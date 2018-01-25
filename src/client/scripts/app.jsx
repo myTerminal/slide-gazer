@@ -8,13 +8,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {
     BrowserRouter,
-    Route,
-    NavLink
+    Route
 } from 'react-router-dom';
 
 // Import pages
 
 import Home from './pages/home.jsx';
+import Presentation from './pages/presentation.jsx';
+import Controller from './pages/controller.jsx';
 
 class App extends React.Component {
 
@@ -27,10 +28,9 @@ class App extends React.Component {
     render () {
         return (
             <div>
-              <span className='fa fa-thumbs-o-up fa-lg'></span>
-              <NavLink to='/' exact activeClassName='active'>Home</NavLink>
-              <NavLink to='/about' activeClassName='active'>About</NavLink>
-              <Route path='/' exact component={Home} />
+                <Route path='/' exact component={Home} />
+                <Route path='/present' component={Presentation} />
+                <Route path='/control' component={Controller} />
             </div>
         );
     }
