@@ -1,0 +1,5 @@
+{
+    "domain": "localhost",
+    "web-port": "8089",
+    "socket-port": "8090"
+}

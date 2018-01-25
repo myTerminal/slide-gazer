@@ -1,0 +1,59 @@
+{
+  "name": "slide-gazer",
+  "version": "0.9.0",
+  "description": "slide-gazer",
+  "main": "src/server/index.js",
+  "scripts": {
+    "debug": "webpack --config webpack.dev.js",
+    "develop": "webpack --config webpack.dev.js --watch",
+    "live": "webpack-dev-server --config webpack.live.js --open",
+    "build": "webpack --config webpack.prod.js",
+    "start": "node starter.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:team-fluxion/slide-gazer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/team-fluxion/slide-gazer/issues"
+  },
+  "homepage": "https://github.com/team-fluxion/slide-gazer#readme",
+  "keywords": [
+    "slide-show"
+  ],
+  "author": "Mohammed Ismail Ansari <team.terminal@gmail.com>",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "body-parser": "1.17.2",
+    "express": "4.15.4",
+    "font-awesome": "4.7.0",
+    "react": "15.6.2",
+    "react-dom": "15.6.2",
+    "react-router-dom": "4.2.2",
+    "ws": "4.0.0"
+  },
+  "devDependencies": {
+    "babel-core": "6.26.0",
+    "babel-loader": "7.1.2",
+    "babel-preset-env": "1.6.0",
+    "babel-preset-react": "6.24.1",
+    "clean-webpack-plugin": "0.1.16",
+    "copy-webpack-plugin": "4.0.1",
+    "css-loader": "0.28.7",
+    "extract-text-webpack-plugin": "3.0.0",
+    "file-loader": "0.11.2",
+    "html-loader": "0.5.1",
+    "html-webpack-plugin": "2.30.1",
+    "jscs": "3.0.7",
+    "jscs-loader": "0.3.0",
+    "jshint": "2.9.5",
+    "jsxhint-loader": "0.2.0",
+    "less": "2.7.2",
+    "less-loader": "4.0.5",
+    "style-loader": "0.18.2",
+    "uglifyjs-webpack-plugin": "0.4.6",
+    "webpack": "3.6.0",
+    "webpack-dev-server": "2.8.2",
+    "webpack-merge": "4.1.0"
+  }
+}
