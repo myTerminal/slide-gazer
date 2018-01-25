@@ -11,7 +11,8 @@ module.exports = function (configs) {
     wss.on('connection', function (ws) {
         clients.push({
             ws: ws,
-            username: 'anonymous'
+            type: 'unknown',
+            id: 'unknown'
         });
 
         ws.on('message', function (message) {
@@ -22,35 +23,73 @@ module.exports = function (configs) {
 
             switch (receivedMessage.type) {
             case 'IDENTIFY':
+                // Find the current client in the list of connected clients
                 currentClient = clients.filter(c => c.ws === self)[0];
 
-                currentClient.username = receivedMessage.username;
+                // Determine whether the client is a presentation or a controller
+                currentClient.type = receivedMessage.type;
 
-                console.log('user identified:', currentClient.username);
+                // Set the id for current client
+                currentClient.id = receivedMessage.id;
 
-                currentClient.ws.send(JSON.stringify({
-                    type: 'USERLIST',
-                    users: clients.filter(c => c.ws !== self).map(c => c.username)
-                }));
+                if (currentClient.type === 'presentation') {
+                    // Store presentation data
+                    currentClient.data = receivedMessage.data;
 
-                clients.filter(c => c.ws !== self)
-                    .forEach(c => c.ws.send(JSON.stringify({
-                        type: 'USERENTERED',
-                        username: currentClient.username
-                    })));
+                    console.log('Presentation started:', currentClient.id);
+                } else {
+                    // Find the corresponding presentation
+                    targetClient = clients.filter(c => c.type === 'presentation' && c.id === currentClient.id)[0];
+
+                    if (targetClient) { // If a presentation is found
+                        // Send presentation data to controller
+                        currentClient.ws.send(JSON.stringify({
+                            type: 'INFO',
+                            subType: 'DATA',
+                            data: targetClient.data
+                        }));
+
+                        // Inform presentation that a controller is connected
+                        targetClient.ws.send(JSON.stringify({
+                            type: 'INFO',
+                            subType: 'CONNECTION'
+                        }));
+
+                        console.log('Controller connected:', currentClient.id);
+                    } else { // If no presentation is found
+                        // Inform controller that no presentation was found
+                        currentClient.ws.send(JSON.stringify({
+                            type: 'INFO',
+                            subType: 'NO_PRESENTATION'
+                        }));
+                    }
+                }
+
+                 break;
+
+            case 'COMMAND':
+                targetClient = clients.filter(c => c.type === 'presentation' && c.id === receivedMessage.id)[0];
+
+                if (targetClient) {
+                    targetClient.ws.send(JSON.stringify({
+                        type: 'COMMAND',
+                        command: receivedMessage.command,
+                        param: receivedMessage.param
+                    }));
+                }
 
                 break;
 
-            case 'MESSAGE':
-                currentClient = clients.filter(c => c.ws === self)[0];
+            case 'SIGNAL':
+                targetClient = clients.filter(c => c.type === 'controller' && c.id === receivedMessage.id)[0];
 
-                targetClient = clients.filter(c => c.username === receivedMessage.targetUsername)[0];
-
-                targetClient.ws.send(JSON.stringify({
-                    type: 'MESSAGE',
-                    fromUsername: currentClient.username,
-                    messageText: receivedMessage.messageText
-                }));
+                if (targetClient) {
+                    targetClient.ws.send(JSON.stringify({
+                        type: 'SIGNAL',
+                        signal: receivedMessage.signal,
+                        data: receivedMessage.data
+                    }));
+                }
 
                 break;
 
@@ -62,16 +101,39 @@ module.exports = function (configs) {
         ws.on('close', function () {
             var self = this,
                 currentClient = clients.filter(c => c.ws === self)[0],
-                index = clients.indexOf(currentClient);
+                index = clients.indexOf(currentClient),
+                pairedClient;
 
+            // Remove the disconnected client from the list
             clients.splice(index, 1);
 
-            clients.forEach(c => c.ws.send(JSON.stringify({
-                type: 'USERLEFT',
-                username: currentClient.username
-            })));
+            if (currentClient.type === 'presentation') {
+                // Find the corressponding controller
+                pairedClient = clients.filter( c=> c.type === 'controller' && c.id === currentClient.id)[0];
 
-            console.log('connection closed by', currentClient.username);
+                if (pairedClient) {
+                    // Communicate that the presentation has ended
+                    pairedClient.ws.send(JSON.stringify({
+                        type: 'INFO',
+                        subType: 'DISCONNECTION'
+                    }));
+                }
+
+                console.log('Presentation ended:', currentClient.id);
+            } else {
+                // Find the corressponding presentation
+                pairedClient = clients.filter( c=> c.type === 'presentation' && c.id === currentClient.id)[0];
+
+                if (pairedClient) {
+                    // Communicate that the controller has disconnected
+                    pairedClient.ws.send(JSON.stringify({
+                        type: 'INFO',
+                        subType: 'DISCONNECTION'
+                    }));
+                }
+
+                console.log('Controller disconnected:', currentClient.id);
+            }
         });
     });
 
