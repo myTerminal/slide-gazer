@@ -31,6 +31,7 @@
     "react": "15.6.2",
     "react-dom": "15.6.2",
     "react-router-dom": "4.2.2",
+    "showdown": "1.8.6",
     "ws": "4.0.0"
   },
   "devDependencies": {
