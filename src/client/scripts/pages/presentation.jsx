@@ -189,33 +189,34 @@ export default class Presentation extends React.Component {
                   <div id='top-panel-progress-bar' style={{width:this.state.presentationProgress + '%'}}></div>
                 </div>
                 <div id='top-panel-body'>
+                  <div className={'controls-row' + (!this.state.isPresentationLoaded ? ' hidden' : '')}>
+                    <div className='controls-row-header'>
+                      Remotely control
+                    </div>
+
+                  </div>
                   <div className='controls-row'>
                     <div className='controls-row-header'>
-                      Misc
+                      Presentation
                     </div>
-                    <div className={'control-button ' + (!this.state.isPresentationLoaded ? 'hidden' : '')} onClick={this.backToHome.bind(this)}>
+                    <div className={'control-button' + (!this.state.isPresentationLoaded ? ' hidden' : '')} onClick={this.backToHome.bind(this)}>
                       End Presentation
                     </div>
-                    <div className={'control-button ' + (this.state.isPresentationLoaded ? 'hidden' : '')} onClick={this.backToHome.bind(this)}>
+                    <div className={'control-button' + (this.state.isPresentationLoaded ? ' hidden' : '')} onClick={this.backToHome.bind(this)}>
                       Back
                     </div>
-                  </div>
-                  <div className='controls-row'>
-                    <div className='controls-row-header'>
-                      Transition
-                    </div>
-                    <div className={'control-button ' + (this.state.isAutoTransitionEnabled ? 'active' : '')} onClick={this.toggleAutoTransition.bind(this)}>
-                      Auto
+                    <div className={'control-button' + (!this.state.isPresentationLoaded ? ' hidden' : '') + (this.state.isAutoTransitionEnabled ? ' active' : '')} onClick={this.toggleAutoTransition.bind(this)}>
+                      Auto-Transition
                     </div>
                   </div>
-                  <div className='controls-row'>
+                  <div className={'controls-row' + (!this.state.isPresentationLoaded ? ' hidden' : '')}>
                     <div className='controls-row-header'>
                       Animation
                     </div>
                     {
                       ['fade', 'slide-up', 'unfold-down', 'unfold-up', 'zoom', 'flip'].map(animation => {
                         return (
-                          <div key={animation} className={'control-button ' + (this.state.animation === animation ? 'active' : '')} onClick={() => this.setAnimation.bind(this)(animation)}>
+                          <div key={animation} className={'control-button' + (this.state.animation === animation ? ' active' : '')} onClick={() => this.setAnimation.bind(this)(animation)}>
                             { animation.slice(0, 1).toUpperCase() + animation.slice(1) }
                           </div>
                         );
@@ -230,7 +231,7 @@ export default class Presentation extends React.Component {
                   <br />
                   <span>OR</span>
                   <br />
-                  <div className={'control-button ' + (!this.state.previousPresentationDataExists ? 'disabled' : '')} onClick={this.reloadLastPresentation.bind(this)}>
+                  <div className={'control-button' + (!this.state.previousPresentationDataExists ? ' disabled' : '')} onClick={this.reloadLastPresentation.bind(this)}>
                     Reload the last presentation
                   </div>
                 </div>
