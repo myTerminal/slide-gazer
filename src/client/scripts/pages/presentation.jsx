@@ -14,6 +14,9 @@ export default class Presentation extends React.Component {
             previousPresentationDataExists: window.localStorage.lastPresentationDOM,
             isPresentationLoaded: false,
             presentationData: '',
+            slideCount: 0,
+            currentSlideIndex: 0,
+            presentationProgress: 0,
             isAutoTransitionEnabled: false,
             animation: 'fade'
         };
@@ -25,6 +28,8 @@ export default class Presentation extends React.Component {
         stage.ondragover = this.onDragOverOnStage;
         stage.ondrop = this.onDropOnStage.bind(this);
         stage.ondragend = this.onDragEndOnStage;
+
+        document.onkeydown = this.onKeyDownOnPresentation.bind(this);
     }
 
     onDragOverOnStage () {
@@ -54,35 +59,48 @@ export default class Presentation extends React.Component {
         return false;
     }
 
+    onKeyDownOnPresentation (e) {
+        if (this.state.isPresentationLoaded) {
+            if (e.keyCode === 39) {
+                this.nextSlide();
+            } else if (e.keyCode === 37) {
+                this.previousSlide();
+            }
+        }
+    }
+
+    previousSlide () {
+        if (!this.state.currentSlideIndex) {
+            return;
+        }
+
+        this.showSlide(this.state.currentSlideIndex - 1);
+    }
+
+    nextSlide () {
+        if (this.state.currentSlideIndex + 1 === this.state.slideCount) {
+            return;
+        }
+
+        this.showSlide(this.state.currentSlideIndex + 1);
+    }
+
+    showSlide (slideIndex) {
+        var slides = document.querySelectorAll('#presentation .slide');
+
+        this.setState({
+            currentSlideIndex: slideIndex,
+            presentationProgress: (slideIndex + 1) * 100 / this.state.slideCount
+        });
+
+        slides.forEach(s => s.className = s.className.replace(' visible', ''));
+        slides[slideIndex].className += ' visible';
+    }
+
     backToHome () {
         this.setState({
             redirectToHome: true
         });
-    }
-
-    startPresentation (presentationData) {
-        var presentation = document.getElementById('presentation'),
-            title;
-
-        this.setState({
-            isPresentationLoaded: true,
-            presentationData: presentationData
-        });
-
-        presentation.innerHTML = this.getSlidesDOM(presentationData);
-
-        title = presentation.querySelector('h1').innerText;
-
-        presentation.innerHTML += this.getLastSlide(title);
-        presentation.innerHTML += this.getFooter();
-    }
-
-    reloadLastPresentation () {
-        var lastPresentationDOM = window.localStorage.lastPresentationDOM;
-
-        if (lastPresentationDOM) {
-          this.startPresentation(lastPresentationDOM);
-        }
     }
 
     toggleAutoTransition () {
@@ -97,8 +115,36 @@ export default class Presentation extends React.Component {
         });
     }
 
+    startPresentation (presentationData) {
+        var presentation = document.getElementById('presentation'),
+            title;
+
+        presentation.innerHTML = this.getSlidesDOM(presentationData);
+
+        title = presentation.querySelector('h1').innerText;
+
+        presentation.innerHTML += this.getLastSlide(title);
+        presentation.innerHTML += this.getFooter();
+
+        this.setState({
+            isPresentationLoaded: true,
+            presentationData: presentationData,
+            slideCount: document.querySelectorAll('#presentation .slide').length,
+        });
+
+        this.showSlide(0);
+    }
+
+    reloadLastPresentation () {
+        var lastPresentationDOM = window.localStorage.lastPresentationDOM;
+
+        if (lastPresentationDOM) {
+          this.startPresentation(lastPresentationDOM);
+        }
+    }
+
     getSlidesDOM (presentationData) {
-        return "<div class='slide visible'>" +
+        return "<div class='slide'>" +
                 presentationData.replace(/\<h2/g,
                                  "</div><div class='slide'><h2") +
                 "</div>";
@@ -127,7 +173,7 @@ export default class Presentation extends React.Component {
               <div id='top-panel'>
                 <div id='top-panel-head'>
                   <span id='top-panel-pulldown-trigger' className='fa fa-angle-double-down'></span>
-                  <div id='top-panel-progress-bar'></div>
+                  <div id='top-panel-progress-bar' style={{width:this.state.presentationProgress + '%'}}></div>
                 </div>
                 <div id='top-panel-body'>
                   <div className='controls-row'>
@@ -177,7 +223,7 @@ export default class Presentation extends React.Component {
                 </div>
               </div>
               <div id='presentation-container' className={!this.state.isPresentationLoaded ? 'hidden' : ''}>
-                <div id='presentation' className='markdown-body'>
+                <div id='presentation' className={'markdown-body ' + this.state.animation}>
 
                 </div>
               </div>

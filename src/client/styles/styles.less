@@ -75,6 +75,7 @@ body,
             .background-gradient-twoColor(#000, transparent);
             color: #fff;
             overflow: hidden;
+            z-index: 1;
             .transition (0.5s);
 
             #top-panel-head {
@@ -93,7 +94,6 @@ body,
                     position: absolute;
                     top: 0;
                     left: 0;
-                    width: 30%;
                     height: 20px;
                     background-color: #0f0;
                     .opacity(0.5);
@@ -147,6 +147,7 @@ body,
             height: 100%;
 
             #presentation {
+                .perspective(500px);
                 .box-sizing(border-box);
                 padding: 10px;
                 height: 100%;
