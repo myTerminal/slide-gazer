@@ -20,6 +20,8 @@ export default class Presentation extends React.Component {
             isAutoTransitionEnabled: false,
             animation: 'fade'
         };
+
+        this.autoTransitionTimer = null;
     }
 
     componentDidMount () {
@@ -97,6 +99,10 @@ export default class Presentation extends React.Component {
         slides[slideIndex].className += ' visible';
     }
 
+    autoTransitToNextSlide () {
+        this.nextSlide();
+    }
+
     backToHome () {
         this.setState({
             redirectToHome: true
@@ -104,6 +110,13 @@ export default class Presentation extends React.Component {
     }
 
     toggleAutoTransition () {
+        if (this.state.isAutoTransitionEnabled) {
+            window.clearInterval(this.autoTransitionTimer);
+            this.autoTransitionTimer = null;
+        } else {
+            this.autoTransitionTimer = window.setInterval(this.autoTransitToNextSlide.bind(this), 5000);
+        }
+
         this.setState({
             isAutoTransitionEnabled: !this.state.isAutoTransitionEnabled
         });
@@ -224,7 +237,6 @@ export default class Presentation extends React.Component {
               </div>
               <div id='presentation-container' className={!this.state.isPresentationLoaded ? 'hidden' : ''}>
                 <div id='presentation' className={'markdown-body ' + this.state.animation}>
-
                 </div>
               </div>
             </div>
