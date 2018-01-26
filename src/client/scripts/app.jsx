@@ -21,13 +21,11 @@ class App extends React.Component {
 
     constructor () {
         super();
-
-        this.state = {};
     }
 
     render () {
         return (
-            <div>
+            <div className='canvas'>
                 <Route path='/' exact component={Home} />
                 <Route path='/present' component={Presentation} />
                 <Route path='/control' component={Controller} />
