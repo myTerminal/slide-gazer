@@ -1,5 +1,8 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import showdown from 'showdown';
+
+const converter = new showdown.Converter();
 
 export default class Presentation extends React.Component {
 
@@ -8,11 +11,47 @@ export default class Presentation extends React.Component {
 
         this.state = {
             redirectToHome: false,
+            previousPresentationDataExists: window.localStorage.lastPresentationDOM,
             isPresentationLoaded: false,
             presentationData: '',
             isAutoTransitionEnabled: false,
             animation: 'fade'
         };
+    }
+
+    componentDidMount () {
+        var stage = document.getElementById('stage');
+
+        stage.ondragover = this.onDragOverOnStage;
+        stage.ondrop = this.onDropOnStage.bind(this);
+        stage.ondragend = this.onDragEndOnStage;
+    }
+
+    onDragOverOnStage () {
+        return false;
+    }
+
+    onDropOnStage (e) {
+        e.preventDefault();
+
+        var context = this,
+            file = e.dataTransfer.files[0],
+            reader = new FileReader();
+
+        reader.onload = function(event) {
+            var lastPresentationDOM = converter.makeHtml(event.target.result);
+
+            window.localStorage.lastPresentationDOM = lastPresentationDOM;
+
+            context.startPresentation(lastPresentationDOM);
+        };
+
+        reader.readAsText(file);
+        return false;
+    }
+
+    onDragEndOnStage () {
+        return false;
     }
 
     backToHome () {
@@ -21,10 +60,29 @@ export default class Presentation extends React.Component {
         });
     }
 
-    reloadLastPresentation () {
+    startPresentation (presentationData) {
+        var presentation = document.getElementById('presentation'),
+            title;
+
         this.setState({
-            isPresentationLoaded: true
+            isPresentationLoaded: true,
+            presentationData: presentationData
         });
+
+        presentation.innerHTML = this.getSlidesDOM(presentationData);
+
+        title = presentation.querySelector('h1').innerText;
+
+        presentation.innerHTML += this.getLastSlide(title);
+        presentation.innerHTML += this.getFooter();
+    }
+
+    reloadLastPresentation () {
+        var lastPresentationDOM = window.localStorage.lastPresentationDOM;
+
+        if (lastPresentationDOM) {
+          this.startPresentation(lastPresentationDOM);
+        }
     }
 
     toggleAutoTransition () {
@@ -37,6 +95,26 @@ export default class Presentation extends React.Component {
         this.setState({
             animation: animation
         });
+    }
+
+    getSlidesDOM (presentationData) {
+        return "<div class='slide visible'>" +
+                presentationData.replace(/\<h2/g,
+                                 "</div><div class='slide'><h2") +
+                "</div>";
+    }
+
+    getLastSlide (title) {
+        return "<div class='slide last-slide'>" +
+               "  <h1>" + title + "</h1>" +
+               "  Thanks for attending the session. Questions please..." +
+               "</div>";
+    }
+
+    getFooter () {
+        return "<div class='footer'>" +
+               "  Printed from <a href='http://slide-gazer.teamfluxion.com'>slide-gazer</a>" +
+               "</div>"
     }
 
     render () {
@@ -93,13 +171,13 @@ export default class Presentation extends React.Component {
                   <br />
                   <span>OR</span>
                   <br />
-                  <div className='control-button' onClick={this.reloadLastPresentation.bind(this)}>
+                  <div className={'control-button ' + (!this.state.previousPresentationDataExists ? 'disabled' : '')} onClick={this.reloadLastPresentation.bind(this)}>
                     Reload the last presentation
                   </div>
                 </div>
               </div>
               <div id='presentation-container' className={!this.state.isPresentationLoaded ? 'hidden' : ''}>
-                <div id='presentation'>
+                <div id='presentation' className='markdown-body'>
 
                 </div>
               </div>
