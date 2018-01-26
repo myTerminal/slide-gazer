@@ -25,6 +25,35 @@ body,
     font-family: OpenSans;
     height: 100%;
 
+    .hidden {
+        display: none !important;
+    }
+
+    .control-button {
+        display: inline-block;
+        min-width: 40px;
+        height: 30px;
+        border: 2px solid #fff;
+        .round-borders(5px);
+        cursor: pointer;
+        padding: 5px;
+        margin: 0 5px;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        line-height: 30px;
+
+        &.active {
+            background-color: #ccc;
+            color: #000;
+        }
+
+        &:hover {
+            background-color: #fff;
+            color: #000;
+        }
+    }
+
     #home-page {
 
     }
@@ -38,7 +67,7 @@ body,
             left: 0;
             width: 100%;
             height: 20px;
-            background-color: #000;
+            .background-gradient-twoColor(#000, transparent);
             color: #fff;
             overflow: hidden;
             .transition (0.5s);
@@ -69,6 +98,14 @@ body,
 
             #top-panel-body {
 
+                .controls-row {
+                    padding: 10px;
+
+                    .controls-row-header {
+                        margin: 5px 0px;
+                        font-weight: bold;
+                    }
+                }
             }
 
             &:hover {
@@ -79,10 +116,23 @@ body,
         #stage-container {
             .box-sizing(border-box);
             padding-top: 20px;
+            width: 100%;
             height: 100%;
+            display: table;
 
             #stage {
+                display: table-cell;
+                vertical-align: middle;
+                width: 100%;
                 height: 100%;
+                text-align: center;
+                cursor: default;
+                background: #ccc;
+
+                span {
+                    font-weight: bold;
+                    color: #000;
+                }
             }
         }
 
