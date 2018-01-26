@@ -1,6 +1,8 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import axios from 'axios';
 import showdown from 'showdown';
+import qrcode from 'qrcode';
 
 const converter = new showdown.Converter();
 
@@ -10,10 +12,15 @@ export default class Presentation extends React.Component {
         super();
 
         this.state = {
+            configs: {
+                domain: 'http://slide-gazer.teamfluxion.com'
+            },
             redirectToHome: false,
             previousPresentationDataExists: window.localStorage.lastPresentationDOM,
             isPresentationLoaded: false,
             presentationData: '',
+            presentationCode: '',
+            controllerUrlQRCodeData: '',
             slideCount: 0,
             currentSlideIndex: 0,
             presentationProgress: 0,
@@ -25,13 +32,22 @@ export default class Presentation extends React.Component {
     }
 
     componentDidMount () {
-        var stage = document.getElementById('stage');
+        var context = this,
+            stage = document.getElementById('stage');
 
         stage.ondragover = this.onDragOverOnStage;
         stage.ondrop = this.onDropOnStage.bind(this);
         stage.ondragend = this.onDragEndOnStage;
 
         document.onkeydown = this.onKeyDownOnPresentation.bind(this);
+
+        axios.get('/configs').then(response => {
+            context.setState({
+                configs: response.data
+            });
+        }).catch(() => {
+            alert('Failed to fetch domain details.');
+        });
     }
 
     onDragOverOnStage () {
@@ -130,6 +146,7 @@ export default class Presentation extends React.Component {
 
     startPresentation (presentationData) {
         var presentation = document.getElementById('presentation'),
+            presentationCode = (new Date()).getTime(),
             title;
 
         presentation.innerHTML = this.getSlidesDOM(presentationData);
@@ -142,10 +159,17 @@ export default class Presentation extends React.Component {
         this.setState({
             isPresentationLoaded: true,
             presentationData: presentationData,
+            presentationCode: presentationCode,
             slideCount: document.querySelectorAll('#presentation .slide').length,
         });
 
         this.showSlide(0);
+
+        qrcode.toDataURL(this.state.configs.domain + '/control/' + presentationCode).then(url => {
+            this.setState({
+                controllerUrlQRCodeData: url
+            });
+        });
     }
 
     reloadLastPresentation () {
@@ -172,7 +196,7 @@ export default class Presentation extends React.Component {
 
     getFooter () {
         return "<div class='footer'>" +
-               "  Printed from <a href='http://slide-gazer.teamfluxion.com'>slide-gazer</a>" +
+               "  Printed from <a href='" + this.state.configs.domain + "'>slide-gazer</a>" +
                "</div>"
     }
 
@@ -193,14 +217,18 @@ export default class Presentation extends React.Component {
                     <div className='controls-row-header'>
                       Remotely control
                     </div>
-
+                    <div id='qr-code-image' style={{backgroundImage:'url(' + this.state.controllerUrlQRCodeData + ')'}}>
+                    </div>
+                    <a id='controller-url-link' href={this.state.configs.domain + '/control/' + this.state.presentationCode}>
+                      {this.state.configs.domain + '/control/' + this.state.presentationCode}
+                    </a>
                   </div>
                   <div className='controls-row'>
                     <div className='controls-row-header'>
                       Presentation
                     </div>
                     <div className={'control-button' + (!this.state.isPresentationLoaded ? ' hidden' : '')} onClick={this.backToHome.bind(this)}>
-                      End Presentation
+                      End
                     </div>
                     <div className={'control-button' + (this.state.isPresentationLoaded ? ' hidden' : '')} onClick={this.backToHome.bind(this)}>
                       Back
