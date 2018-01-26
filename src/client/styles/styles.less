@@ -259,6 +259,7 @@ body,
                 }
 
                 .footer {
+                    margin-top: 50px;
                     border-top: 1px solid #000;
                     display: none;
                     text-align: center;
@@ -269,5 +270,66 @@ body,
 
     #controller-page {
 
+    }
+}
+
+@media print {
+        height: auto;
+
+    body {
+        height: auto;
+        overflow: visible;
+        background-color: transparent;
+
+        #page {
+            height: auto;
+
+            .canvas {
+                height: auto;
+
+                #home-page {
+
+                }
+
+                #presentation-page {
+
+                    #top-panel {
+                        display: none;
+                    }
+
+                    #stage-container {
+                        display: none;
+                    }
+
+                    #presentation-container {
+
+                        #presentation {
+
+                            .slide {
+                                height: auto;
+                                padding: 0 !important;
+                                .opacity(1) !important;
+                                overflow: visible !important;
+                                box-shadow: none !important;
+                                border: none !important;
+                                .transform(none) !important;
+
+                                &.last-slide {
+                                    display: none;
+                                }
+                            }
+
+                            .footer {
+                                display: inherit;
+                            }
+                        }
+                    }
+                }
+
+                #controller-page {
+
+                }
+            }
+        }
     }
 }
