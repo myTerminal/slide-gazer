@@ -11,7 +11,7 @@ module.exports = function (configs) {
     wss.on('connection', function (ws) {
         clients.push({
             ws: ws,
-            type: 'unknown',
+            clientType: 'unknown',
             id: 'unknown'
         });
 
@@ -27,19 +27,19 @@ module.exports = function (configs) {
                 currentClient = clients.filter(c => c.ws === self)[0];
 
                 // Determine whether the client is a presentation or a controller
-                currentClient.type = receivedMessage.type;
+                currentClient.clientType = receivedMessage.clientType;
 
                 // Set the id for current client
                 currentClient.id = receivedMessage.id;
 
-                if (currentClient.type === 'presentation') {
+                if (currentClient.clientType === 'presentation') {
                     // Store presentation data
                     currentClient.data = receivedMessage.data;
 
                     console.log('Presentation started:', currentClient.id);
                 } else {
                     // Find the corresponding presentation
-                    targetClient = clients.filter(c => c.type === 'presentation' && c.id === currentClient.id)[0];
+                    targetClient = clients.filter(c => c.clientType === 'presentation' && c.id === currentClient.id)[0];
 
                     if (targetClient) { // If a presentation is found
                         // Send presentation data to controller
@@ -68,7 +68,7 @@ module.exports = function (configs) {
                  break;
 
             case 'COMMAND':
-                targetClient = clients.filter(c => c.type === 'presentation' && c.id === receivedMessage.id)[0];
+                targetClient = clients.filter(c => c.clientType === 'presentation' && c.id === receivedMessage.id)[0];
 
                 if (targetClient) {
                     targetClient.ws.send(JSON.stringify({
@@ -81,7 +81,7 @@ module.exports = function (configs) {
                 break;
 
             case 'SIGNAL':
-                targetClient = clients.filter(c => c.type === 'controller' && c.id === receivedMessage.id)[0];
+                targetClient = clients.filter(c => c.clientType === 'controller' && c.id === receivedMessage.id)[0];
 
                 if (targetClient) {
                     targetClient.ws.send(JSON.stringify({
@@ -107,9 +107,9 @@ module.exports = function (configs) {
             // Remove the disconnected client from the list
             clients.splice(index, 1);
 
-            if (currentClient.type === 'presentation') {
+            if (currentClient.clientType === 'presentation') {
                 // Find the corressponding controller
-                pairedClient = clients.filter( c=> c.type === 'controller' && c.id === currentClient.id)[0];
+                pairedClient = clients.filter( c=> c.clientType === 'controller' && c.id === currentClient.id)[0];
 
                 if (pairedClient) {
                     // Communicate that the presentation has ended
@@ -122,7 +122,7 @@ module.exports = function (configs) {
                 console.log('Presentation ended:', currentClient.id);
             } else {
                 // Find the corressponding presentation
-                pairedClient = clients.filter( c=> c.type === 'presentation' && c.id === currentClient.id)[0];
+                pairedClient = clients.filter( c=> c.clientType === 'presentation' && c.id === currentClient.id)[0];
 
                 if (pairedClient) {
                     // Communicate that the controller has disconnected

@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import showdown from 'showdown';
 import qrcode from 'qrcode';
+import socketService from '../services/Presentation-socket-service.js';
 
 const converter = new showdown.Converter();
 
@@ -13,7 +14,7 @@ export default class Presentation extends React.Component {
 
         this.state = {
             configs: {
-                domain: 'http://slide-gazer.teamfluxion.com'
+                domain: 'slide-gazer.teamfluxion.com'
             },
             redirectToHome: false,
             previousPresentationDataExists: window.localStorage.lastPresentationDOM,
@@ -24,6 +25,7 @@ export default class Presentation extends React.Component {
             slideCount: 0,
             currentSlideIndex: 0,
             presentationProgress: 0,
+            isControllerConnected: false,
             isAutoTransitionEnabled: false,
             animation: 'slide-up'
         };
@@ -113,6 +115,10 @@ export default class Presentation extends React.Component {
 
         slides.forEach(s => s.className = s.className.replace(' visible', ''));
         slides[slideIndex].className += ' visible';
+
+        if (slideIndex) {
+            socketService.sendSignal('SLIDE-SHOW', slideIndex)
+        }
     }
 
     autoTransitToNextSlide () {
@@ -136,6 +142,8 @@ export default class Presentation extends React.Component {
             presentationProgress: 0,
             isAutoTransitionEnabled: false
         });
+
+        socketService.close();
     }
 
     toggleAutoTransition () {
@@ -178,11 +186,20 @@ export default class Presentation extends React.Component {
 
         this.showSlide(0);
 
-        qrcode.toDataURL(this.state.configs.domain + '/control/' + presentationCode).then(url => {
+        qrcode.toDataURL('http://' + this.state.configs.domain + '/control/' + presentationCode).then(url => {
             this.setState({
                 controllerUrlQRCodeData: url
             });
         });
+
+        socketService.open(
+            this.state.configs,
+            this.state.presentationCode,
+            this.state.presentationData,
+            this.onInfo.bind(this),
+            this.onCommand.bind(this),
+            this.onException.bind(this)
+        );
     }
 
     reloadLastPresentation () {
@@ -209,8 +226,30 @@ export default class Presentation extends React.Component {
 
     getFooter () {
         return "<div class='footer'>" +
-               "  Printed from <a href='" + this.state.configs.domain + "'>slide-gazer</a>" +
+               "  Printed from <a href='" + 'http://' + this.state.configs.domain + "'>slide-gazer</a>" +
                "</div>";
+    }
+
+    onInfo (info) {
+        if (info === 'CONNECTION') {
+            this.setState({
+                isControllerConnected: true
+            });
+        } else if (info === 'DISCONNECTION') {
+            this.setState({
+                isControllerConnected: false
+            });
+        }
+    }
+
+    onCommand (command, param) {
+        if (command === 'SLIDE-SHOW') {
+            this.showSlide(+param);
+        }
+    }
+
+    onException (exception) {
+        console.error(exception);
     }
 
     render () {
@@ -224,6 +263,7 @@ export default class Presentation extends React.Component {
                     <div id='top-panel-head'>
                         <span id='top-panel-pulldown-trigger' className='fa fa-angle-double-down'></span>
                         <div id='top-panel-progress-bar' style={{width:this.state.presentationProgress + '%'}}></div>
+                        <span id='controller-connection-icon' className={'fa fa-chain' + (!this.state.isControllerConnected ? ' hidden' : '')}></span>
                     </div>
                     <div id='top-panel-body'>
                         <div className={'controls-row' + (!this.state.isPresentationLoaded ? ' hidden' : '')}>
@@ -232,8 +272,8 @@ export default class Presentation extends React.Component {
                             </div>
                             <div id='qr-code-image' style={{backgroundImage:'url(' + this.state.controllerUrlQRCodeData + ')'}}>
                             </div>
-                            <a id='controller-url-link' href={this.state.configs.domain + '/control/' + this.state.presentationCode}>
-                                {this.state.configs.domain + '/control/' + this.state.presentationCode}
+                            <a id='controller-url-link' href={'http://' + this.state.configs.domain + '/control/' + this.state.presentationCode}>
+                                {'http://' + this.state.configs.domain + '/control/' + this.state.presentationCode}
                             </a>
                         </div>
                         <div className='controls-row'>
