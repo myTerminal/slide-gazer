@@ -125,6 +125,19 @@ export default class Presentation extends React.Component {
         });
     }
 
+    endPresentation () {
+        this.setState({
+            isPresentationLoaded: false,
+            presentationData: '',
+            presentattionCode: '',
+            controllerUrlQRCodeData: '',
+            slideCount: 0,
+            currentSlideIndex: 0,
+            presentationProgress: 0,
+            isAutoTransitionEnabled: false
+        });
+    }
+
     toggleAutoTransition () {
         if (this.state.isAutoTransitionEnabled) {
             window.clearInterval(this.autoTransitionTimer);
@@ -227,7 +240,7 @@ export default class Presentation extends React.Component {
                             <div className='controls-row-header'>
                                 Presentation
                             </div>
-                            <div className={'control-button' + (!this.state.isPresentationLoaded ? ' hidden' : '')} onClick={this.backToHome.bind(this)}>
+                            <div className={'control-button' + (!this.state.isPresentationLoaded ? ' hidden' : '')} onClick={this.endPresentation.bind(this)}>
                                 End
                             </div>
                             <div className={'control-button' + (this.state.isPresentationLoaded ? ' hidden' : '')} onClick={this.backToHome.bind(this)}>
