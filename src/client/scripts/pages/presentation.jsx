@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import showdown from 'showdown';
 import qrcode from 'qrcode';
-import socketService from '../services/Presentation-socket-service.js';
+import socketService from '../services/presentation-socket-service.js';
 
 const converter = new showdown.Converter();
 
@@ -194,8 +194,8 @@ export default class Presentation extends React.Component {
 
         socketService.open(
             this.state.configs,
-            this.state.presentationCode,
-            this.state.presentationData,
+            presentationCode,
+            presentationData,
             this.onInfo.bind(this),
             this.onCommand.bind(this),
             this.onException.bind(this)

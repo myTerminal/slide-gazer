@@ -28,7 +28,8 @@ class App extends React.Component {
             <div className='canvas'>
                 <Route path='/' exact component={Home} />
                 <Route path='/present' component={Presentation} />
-                <Route path='/control' component={Controller} />
+                <Route path='/control' exact component={Controller} />
+                <Route path='/control/:presentationCode' component={Controller} />
             </div>
         );
     }
