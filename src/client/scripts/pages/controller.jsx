@@ -150,7 +150,7 @@ export default class Controller extends React.Component {
     onException (exception) {
         alert(exception);
     }
-    
+
     render () {
         if (this.state.redirectToHome) {
             return <Redirect to='/' />;
@@ -160,27 +160,72 @@ export default class Controller extends React.Component {
             <div id='controller-page'>
                 <div id='stage' className={this.state.isConnected ? 'hidden' : ''}>
                     <div id='stage-controls'>
-                        <span id='presentation-code-label'>Enter presentation code to connect</span>
+                        <span id='presentation-code-label'>
+                            Enter presentation code to connect
+                        </span>
                         <br />
-                        <input type='text' id='presentation-code-input' value={this.state.presentationCode} onChange={this.onPresentationCodeChange.bind(this)} />
+                        <input type='text'
+                               id='presentation-code-input'
+                               value={this.state.presentationCode}
+                               onChange={this.onPresentationCodeChange.bind(this)} />
                         <br />
-                        <div id='connect-button' className={'control-button' + (!this.state.presentationCode ? ' disabled' : '')} onClick={this.connect.bind(this)}>Connect</div>
+                        <div id='connect-button'
+                             className={'control-button' + (!this.state.presentationCode ? ' disabled' : '')}
+                             onClick={this.connect.bind(this)}>
+                            Connect
+                        </div>
+                        <div id='back-button'
+                             className='control-button'
+                             onClick={this.backToHome.bind(this)}>
+                            Back
+                        </div>
                     </div>
                 </div>
                 <div id='controller' className={!this.state.isConnected ? 'hidden' : ''}>
                     <div id='controller-presentation-view'>
 
                     </div>
+                    <div id='controller-screen-container'>
+                        <div id='presentation-progress-bar-container'>
+                            <div id='presentation-progress-bar'
+                                 style={{width:this.state.presentationProgress + '%'}}>
+                            </div>
+                        </div>
+                        <div id='controller-screen'>
+                            <span className='presentation-detail'>
+                                Slide: {this.state.currentSlideIndex + 1} / {this.state.slideCount}
+                            </span>
+                        </div>
+                    </div>
                     <div id='controller-controls'>
-                        Total slides: {this.state.slideCount}
-                        <br />
-                        Presentation progress: {this.state.presentationProgress}
-                        <br />
-                        Current slide index: {this.state.currentSlideIndex}
-                        <br />
-                        <span onClick={this.previousSlide.bind(this)}>Previous Slide</span>
-                        <br />
-                        <span onClick={this.nextSlide.bind(this)}>Next Slide</span>
+                        <div className='control-row'>
+                            <div className='presentation-control-button disabled'>
+                                <span className='fa fa-3x fa-fast-backward'></span>
+                            </div>
+                            <div className={'presentation-control-button' + (!this.state.currentSlideIndex ? ' disabled' : '')} onClick={this.previousSlide.bind(this)}>
+                                <span className='fa fa-3x fa-step-backward'></span>
+                            </div>
+                            <div className={'presentation-control-button' + (this.state.currentSlideIndex === this.state.slideCount - 1 ? ' disabled' : '')} onClick={this.nextSlide.bind(this)}>
+                                <span className='fa fa-3x fa-step-forward'></span>
+                            </div>
+                            <div className='presentation-control-button disabled'>
+                                <span className='fa fa-3x fa-fast-forward'></span>
+                            </div>
+                        </div>
+                        <div className='control-row'>
+                            <div className='presentation-control-button' onClick={this.disconnect.bind(this)}>
+                                <span className='fa fa-3x fa-power-off' style={{color: 'red'}}></span>
+                            </div>
+                            <div className='presentation-control-button disabled'>
+                                <span className='fa fa-3x fa-times'></span>
+                            </div>
+                            <div className='presentation-control-button disabled'>
+                                <span className='fa fa-3x fa-times'></span>
+                            </div>
+                            <div className='presentation-control-button disabled'>
+                                <span className='fa fa-3x fa-times'></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
