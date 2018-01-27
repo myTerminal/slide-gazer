@@ -47,6 +47,7 @@ body,
         color: #fff;
         text-align: center;
         line-height: 30px;
+        box-shadow: 0 0 10px #000;
 
         &.active {
             background-color: #ccc;
@@ -95,7 +96,7 @@ body,
                     top: 0;
                     left: 0;
                     height: 20px;
-                    background-color: #0f0;
+                    .background-gradient-twoColor(#0f0, #070);
                     .opacity(0.5);
                     .transition(1s);
                 }
@@ -109,6 +110,7 @@ body,
                     .controls-row-header {
                         margin: 5px 0px;
                         font-weight: bold;
+                        text-shadow: 0 0 10px #000;
                     }
 
                     #qr-code-image {
@@ -285,7 +287,7 @@ body,
 }
 
 @media print {
-        height: auto;
+    height: auto;
 
     body {
         height: auto;

@@ -25,7 +25,7 @@ export default class Presentation extends React.Component {
             currentSlideIndex: 0,
             presentationProgress: 0,
             isAutoTransitionEnabled: false,
-            animation: 'fade'
+            animation: 'slide-up'
         };
 
         this.autoTransitionTimer = null;
@@ -160,7 +160,7 @@ export default class Presentation extends React.Component {
             isPresentationLoaded: true,
             presentationData: presentationData,
             presentationCode: presentationCode,
-            slideCount: document.querySelectorAll('#presentation .slide').length,
+            slideCount: document.querySelectorAll('#presentation .slide').length
         });
 
         this.showSlide(0);
@@ -176,15 +176,15 @@ export default class Presentation extends React.Component {
         var lastPresentationDOM = window.localStorage.lastPresentationDOM;
 
         if (lastPresentationDOM) {
-          this.startPresentation(lastPresentationDOM);
+            this.startPresentation(lastPresentationDOM);
         }
     }
 
     getSlidesDOM (presentationData) {
         return "<div class='slide'>" +
-                presentationData.replace(/\<h2/g,
-                                 "</div><div class='slide'><h2") +
-                "</div>";
+               presentationData.replace(/\<h2/g,
+                                        "</div><div class='slide'><h2") +
+               "</div>";
     }
 
     getLastSlide (title) {
@@ -197,7 +197,7 @@ export default class Presentation extends React.Component {
     getFooter () {
         return "<div class='footer'>" +
                "  Printed from <a href='" + this.state.configs.domain + "'>slide-gazer</a>" +
-               "</div>"
+               "</div>";
     }
 
     render () {
@@ -207,67 +207,67 @@ export default class Presentation extends React.Component {
 
         return (
             <div id='presentation-page'>
-              <div id='top-panel'>
-                <div id='top-panel-head'>
-                  <span id='top-panel-pulldown-trigger' className='fa fa-angle-double-down'></span>
-                  <div id='top-panel-progress-bar' style={{width:this.state.presentationProgress + '%'}}></div>
+                <div id='top-panel'>
+                    <div id='top-panel-head'>
+                        <span id='top-panel-pulldown-trigger' className='fa fa-angle-double-down'></span>
+                        <div id='top-panel-progress-bar' style={{width:this.state.presentationProgress + '%'}}></div>
+                    </div>
+                    <div id='top-panel-body'>
+                        <div className={'controls-row' + (!this.state.isPresentationLoaded ? ' hidden' : '')}>
+                            <div className='controls-row-header'>
+                                Remotely control
+                            </div>
+                            <div id='qr-code-image' style={{backgroundImage:'url(' + this.state.controllerUrlQRCodeData + ')'}}>
+                            </div>
+                            <a id='controller-url-link' href={this.state.configs.domain + '/control/' + this.state.presentationCode}>
+                                {this.state.configs.domain + '/control/' + this.state.presentationCode}
+                            </a>
+                        </div>
+                        <div className='controls-row'>
+                            <div className='controls-row-header'>
+                                Presentation
+                            </div>
+                            <div className={'control-button' + (!this.state.isPresentationLoaded ? ' hidden' : '')} onClick={this.backToHome.bind(this)}>
+                                End
+                            </div>
+                            <div className={'control-button' + (this.state.isPresentationLoaded ? ' hidden' : '')} onClick={this.backToHome.bind(this)}>
+                                Back
+                            </div>
+                            <div className={'control-button' + (!this.state.isPresentationLoaded ? ' hidden' : '') + (this.state.isAutoTransitionEnabled ? ' active' : '')} onClick={this.toggleAutoTransition.bind(this)}>
+                                Auto-Transition
+                            </div>
+                        </div>
+                        <div className={'controls-row' + (!this.state.isPresentationLoaded ? ' hidden' : '')}>
+                            <div className='controls-row-header'>
+                                Animation
+                            </div>
+                            {
+                                ['fade', 'slide-up', 'unfold-down', 'unfold-up', 'zoom', 'flip'].map(animation => {
+                                    return (
+                                        <div key={animation} className={'control-button' + (this.state.animation === animation ? ' active' : '')} onClick={() => this.setAnimation.bind(this)(animation)}>
+                                            { animation.slice(0, 1).toUpperCase() + animation.slice(1) }
+                                        </div>
+                                    );
+                                })
+                            }
+                        </div>
+                    </div>
                 </div>
-                <div id='top-panel-body'>
-                  <div className={'controls-row' + (!this.state.isPresentationLoaded ? ' hidden' : '')}>
-                    <div className='controls-row-header'>
-                      Remotely control
+                <div id='stage-container' className={this.state.isPresentationLoaded ? 'hidden' : ''}>
+                    <div id='stage'>
+                        <span>Drop a markdown file here to start a presentation</span>
+                        <br />
+                        <span>OR</span>
+                        <br />
+                        <div className={'control-button' + (!this.state.previousPresentationDataExists ? ' disabled' : '')} onClick={this.reloadLastPresentation.bind(this)}>
+                            Reload the last presentation
+                        </div>
                     </div>
-                    <div id='qr-code-image' style={{backgroundImage:'url(' + this.state.controllerUrlQRCodeData + ')'}}>
-                    </div>
-                    <a id='controller-url-link' href={this.state.configs.domain + '/control/' + this.state.presentationCode}>
-                      {this.state.configs.domain + '/control/' + this.state.presentationCode}
-                    </a>
-                  </div>
-                  <div className='controls-row'>
-                    <div className='controls-row-header'>
-                      Presentation
-                    </div>
-                    <div className={'control-button' + (!this.state.isPresentationLoaded ? ' hidden' : '')} onClick={this.backToHome.bind(this)}>
-                      End
-                    </div>
-                    <div className={'control-button' + (this.state.isPresentationLoaded ? ' hidden' : '')} onClick={this.backToHome.bind(this)}>
-                      Back
-                    </div>
-                    <div className={'control-button' + (!this.state.isPresentationLoaded ? ' hidden' : '') + (this.state.isAutoTransitionEnabled ? ' active' : '')} onClick={this.toggleAutoTransition.bind(this)}>
-                      Auto-Transition
-                    </div>
-                  </div>
-                  <div className={'controls-row' + (!this.state.isPresentationLoaded ? ' hidden' : '')}>
-                    <div className='controls-row-header'>
-                      Animation
-                    </div>
-                    {
-                      ['fade', 'slide-up', 'unfold-down', 'unfold-up', 'zoom', 'flip'].map(animation => {
-                        return (
-                          <div key={animation} className={'control-button' + (this.state.animation === animation ? ' active' : '')} onClick={() => this.setAnimation.bind(this)(animation)}>
-                            { animation.slice(0, 1).toUpperCase() + animation.slice(1) }
-                          </div>
-                        );
-                      })
-                    }
-                  </div>
                 </div>
-              </div>
-              <div id='stage-container' className={this.state.isPresentationLoaded ? 'hidden' : ''}>
-                <div id='stage'>
-                  <span>Drop a markdown file here to start a presentation</span>
-                  <br />
-                  <span>OR</span>
-                  <br />
-                  <div className={'control-button' + (!this.state.previousPresentationDataExists ? ' disabled' : '')} onClick={this.reloadLastPresentation.bind(this)}>
-                    Reload the last presentation
-                  </div>
+                <div id='presentation-container' className={!this.state.isPresentationLoaded ? 'hidden' : ''}>
+                    <div id='presentation' className={'markdown-body ' + this.state.animation}>
+                    </div>
                 </div>
-              </div>
-              <div id='presentation-container' className={!this.state.isPresentationLoaded ? 'hidden' : ''}>
-                <div id='presentation' className={'markdown-body ' + this.state.animation}>
-                </div>
-              </div>
             </div>
         );
     }
