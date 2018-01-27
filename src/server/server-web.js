@@ -1,6 +1,6 @@
 /* global module require __dirname */
 
-module.exports = function (configs) {
+module.exports = function (portNumber) {
     var appName = 'slide-gazer',
         path = require('path'),
         express = require('express'),
@@ -12,12 +12,12 @@ module.exports = function (configs) {
     app.use(express.static(path.join(baseUrl, 'public')));
     app.use(bodyParser.json());
 
-    app.listen(configs['web-port'], function () {
-        console.log(appName, 'web server started on port', configs['web-port']);
+    app.listen(portNumber, function () {
+        console.log(appName, 'web server started on port', portNumber);
     });
 
     app.get("/configs", function (req, res) {
-        res.send(configs);
+        res.send(fs.readFileSync(baseUrl + "/configs.json", "utf8"));
     });
 
     app.get('*', function (req, res) {

@@ -1,11 +1,11 @@
 /* global module require */
 
-module.exports = function (configs) {
+module.exports = function (portNumber) {
     var ws = require('ws'),
         clients = [],
         wss = new ws.Server({
             perMessageDeflate: false,
-            port: configs['socket-port']
+            port: portNumber
         });
 
     wss.on('connection', function (ws) {
@@ -149,5 +149,5 @@ module.exports = function (configs) {
         });
     });
 
-    console.log('slide-gazer socket server started on port', configs['socket-port']);
+    console.log('slide-gazer socket server started on port', portNumber);
 };
