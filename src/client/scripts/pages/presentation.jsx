@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import { FilePicker } from 'react-file-picker';
 import axios from 'axios';
 import showdown from 'showdown';
 import qrcode from 'qrcode';
@@ -59,8 +60,21 @@ export default class Presentation extends React.Component {
     onDropOnStage (e) {
         e.preventDefault();
 
+        this.loadFile(e.dataTransfer.files[0]);
+
+        return false;
+    }
+
+    onDragEndOnStage () {
+        return false;
+    }
+
+    onFilePick (file) {
+        this.loadFile(file);
+    }
+
+    loadFile (file) {
         var context = this,
-            file = e.dataTransfer.files[0],
             reader = new FileReader();
 
         reader.onload = function(event) {
@@ -72,11 +86,6 @@ export default class Presentation extends React.Component {
         };
 
         reader.readAsText(file);
-        return false;
-    }
-
-    onDragEndOnStage () {
-        return false;
     }
 
     onKeyDownOnPresentation (e) {
@@ -263,16 +272,16 @@ export default class Presentation extends React.Component {
                     <div id='top-panel-head'>
                         <span id='top-panel-pulldown-trigger' className='fa fa-angle-double-down'></span>
                         <div id='top-panel-progress-bar' style={{width:this.state.presentationProgress + '%'}}></div>
-                        <span id='controller-connection-icon' className={'fa fa-chain' + (!this.state.isControllerConnected ? ' hidden' : '')}></span>
+                        <span id='controller-connection-icon' className={'fa fa-chain' + (!this.state.isControllerConnected ? ' hidden' : '')} title='A controller is connected'></span>
                     </div>
                     <div id='top-panel-body'>
                         <div className={'controls-row' + (!this.state.isPresentationLoaded ? ' hidden' : '')}>
                             <div className='controls-row-header'>
-                                Remotely control
+                                Remotely control this presentation at this URL
                             </div>
                             <div id='qr-code-image' style={{backgroundImage:'url(' + this.state.controllerUrlQRCodeData + ')'}}>
                             </div>
-                            <a id='controller-url-link' href={'http://' + this.state.configs.domain + '/control/' + this.state.presentationCode}>
+                            <a id='controller-url-link' href={'http://' + this.state.configs.domain + '/control/' + this.state.presentationCode} target='_blank'>
                                 {'http://' + this.state.configs.domain + '/control/' + this.state.presentationCode}
                             </a>
                         </div>
@@ -308,9 +317,25 @@ export default class Presentation extends React.Component {
                 </div>
                 <div id='stage-container' className={this.state.isPresentationLoaded ? 'hidden' : ''}>
                     <div id='stage'>
-                        <span>Drop a markdown file here to start a presentation</span>
+                        <h2>To start a presentation, do one of the following:</h2>
+                        <br />
+                        <FilePicker
+                            extensions={['md']}
+                            onChange={file => this.onFilePick(file)}
+                            onError={err => alert(err)}>
+                            <div className='control-button'>
+                                Pick a markdown file
+                            </div>
+                        </FilePicker>
                         <br />
                         <span>OR</span>
+                        <br />
+                        <br />
+                        <span>Drop a markdown file on this page</span>
+                        <br />
+                        <br />
+                        <span>OR</span>
+                        <br />
                         <br />
                         <div className={'control-button' + (!this.state.previousPresentationDataExists ? ' disabled' : '')} onClick={this.reloadLastPresentation.bind(this)}>
                             Reload the last presentation
