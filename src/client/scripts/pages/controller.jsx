@@ -47,6 +47,11 @@ export default class Controller extends React.Component {
     }
 
     disconnect () {
+        socketService.close();
+        this.reset();
+    }
+
+    reset () {
         this.setState({
             isConnected: false,
             presentationData: '',
@@ -55,8 +60,6 @@ export default class Controller extends React.Component {
             currentSlideIndex: 0,
             presentationProgress: 0
         });
-
-        socketService.close();
     }
 
     connect () {
@@ -132,7 +135,8 @@ export default class Controller extends React.Component {
             alert('The presentation you tried to connect to does not exist!');
         } else if (info === 'DISCONNECTION') {
             alert('The presentation you were controlling has ended');
-            this.disconnect();
+        } else if (info === 'DUPLICATE') {
+            alert('Someone is already controlling the presentation you tried to connect!');
         }
     }
 
@@ -149,6 +153,7 @@ export default class Controller extends React.Component {
 
     onException (exception) {
         alert(exception);
+        this.reset();
     }
 
     render () {

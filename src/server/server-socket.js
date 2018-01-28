@@ -38,6 +38,26 @@ module.exports = function (portNumber) {
 
                     console.log('Presentation started:', currentClient.id);
                 } else {
+                    // Check if a controller is already connected
+                    if (clients.filter(c => c.clientType === 'controller' && c.id === currentClient.id).length > 1) {
+                        // Remove the controller from the list of clients
+                        clients.splice(clients.indexOf(currentClient), 1);
+
+                        // Send the controller an exception
+                        currentClient.ws.send(JSON.stringify({
+                            type: 'INFO',
+                            subType: 'DUPLICATE'
+                        }));
+
+                        // Close connection
+                        self.close();
+
+                        // Log information to the console and stop processing
+                        console.log('Redundant controller ' + currentClient.id + ' attempted to connect.');
+                        return;
+                    }
+
+
                     // Find the corresponding presentation
                     targetClient = clients.filter(c => c.clientType === 'presentation' && c.id === currentClient.id)[0];
 
@@ -65,7 +85,7 @@ module.exports = function (portNumber) {
                     }
                 }
 
-                 break;
+                break;
 
             case 'COMMAND':
                 // Find the current client in the list of connected clients
@@ -116,6 +136,12 @@ module.exports = function (portNumber) {
                 index = clients.indexOf(currentClient),
                 pairedClient;
 
+            // Check if it is a redundant client
+            if (index === -1) {
+                console.log('Redundant client disconnected');
+                return;
+            }
+
             // Remove the disconnected client from the list
             clients.splice(index, 1);
 
@@ -129,6 +155,8 @@ module.exports = function (portNumber) {
                         type: 'INFO',
                         subType: 'DISCONNECTION'
                     }));
+
+                    pairedClient.ws.close();
                 }
 
                 console.log('Presentation ended:', currentClient.id);
