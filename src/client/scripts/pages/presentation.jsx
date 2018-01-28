@@ -317,7 +317,9 @@ export default class Presentation extends React.Component {
                 </div>
                 <div id='stage-container' className={this.state.isPresentationLoaded ? 'hidden' : ''}>
                     <div id='stage'>
-                        <h2>To start a presentation, do one of the following:</h2>
+                        <h2 className='regular-text'>
+                            To start a presentation, do one of the following:
+                        </h2>
                         <br />
                         <FilePicker
                             extensions={['md']}
@@ -328,13 +330,19 @@ export default class Presentation extends React.Component {
                             </div>
                         </FilePicker>
                         <br />
-                        <span>OR</span>
+                        <span className='regular-text'>
+                            OR
+                        </span>
                         <br />
                         <br />
-                        <span>Drop a markdown file on this page</span>
+                        <span className='regular-text'>
+                            Drop a markdown file on this page
+                        </span>
                         <br />
                         <br />
-                        <span>OR</span>
+                        <span className='regular-text'>
+                            OR
+                        </span>
                         <br />
                         <br />
                         <div className={'control-button' + (!this.state.previousPresentationDataExists ? ' disabled' : '')} onClick={this.reloadLastPresentation.bind(this)}>

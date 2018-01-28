@@ -160,7 +160,7 @@ export default class Controller extends React.Component {
             <div id='controller-page'>
                 <div id='stage' className={this.state.isConnected ? 'hidden' : ''}>
                     <div id='stage-controls'>
-                        <span id='presentation-code-label'>
+                        <span id='presentation-code-label' className='regular-text'>
                             Enter presentation code to connect
                         </span>
                         <br />
