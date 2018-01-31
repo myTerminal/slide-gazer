@@ -244,6 +244,8 @@ export default class Presentation extends React.Component {
             this.setState({
                 isControllerConnected: true
             });
+
+            socketService.sendSignal('SLIDE-SHOW', this.state.currentSlideIndex);
         } else if (info === 'DISCONNECTION') {
             this.setState({
                 isControllerConnected: false
