@@ -1,14 +1,22 @@
-/* global module require */
+/* global module require setInterval */
 
 module.exports = function (portNumber) {
     var ws = require('ws'),
         clients = [],
+        pingInterval,
+        noOperation = function () {},
         wss = new ws.Server({
             perMessageDeflate: false,
             port: portNumber
         });
 
     wss.on('connection', function (ws) {
+        ws.isAlive = true;
+
+        ws.on('pong', function () {
+            this.isAlive = true;
+        });
+
         clients.push({
             ws: ws,
             clientType: 'unknown',
@@ -176,6 +184,19 @@ module.exports = function (portNumber) {
             }
         });
     });
+
+    pingInterval = setInterval(function ping() {
+        clients
+            .map(c => c.ws)
+            .forEach(ws => {
+                if (!ws.isAlive) {
+                    return ws.terminate();
+                }
+
+                ws.isAlive = false;
+                ws.ping(noOperation);
+            });
+    }, 30000);
 
     console.log('slide-gazer socket server started on port', portNumber);
 };
