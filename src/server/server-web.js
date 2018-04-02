@@ -16,8 +16,8 @@ module.exports = function (portNumber) {
         console.log(appName, 'web server started on port', portNumber);
     });
 
-    app.get("/configs", function (req, res) {
-        res.send(fs.readFileSync(baseUrl + "/configs.json", "utf8"));
+    app.get('/configs', function (req, res) {
+        res.send(fs.readFileSync(baseUrl + '/configs.json', 'utf8'));
     });
 
     app.get('*', function (req, res) {

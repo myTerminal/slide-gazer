@@ -74,21 +74,21 @@ module.exports = {
             },
             {
                 test: /\.(jsx|js)$/,
-                enforce: "pre",
+                enforce: 'pre',
                 exclude: /node_modules/,
                 use: [
                     {
-                        loader: "jsxhint-loader"
+                        loader: 'jsxhint-loader'
                     }
                 ]
             },
             {
                 test: /\.(jsx|js)$/,
-                enforce: "pre",
+                enforce: 'pre',
                 exclude: /node_modules/,
                 use: [
                     {
-                        loader: "jscs-loader"
+                        loader: 'jscs-loader'
                     }
                 ]
             },
