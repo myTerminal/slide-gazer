@@ -1,6 +1,10 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
+// Import package details
+
+import packageDetails from '../../../../package.json';
+
 export default class Home extends React.Component {
     render () {
         return (
@@ -9,6 +13,7 @@ export default class Home extends React.Component {
                     <h1 className='regular-text'>
                         Slide Gazer
                     </h1>
+                    <div className='regular-text'>v{packageDetails.version}</div>
                     <h2 className='regular-text'>
                         A light-weight presentation tool for presenting your ideas quickly and with style!
                     </h2>
