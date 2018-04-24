@@ -1,3 +1,5 @@
+/* global window document alert FileReader */
+
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { FilePicker } from 'react-file-picker';
@@ -9,8 +11,7 @@ import socketService from '../services/presentation-socket-service.js';
 const converter = new showdown.Converter();
 
 export default class Presentation extends React.Component {
-
-    constructor () {
+    constructor() {
         super();
 
         this.state = {
@@ -20,7 +21,6 @@ export default class Presentation extends React.Component {
             redirectToHome: false,
             previousPresentationDataExists: window.localStorage.lastPresentationDOM,
             isPresentationLoaded: false,
-            presentationData: '',
             presentationCode: '',
             controllerUrlQRCodeData: '',
             slideCount: 0,
@@ -34,7 +34,7 @@ export default class Presentation extends React.Component {
         this.autoTransitionTimer = null;
     }
 
-    componentDidMount () {
+    componentDidMount() {
         var context = this,
             stage = document.getElementById('stage');
 
@@ -53,11 +53,11 @@ export default class Presentation extends React.Component {
         });
     }
 
-    onDragOverOnStage () {
+    onDragOverOnStage() {
         return false;
     }
 
-    onDropOnStage (e) {
+    onDropOnStage(e) {
         e.preventDefault();
 
         this.loadFile(e.dataTransfer.files[0]);
@@ -65,19 +65,19 @@ export default class Presentation extends React.Component {
         return false;
     }
 
-    onDragEndOnStage () {
+    onDragEndOnStage() {
         return false;
     }
 
-    onFilePick (file) {
+    onFilePick(file) {
         this.loadFile(file);
     }
 
-    loadFile (file) {
+    loadFile(file) {
         var context = this,
             reader = new FileReader();
 
-        reader.onload = function(event) {
+        reader.onload = function (event) {
             var lastPresentationDOM = converter.makeHtml(event.target.result);
 
             window.localStorage.lastPresentationDOM = lastPresentationDOM;
@@ -88,7 +88,7 @@ export default class Presentation extends React.Component {
         reader.readAsText(file);
     }
 
-    onKeyDownOnPresentation (e) {
+    onKeyDownOnPresentation(e) {
         if (this.state.isPresentationLoaded) {
             if (e.keyCode === 39) {
                 this.nextSlide();
@@ -98,7 +98,7 @@ export default class Presentation extends React.Component {
         }
     }
 
-    previousSlide () {
+    previousSlide() {
         if (!this.state.currentSlideIndex) {
             return;
         }
@@ -106,7 +106,7 @@ export default class Presentation extends React.Component {
         this.showSlide(this.state.currentSlideIndex - 1);
     }
 
-    nextSlide () {
+    nextSlide() {
         if (this.state.currentSlideIndex + 1 === this.state.slideCount) {
             return;
         }
@@ -114,37 +114,39 @@ export default class Presentation extends React.Component {
         this.showSlide(this.state.currentSlideIndex + 1);
     }
 
-    showSlide (slideIndex) {
+    showSlide(slideIndex) {
         var slides = document.querySelectorAll('#presentation .slide');
 
         this.setState({
             currentSlideIndex: slideIndex,
-            presentationProgress: (slideIndex + 1) * 100 / this.state.slideCount
+            presentationProgress: ((slideIndex + 1) * 100) / this.state.slideCount
         });
 
-        slides.forEach(s => s.className = s.className.replace(' visible', ''));
+        slides.forEach(s => {
+            s.className = s.className.replace(' visible', '');
+        });
+
         slides[slideIndex].className += ' visible';
 
         if (slideIndex) {
-            socketService.sendSignal('SLIDE-SHOW', slideIndex)
+            socketService.sendSignal('SLIDE-SHOW', slideIndex);
         }
     }
 
-    autoTransitToNextSlide () {
+    autoTransitToNextSlide() {
         this.nextSlide();
     }
 
-    backToHome () {
+    backToHome() {
         this.setState({
             redirectToHome: true
         });
     }
 
-    endPresentation () {
+    endPresentation() {
         this.setState({
             isPresentationLoaded: false,
-            presentationData: '',
-            presentattionCode: '',
+            presentationCode: '',
             controllerUrlQRCodeData: '',
             slideCount: 0,
             currentSlideIndex: 0,
@@ -155,12 +157,14 @@ export default class Presentation extends React.Component {
         socketService.close();
     }
 
-    toggleAutoTransition () {
+    toggleAutoTransition() {
         if (this.state.isAutoTransitionEnabled) {
             window.clearInterval(this.autoTransitionTimer);
             this.autoTransitionTimer = null;
         } else {
-            this.autoTransitionTimer = window.setInterval(this.autoTransitToNextSlide.bind(this), 5000);
+            this.autoTransitionTimer
+                = window.setInterval(this.autoTransitToNextSlide.bind(this),
+                    5000);
         }
 
         this.setState({
@@ -168,13 +172,13 @@ export default class Presentation extends React.Component {
         });
     }
 
-    setAnimation (animation) {
+    setAnimation(animation) {
         this.setState({
             animation: animation
         });
     }
 
-    startPresentation (presentationData) {
+    startPresentation(presentationData) {
         var presentation = document.getElementById('presentation'),
             presentationCode = (new Date()).getTime(),
             title;
@@ -188,7 +192,6 @@ export default class Presentation extends React.Component {
 
         this.setState({
             isPresentationLoaded: true,
-            presentationData: presentationData,
             presentationCode: presentationCode,
             slideCount: document.querySelectorAll('#presentation .slide').length
         });
@@ -211,7 +214,7 @@ export default class Presentation extends React.Component {
         );
     }
 
-    reloadLastPresentation () {
+    reloadLastPresentation() {
         var lastPresentationDOM = window.localStorage.lastPresentationDOM;
 
         if (lastPresentationDOM) {
@@ -219,27 +222,27 @@ export default class Presentation extends React.Component {
         }
     }
 
-    getSlidesDOM (presentationData) {
-        return "<div class='slide'>" +
-               presentationData.replace(/\<h2/g,
-                                        "</div><div class='slide'><h2") +
-               "</div>";
+    getSlidesDOM(presentationData) {
+        return '<div class="slide">' +
+            presentationData.replace(/<h2/g,
+                '</div><div class="slide"><h2') +
+            '</div>';
     }
 
-    getLastSlide (title) {
-        return "<div class='slide last-slide'>" +
-               "  <h1>" + title + "</h1>" +
-               "  Thanks for attending the session. Questions please..." +
-               "</div>";
+    getLastSlide(title) {
+        return '<div class="slide last-slide">' +
+               '  <h1>' + title + '</h1>' +
+               '  Thanks for attending the session. Questions please...' +
+               '</div>';
     }
 
-    getFooter () {
-        return "<div class='footer'>" +
-               "  Printed from <a href='" + 'http://' + this.state.configs.domain + "'>slide-gazer</a>" +
-               "</div>";
+    getFooter() {
+        return '<div class="footer">' +
+               '  Printed from <a href="http://' + this.state.configs.domain + '">slide-gazer</a>' +
+               '</div>';
     }
 
-    onInfo (info) {
+    onInfo(info) {
         if (info === 'CONNECTION') {
             this.setState({
                 isControllerConnected: true
@@ -253,42 +256,41 @@ export default class Presentation extends React.Component {
         }
     }
 
-    onCommand (command, param) {
+    onCommand(command, param) {
         if (command === 'SLIDE-SHOW') {
             this.showSlide(+param);
         }
     }
 
-    onException (exception) {
+    onException(exception) {
         console.error(exception);
     }
 
-    render () {
+    render() {
         if (this.state.redirectToHome) {
-            return <Redirect to='/' />;
+            return <Redirect to="/" />;
         }
 
         return (
-            <div id='presentation-page'>
-                <div id='top-panel'>
-                    <div id='top-panel-head'>
-                        <span id='top-panel-pulldown-trigger' className='fa fa-angle-double-down'></span>
-                        <div id='top-panel-progress-bar' style={{width:this.state.presentationProgress + '%'}}></div>
-                        <span id='controller-connection-icon' className={'fa fa-chain' + (!this.state.isControllerConnected ? ' hidden' : '')} title='A controller is connected'></span>
+            <div id="presentation-page">
+                <div id="top-panel">
+                    <div id="top-panel-head">
+                        <span id="top-panel-pulldown-trigger" className="fa fa-angle-double-down" />
+                        <div id="top-panel-progress-bar" style={{ width: this.state.presentationProgress + '%' }} />
+                        <span id="controller-connection-icon" className={'fa fa-chain' + (!this.state.isControllerConnected ? ' hidden' : '')} title="A controller is connected" />
                     </div>
-                    <div id='top-panel-body'>
+                    <div id="top-panel-body">
                         <div className={'controls-row' + (!this.state.isPresentationLoaded ? ' hidden' : '')}>
-                            <div className='controls-row-header'>
+                            <div className="controls-row-header">
                                 Remotely control this presentation at this URL
                             </div>
-                            <div id='qr-code-image' style={{backgroundImage:'url(' + this.state.controllerUrlQRCodeData + ')'}}>
-                            </div>
-                            <a id='controller-url-link' href={'http://' + this.state.configs.domain + '/control/' + this.state.presentationCode} target='_blank'>
+                            <div id="qr-code-image" style={{ backgroundImage: 'url(' + this.state.controllerUrlQRCodeData + ')' }} />
+                            <a id="controller-url-link" href={'http://' + this.state.configs.domain + '/control/' + this.state.presentationCode} target="_blank">
                                 {'http://' + this.state.configs.domain + '/control/' + this.state.presentationCode}
                             </a>
                         </div>
-                        <div className='controls-row'>
-                            <div className='controls-row-header'>
+                        <div className="controls-row">
+                            <div className="controls-row-header">
                                 Presentation
                             </div>
                             <div className={'control-button' + (!this.state.isPresentationLoaded ? ' hidden' : '')} onClick={this.endPresentation.bind(this)}>
@@ -302,24 +304,27 @@ export default class Presentation extends React.Component {
                             </div>
                         </div>
                         <div className={'controls-row' + (!this.state.isPresentationLoaded ? ' hidden' : '')}>
-                            <div className='controls-row-header'>
+                            <div className="controls-row-header">
                                 Animation
                             </div>
                             {
-                                ['fade', 'slide-up', 'unfold-down', 'unfold-up', 'zoom', 'flip'].map(animation => {
-                                    return (
+                                ['fade', 'slide-up', 'unfold-down', 'unfold-up', 'zoom', 'flip'].map(animation =>
+                                    (
                                         <div key={animation} className={'control-button' + (this.state.animation === animation ? ' active' : '')} onClick={() => this.setAnimation.bind(this)(animation)}>
-                                            { animation.slice(0, 1).toUpperCase() + animation.slice(1) }
+                                            {
+                                                animation.slice(0, 1)
+                                                    .toUpperCase()
+                                                + animation.slice(1)
+                                            }
                                         </div>
-                                    );
-                                })
+                                    ))
                             }
                         </div>
                     </div>
                 </div>
-                <div id='stage-container' className={this.state.isPresentationLoaded ? 'hidden' : ''}>
-                    <div id='stage'>
-                        <h2 className='regular-text'>
+                <div id="stage-container" className={this.state.isPresentationLoaded ? 'hidden' : ''}>
+                    <div id="stage">
+                        <h2 className="regular-text">
                             To start a presentation, do one of the following:
                         </h2>
                         <br />
@@ -327,22 +332,22 @@ export default class Presentation extends React.Component {
                             extensions={['md']}
                             onChange={file => this.onFilePick(file)}
                             onError={err => alert(err)}>
-                            <div className='control-button'>
+                            <div className="control-button">
                                 Pick a markdown file
                             </div>
                         </FilePicker>
                         <br />
-                        <span className='regular-text'>
+                        <span className="regular-text">
                             OR
                         </span>
                         <br />
                         <br />
-                        <span className='regular-text'>
+                        <span className="regular-text">
                             Drop a markdown file on this page
                         </span>
                         <br />
                         <br />
-                        <span className='regular-text'>
+                        <span className="regular-text">
                             OR
                         </span>
                         <br />
@@ -352,9 +357,8 @@ export default class Presentation extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div id='presentation-container' className={!this.state.isPresentationLoaded ? 'hidden' : ''}>
-                    <div id='presentation' className={'markdown-body ' + this.state.animation}>
-                    </div>
+                <div id="presentation-container" className={!this.state.isPresentationLoaded ? 'hidden' : ''}>
+                    <div id="presentation" className={'markdown-body ' + this.state.animation} />
                 </div>
             </div>
         );

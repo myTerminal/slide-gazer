@@ -1,11 +1,12 @@
+/* global document alert */
+
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import socketService from '../services/controller-socket-service.js';
 
 export default class Controller extends React.Component {
-
-    constructor (props) {
+    constructor(props) {
         super();
 
         this.state = {
@@ -14,7 +15,6 @@ export default class Controller extends React.Component {
             },
             redirectToHome: false,
             isConnected: false,
-            presentationData: '',
             presentationCode: props.match.params.presentationCode || '',
             slideCount: 0,
             currentSlideIndex: 0,
@@ -22,7 +22,7 @@ export default class Controller extends React.Component {
         };
     }
 
-    componentDidMount () {
+    componentDidMount() {
         var context = this;
 
         axios.get('/configs').then(response => {
@@ -34,27 +34,26 @@ export default class Controller extends React.Component {
         });
     }
 
-    onPresentationCodeChange (e) {
+    onPresentationCodeChange(e) {
         this.setState({
             presentationCode: e.target.value
         });
-    };
+    }
 
-    backToHome () {
+    backToHome() {
         this.setState({
             redirectToHome: true
         });
     }
 
-    disconnect () {
+    disconnect() {
         socketService.close();
         this.reset();
     }
 
-    reset () {
+    reset() {
         this.setState({
             isConnected: false,
-            presentationData: '',
             presentationCode: '',
             slideCount: 0,
             currentSlideIndex: 0,
@@ -62,7 +61,7 @@ export default class Controller extends React.Component {
         });
     }
 
-    connect () {
+    connect() {
         socketService.open(
             this.state.configs,
             this.state.presentationCode,
@@ -72,7 +71,7 @@ export default class Controller extends React.Component {
         );
     }
 
-    loadPresentation (presentationData) {
+    loadPresentation(presentationData) {
         var presentationView = document.getElementById('controller-presentation-view'),
             title;
 
@@ -84,21 +83,23 @@ export default class Controller extends React.Component {
 
         this.setState({
             isConnected: true,
-            presentation: presentationData,
             slideCount: presentationView.querySelectorAll('.slide').length,
             currentSlideIndex: 0,
             presentationProgress: 0
         });
     }
 
-    highlightSlide (slideIndex) {
+    highlightSlide(slideIndex) {
         var slides = document.querySelectorAll('#controller-presentation-view .slide');
 
-        slides.forEach(s => s.className = s.className.replace(' active', ''));
+        slides.forEach(s => {
+            s.className = s.className.replace(' active', '');
+        });
+
         slides[slideIndex].className += ' active';
     }
 
-    previousSlide () {
+    previousSlide() {
         if (!this.state.currentSlideIndex) {
             return;
         }
@@ -106,7 +107,7 @@ export default class Controller extends React.Component {
         socketService.sendCommand('SLIDE-SHOW', this.state.currentSlideIndex - 1);
     }
 
-    nextSlide () {
+    nextSlide() {
         if (this.state.currentSlideIndex + 1 === this.state.slideCount) {
             return;
         }
@@ -114,21 +115,21 @@ export default class Controller extends React.Component {
         socketService.sendCommand('SLIDE-SHOW', this.state.currentSlideIndex + 1);
     }
 
-    getSlidesDOM (presentationData) {
-        return "<div class='slide'>" +
-               presentationData.replace(/\<h2/g,
-                                        "</div><div class='slide'><h2") +
-               "</div>";
+    getSlidesDOM(presentationData) {
+        return '<div class="slide">' +
+            presentationData.replace(/<h2/g,
+                '</div><div class="slide"><h2') +
+            '</div>';
     }
 
-    getLastSlide (title) {
-        return "<div class='slide last-slide'>" +
-               "  <h1>" + title + "</h1>" +
-               "  Thanks for attending the session. Questions please..." +
-               "</div>";
+    getLastSlide(title) {
+        return '<div class="slide last-slide">' +
+               '  <h1>' + title + '</h1>' +
+               '  Thanks for attending the session. Questions please...' +
+               '</div>';
     }
 
-    onInfo (info, data) {
+    onInfo(info, data) {
         if (info === 'DATA') {
             this.loadPresentation(data);
         } else if (info === 'NO-PRESENTATION') {
@@ -140,95 +141,92 @@ export default class Controller extends React.Component {
         }
     }
 
-    onSignal (signal, data) {
+    onSignal(signal, data) {
         if (signal === 'SLIDE-SHOW') {
             this.setState({
                 currentSlideIndex: data,
-                presentationProgress: (data + 1) * 100 / this.state.slideCount
+                presentationProgress: ((data + 1) * 100) / this.state.slideCount
             });
 
             this.highlightSlide(data);
         }
     }
 
-    onException (exception) {
+    onException(exception) {
         alert(exception);
         this.reset();
     }
 
-    render () {
+    render() {
         if (this.state.redirectToHome) {
-            return <Redirect to='/' />;
+            return <Redirect to="/" />;
         }
 
         return (
-            <div id='controller-page'>
-                <div id='stage' className={this.state.isConnected ? 'hidden' : ''}>
-                    <div id='stage-controls'>
-                        <span id='presentation-code-label' className='regular-text'>
+            <div id="controller-page">
+                <div id="stage" className={this.state.isConnected ? 'hidden' : ''}>
+                    <div id="stage-controls">
+                        <span id="presentation-code-label" className="regular-text">
                             Enter presentation code to connect
                         </span>
                         <br />
-                        <input type='text'
-                               id='presentation-code-input'
-                               value={this.state.presentationCode}
-                               onChange={this.onPresentationCodeChange.bind(this)} />
+                        <input type="text"
+                            id="presentation-code-input"
+                            value={this.state.presentationCode}
+                            onChange={this.onPresentationCodeChange.bind(this)} />
                         <br />
-                        <div id='connect-button'
-                             className={'control-button' + (!this.state.presentationCode ? ' disabled' : '')}
-                             onClick={this.connect.bind(this)}>
+                        <div id="connect-button"
+                            className={'control-button' + (!this.state.presentationCode ? ' disabled' : '')}
+                            onClick={this.connect.bind(this)}>
                             Connect
                         </div>
-                        <div id='back-button'
-                             className='control-button'
-                             onClick={this.backToHome.bind(this)}>
+                        <div id="back-button"
+                            className="control-button"
+                            onClick={this.backToHome.bind(this)}>
                             Back
                         </div>
                     </div>
                 </div>
-                <div id='controller' className={!this.state.isConnected ? 'hidden' : ''}>
-                    <div id='controller-presentation-view'>
-
-                    </div>
-                    <div id='controller-screen-container'>
-                        <div id='presentation-progress-bar-container'>
-                            <div id='presentation-progress-bar'
-                                 style={{width:this.state.presentationProgress + '%'}}>
-                            </div>
+                <div id="controller" className={!this.state.isConnected ? 'hidden' : ''}>
+                    <div id="controller-presentation-view" />
+                    <div id="controller-screen-container">
+                        <div id="presentation-progress-bar-container">
+                            <div id="presentation-progress-bar"
+                                style={{ width: this.state.presentationProgress + '%' }} />
                         </div>
-                        <div id='controller-screen'>
-                            <span className='presentation-detail'>
+                        <div id="controller-screen">
+                            <span className="presentation-detail">
                                 Slide: {this.state.currentSlideIndex + 1} / {this.state.slideCount}
                             </span>
                         </div>
                     </div>
-                    <div id='controller-controls'>
-                        <div className='control-row'>
-                            <div className='presentation-control-button disabled'>
-                                <span className='fa fa-3x fa-fast-backward'></span>
+                    <div id="controller-controls">
+                        <div className="control-row">
+                            <div className="presentation-control-button disabled">
+                                <span className="fa fa-3x fa-fast-backward" />
                             </div>
                             <div className={'presentation-control-button' + (!this.state.currentSlideIndex ? ' disabled' : '')} onClick={this.previousSlide.bind(this)}>
-                                <span className='fa fa-3x fa-step-backward'></span>
+                                <span className="fa fa-3x fa-step-backward" />
                             </div>
                             <div className={'presentation-control-button' + (this.state.currentSlideIndex === this.state.slideCount - 1 ? ' disabled' : '')} onClick={this.nextSlide.bind(this)}>
-                                <span className='fa fa-3x fa-step-forward'></span>
+                                <span className="fa fa-3x fa-step-forward" />
                             </div>
-                            <div className='presentation-control-button disabled'>
-                                <span className='fa fa-3x fa-fast-forward'></span>
+                            <div className="presentation-control-button disabled">
+                                <span className="fa fa-3x fa-fast-forward" />
                             </div>
                         </div>
-                        <div className='control-row'>
-                            <div className='presentation-control-button' onClick={this.disconnect.bind(this)}>
-                                <span className='fa fa-3x fa-power-off' style={{color: 'red'}}></span>
+                        <div className="control-row">
+                            <div className="presentation-control-button" onClick={this.disconnect.bind(this)}>
+                                <span className="fa fa-3x fa-power-off" style={{ color: 'red' }} />
                             </div>
-                            <div className='presentation-control-button disabled'>
-                                <span className='fa fa-3x fa-times'></span>
+                            <div className="presentation-control-button disabled">
+                                <span className="fa fa-3x fa-times" />
                             </div>
-                            <div className='presentation-control-button disabled'>
-                                <span className='fa fa-3x fa-times'></span>
+                            <div className="presentation-control-button disabled">
+                                <span className="fa fa-3x fa-times" />
                             </div>
-                            <div className='presentation-control-button disabled'>
-                                <span className='fa fa-3x fa-times'></span>
+                            <div className="presentation-control-button disabled">
+                                <span className="fa fa-3x fa-times" />
                             </div>
                         </div>
                     </div>

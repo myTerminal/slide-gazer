@@ -11,21 +11,21 @@ const controllerSocketService = (function () {
         open = function (configs, id, onInfo, onSignal, onException) {
             clientId = id;
             infoHandler = onInfo;
-            signalHandler = onSignal,
+            signalHandler = onSignal;
             exceptionHandler = onException;
 
             socket = new WebSocket('ws://'
-                                   + configs['domain']
+                                   + configs.domain
                                    + ':'
                                    + configs['socket-port']);
 
             bindEvents(socket);
         },
 
-        bindEvents = function (socket) {
-            socket.onopen = handlers.onOpenHandler;
-            socket.onmessage = handlers.onMessageHandler;
-            socket.onclose = handlers.onCloseHandler;
+        bindEvents = function (s) {
+            s.onopen = handlers.onOpenHandler;
+            s.onmessage = handlers.onMessageHandler;
+            s.onclose = handlers.onCloseHandler;
         },
 
         handlers = {
