@@ -9,6 +9,9 @@ import {
     Route
 } from 'react-router-dom';
 
+// Start service worker
+import './service-worker-starter.js';
+
 // Import styles
 
 import '../styles/styles.less';

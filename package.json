@@ -1,6 +1,6 @@
 {
   "name": "slide-gazer",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "slide-gazer",
   "main": "src/server/index.js",
   "scripts": {
@@ -24,6 +24,7 @@
   "author": "Mohammed Ismail Ansari <team.terminal@gmail.com>",
   "license": "GPL-3.0",
   "dependencies": {
+    "ample-alerts": "0.10.1",
     "axios": "0.17.1",
     "body-parser": "1.17.2",
     "express": "4.15.4",
