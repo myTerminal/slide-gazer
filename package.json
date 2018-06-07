@@ -24,7 +24,7 @@
   "author": "Mohammed Ismail Ansari <team.terminal@gmail.com>",
   "license": "GPL-3.0",
   "dependencies": {
-    "ample-alerts": "0.10.1",
+    "ample-alerts": "0.11.1",
     "axios": "0.17.1",
     "body-parser": "1.17.2",
     "express": "4.15.4",
