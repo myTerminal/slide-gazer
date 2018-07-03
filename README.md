@@ -1,7 +1,7 @@
 # slide-gazer
 
-[![bitHound Overall Score](https://www.bithound.io/github/team-fluxion/slide-gazer/badges/score.svg)](https://www.bithound.io/github/team-fluxion/slide-gazer)
-[![bitHound Code](https://www.bithound.io/github/team-fluxion/slide-gazer/badges/code.svg)](https://www.bithound.io/github/team-fluxion/slide-gazer)  
+[![Code Climate](https://codeclimate.com/github/team-fluxion/slide-gazer.png)](https://codeclimate.com/github/team-fluxion/slide-gazer)
+[![Coverage Status](https://img.shields.io/coveralls/team-fluxion/slide-gazer.svg)](https://coveralls.io/r/team-fluxion/slide-gazer?branch=master)  
 [![Dependency Status](https://david-dm.org/team-fluxion/slide-gazer.svg)](https://david-dm.org/team-fluxion/slide-gazer)
 [![devDependency Status](https://david-dm.org/team-fluxion/slide-gazer/dev-status.svg)](https://david-dm.org/team-fluxion/slide-gazer#info=devDependencies)
 [![peer Dependency Status](https://david-dm.org/team-fluxion/slide-gazer/peer-status.svg)](https://david-dm.org/team-fluxion/slide-gazer#info=peerDependencies)  
