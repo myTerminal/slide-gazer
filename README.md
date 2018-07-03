@@ -75,20 +75,6 @@ Start the application with
 
     npm start
 
-## Dependencies
-
-* [express](https://www.npmjs.org/package/express)
-* [body-parser](https://www.npmjs.org/package/body-parser)
-* [ws](https://www.npmjs.org/package/ws)
-* [react](https://www.npmjs.org/package/react)
-* [react-dom](https://www.npmjs.org/package/react-dom)
-* [react-router-dom](https://www.npmjs.org/package/react-router-dom)
-* [react-file-picker](https://www.npmjs.org/package/react-file-picker)
-* [axios](https://www.npmjs.org/package/axios)
-* [showdown](https://www.npmjs.org/package/showdown)
-* [qrcode](https://www.npmjs.org/package/qrcode)
-* [font-awesome](https://www.npmjs.org/package/font-awesome)
-
 ## To-do
 
 * Touch gestures for mobile devices
