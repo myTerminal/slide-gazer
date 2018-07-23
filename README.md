@@ -21,6 +21,7 @@ A light-weight presentation tool for presenting your ideas quickly and with styl
 * Present from any computer, phone or tablet: all you need is a web-browser
 * Choose from a range of slide-transition animations
 * Select auto-transition of slides
+* Focus on a few emphasized words on a slide
 * Control the presentation from another device and have a bird's eye view of the presentation at the same time
 
 ## How to use
@@ -38,6 +39,7 @@ You can select a presentation to be presented in one of the following three ways
 3. Reload a previously presented slide-show
 
 Once a presentation is started, navigate through the slides using the right and left arrow keys on the keyboard.
+Use the up and down arrow keys to focus a few emphasized words on a slide and restore view back to normal respectively.
 
 Hover on the top-menu to reveal more options like animations and slide auto-transition.
 

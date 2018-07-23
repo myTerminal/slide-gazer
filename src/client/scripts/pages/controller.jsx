@@ -18,6 +18,7 @@ export default class Controller extends React.Component {
             presentationCode: props.match.params.presentationCode || '',
             slideCount: 0,
             currentSlideIndex: 0,
+            isZoomedIn: false,
             presentationProgress: 0
         };
     }
@@ -115,6 +116,14 @@ export default class Controller extends React.Component {
         socketService.sendCommand('SLIDE-SHOW', this.state.currentSlideIndex + 1);
     }
 
+    zoomInOnCurrentSlide() {
+        socketService.sendCommand('SLIDE-ZOOM-IN');
+    }
+
+    zoomOutOnCurrentSlide() {
+        socketService.sendCommand('SLIDE-ZOOM-OUT');
+    }
+
     getSlidesDOM(presentationData) {
         return '<div class="slide">' +
             presentationData.replace(/<h2/g,
@@ -149,6 +158,14 @@ export default class Controller extends React.Component {
             });
 
             this.highlightSlide(data);
+        } else if (signal === 'SLIDE-ZOOM-IN') {
+            this.setState({
+                isZoomedIn: true
+            });
+        } else if (signal === 'SLIDE-ZOOM-OUT') {
+            this.setState({
+                isZoomedIn: false
+            });
         }
     }
 
@@ -219,11 +236,11 @@ export default class Controller extends React.Component {
                             <div className="presentation-control-button" onClick={this.disconnect.bind(this)}>
                                 <span className="fa fa-3x fa-power-off" style={{ color: 'red' }} />
                             </div>
-                            <div className="presentation-control-button disabled">
-                                <span className="fa fa-3x fa-times" />
+                            <div className={'presentation-control-button' + (!this.state.isZoomedIn ? ' active disabled' : '')} onClick={this.zoomOutOnCurrentSlide.bind(this)}>
+                                <span className="fa fa-3x fa-search-minus" />
                             </div>
-                            <div className="presentation-control-button disabled">
-                                <span className="fa fa-3x fa-times" />
+                            <div className={'presentation-control-button' + (this.state.isZoomedIn ? ' active disabled' : '')} onClick={this.zoomInOnCurrentSlide.bind(this)}>
+                                <span className="fa fa-3x fa-search-plus" />
                             </div>
                             <div className="presentation-control-button disabled">
                                 <span className="fa fa-3x fa-times" />

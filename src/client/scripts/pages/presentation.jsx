@@ -25,6 +25,7 @@ export default class Presentation extends React.Component {
             controllerUrlQRCodeData: '',
             slideCount: 0,
             currentSlideIndex: 0,
+            isZoomedIn: false,
             presentationProgress: 0,
             isControllerConnected: false,
             isAutoTransitionEnabled: false,
@@ -94,6 +95,10 @@ export default class Presentation extends React.Component {
                 this.nextSlide();
             } else if (e.keyCode === 37) {
                 this.previousSlide();
+            } else if (e.keyCode === 38) {
+                this.zoomInOnCurrentSlide();
+            } else if (e.keyCode === 40) {
+                this.zoomOutOnCurrentSlide();
             }
         }
     }
@@ -119,6 +124,7 @@ export default class Presentation extends React.Component {
 
         this.setState({
             currentSlideIndex: slideIndex,
+            isZoomedIn: false,
             presentationProgress: ((slideIndex + 1) * 100) / this.state.slideCount
         });
 
@@ -130,7 +136,24 @@ export default class Presentation extends React.Component {
 
         if (slideIndex) {
             socketService.sendSignal('SLIDE-SHOW', slideIndex);
+            socketService.sendSignal('SLIDE-ZOOM-OUT');
         }
+    }
+
+    zoomInOnCurrentSlide() {
+        this.setState({
+            isZoomedIn: true
+        });
+
+        socketService.sendSignal('SLIDE-ZOOM-IN');
+    }
+
+    zoomOutOnCurrentSlide() {
+        this.setState({
+            isZoomedIn: false
+        });
+
+        socketService.sendSignal('SLIDE-ZOOM-OUT');
     }
 
     autoTransitToNextSlide() {
@@ -259,6 +282,10 @@ export default class Presentation extends React.Component {
     onCommand(command, param) {
         if (command === 'SLIDE-SHOW') {
             this.showSlide(+param);
+        } else if (command === 'SLIDE-ZOOM-IN') {
+            this.zoomInOnCurrentSlide();
+        } else if (command === 'SLIDE-ZOOM-OUT') {
+            this.zoomOutOnCurrentSlide();
         }
     }
 
@@ -358,7 +385,7 @@ export default class Presentation extends React.Component {
                     </div>
                 </div>
                 <div id="presentation-container" className={!this.state.isPresentationLoaded ? 'hidden' : ''}>
-                    <div id="presentation" className={'markdown-body ' + this.state.animation} />
+                    <div id="presentation" className={'markdown-body ' + this.state.animation + (this.state.isZoomedIn ? ' zoomed' : '')} />
                 </div>
             </div>
         );
