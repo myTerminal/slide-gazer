@@ -312,9 +312,11 @@ export default class Presentation extends React.Component {
                                 Remotely control this presentation at this URL
                             </div>
                             <div id="qr-code-image" style={{ backgroundImage: 'url(' + this.state.controllerUrlQRCodeData + ')' }} />
-                            <a id="controller-url-link" href={'http://' + this.state.configs.domain + '/control/' + this.state.presentationCode} target="_blank">
-                                {'http://' + this.state.configs.domain + '/control/' + this.state.presentationCode}
-                            </a>
+                            <div>
+                                <a id="controller-url-link" href={'http://' + this.state.configs.domain + '/control/' + this.state.presentationCode} target="_blank">
+                                    {'http://' + this.state.configs.domain + '/control/' + this.state.presentationCode}
+                                </a>
+                            </div>
                         </div>
                         <div className="controls-row">
                             <div className="controls-row-header">
