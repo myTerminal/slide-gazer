@@ -29,7 +29,7 @@ export default class Presentation extends React.Component {
             presentationProgress: 0,
             isControllerConnected: false,
             isAutoTransitionEnabled: false,
-            animation: 'slide-up'
+            animation: 'scroll-down'
         };
 
         this.autoTransitionTimer = null;
@@ -128,11 +128,20 @@ export default class Presentation extends React.Component {
             presentationProgress: ((slideIndex + 1) * 100) / this.state.slideCount
         });
 
-        slides.forEach(s => {
-            s.className = s.className.replace(' visible', '');
-        });
+        slides.forEach((s, i) => {
+            s.className = s.className
+                .replace(' visible', '')
+                .replace(' previous', '')
+                .replace(' next', '');
 
-        slides[slideIndex].className += ' visible';
+            if (i < slideIndex) {
+                s.className += ' previous';
+            } else if (i > slideIndex) {
+                s.className += ' next';
+            } else {
+                s.className += ' visible';
+            }
+        });
 
         if (slideIndex) {
             socketService.sendSignal('SLIDE-SHOW', slideIndex);
@@ -202,7 +211,7 @@ export default class Presentation extends React.Component {
     }
 
     startPresentation(presentationData) {
-        var presentation = document.getElementById('presentation'),
+        var presentation = document.getElementById('slides-holder'),
             presentationCode = (new Date()).getTime(),
             title;
 
@@ -337,7 +346,7 @@ export default class Presentation extends React.Component {
                                 Animation
                             </div>
                             {
-                                ['fade', 'slide-up', 'unfold-down', 'unfold-up', 'zoom', 'flip'].map(animation =>
+                                ['none', 'fade', 'scroll-down', 'scroll-right', 'zoom', 'flip', 'carousel'].map(animation =>
                                     (
                                         <div key={animation} className={'control-button' + (this.state.animation === animation ? ' active' : '')} onClick={() => this.setAnimation.bind(this)(animation)}>
                                             {
@@ -387,7 +396,9 @@ export default class Presentation extends React.Component {
                     </div>
                 </div>
                 <div id="presentation-container" className={!this.state.isPresentationLoaded ? 'hidden' : ''}>
-                    <div id="presentation" className={'markdown-body ' + this.state.animation + (this.state.isZoomedIn ? ' zoomed' : '')} />
+                    <div id="presentation" className={'markdown-body ' + this.state.animation + (this.state.isZoomedIn ? ' zoomed' : '')}>
+                        <div id="slides-holder" />
+                    </div>
                 </div>
             </div>
         );
