@@ -254,14 +254,17 @@ body,
 
                         &.previous {
                             .transform(translateY(-120%));
+                            .opacity(0);
                         }
 
                         &.visible {
                             .transform(translateY(0));
+                            .opacity(1);
                         }
 
                         &.next {
                             .transform(translateY(120%));
+                            .opacity(0);
                         }
                     }
                 }
@@ -273,14 +276,17 @@ body,
 
                         &.previous {
                             .transform(translateX(-120%));
+                            .opacity(0);
                         }
 
                         &.visible {
                             .transform(translateX(0));
+                            .opacity(1);
                         }
 
                         &.next {
                             .transform(translateX(120%));
+                            .opacity(0);
                         }
                     }
                 }
