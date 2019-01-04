@@ -7,7 +7,10 @@ const commonConfig = require('./webpack.common.js');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const html = new HtmlWebpackPlugin({
-    template: sourceDir + '/index.html',
+    template: sourceDir + '/index.ejs',
+    templateParameters: {
+        titlePrefix: '[DEBUG] '
+    },
     filename: 'index.html',
     chunks: ['app']
 });

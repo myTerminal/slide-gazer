@@ -22,7 +22,10 @@ const copy = new CopyWebpackPlugin([
     }
 ]);
 const html = new HtmlWebpackPlugin({
-    template: sourceDir + '/index.html',
+    template: sourceDir + '/index.ejs',
+    templateParameters: {
+        titlePrefix: ''
+    },
     filename: 'index.html',
     chunks: ['app'],
     hash: true
