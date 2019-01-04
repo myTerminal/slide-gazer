@@ -9,7 +9,6 @@ const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const clean = new CleanWebpackPlugin([outputDir]);
 const copy = new CopyWebpackPlugin([
@@ -25,11 +24,6 @@ const copy = new CopyWebpackPlugin([
     }
 ]);
 const extractCSS = new ExtractTextPlugin('styles/styles.css');
-const html = new HtmlWebpackPlugin({
-    template: sourceDir + '/index.html',
-    filename: 'index.html',
-    chunks: ['app']
-});
 
 module.exports = {
     mode: 'development',
@@ -105,8 +99,7 @@ module.exports = {
     plugins: [
         clean,
         copy,
-        extractCSS,
-        html
+        extractCSS
     ],
     output: {
         filename: 'scripts/[name].js',
