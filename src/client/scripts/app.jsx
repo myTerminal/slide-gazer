@@ -40,3 +40,7 @@ ReactDOM.render((
         <App />
     </BrowserRouter>
 ), document.getElementById('page'));
+
+if (module.hot) {
+    module.hot.accept();
+}
