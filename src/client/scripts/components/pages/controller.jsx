@@ -3,7 +3,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
-import socketService from '../services/controller-socket-service.js';
+import socketService from '../../services/controller-socket-service.js';
 
 export default class Controller extends React.Component {
     constructor(props) {

@@ -6,7 +6,7 @@ import { FilePicker } from 'react-file-picker';
 import axios from 'axios';
 import showdown from 'showdown';
 import qrcode from 'qrcode';
-import socketService from '../services/presentation-socket-service.js';
+import socketService from '../../services/presentation-socket-service.js';
 
 const converter = new showdown.Converter();
 

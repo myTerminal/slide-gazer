@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 // Import package details
 
-import packageDetails from '../../../../package.json';
+import packageDetails from '../../../../../package.json';
 
 export default class Home extends React.Component {
     render() {

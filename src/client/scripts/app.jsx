@@ -18,9 +18,9 @@ import '../styles/styles.less';
 
 // Import pages
 
-import Home from './pages/home.jsx';
-import Presentation from './pages/presentation.jsx';
-import Controller from './pages/controller.jsx';
+import Home from './components/pages/home.jsx';
+import Presentation from './components/pages/presentation.jsx';
+import Controller from './components/pages/controller.jsx';
 
 class App extends React.Component {
     render() {
