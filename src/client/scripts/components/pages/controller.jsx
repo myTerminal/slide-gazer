@@ -13,7 +13,6 @@ export default class Controller extends React.Component {
             configs: {
                 domain: 'slide-gazer.teamfluxion.com'
             },
-            redirectToHome: false,
             isConnected: false,
             presentationCode: props.match.params.presentationCode || '',
             slideCount: 0,
@@ -42,9 +41,7 @@ export default class Controller extends React.Component {
     }
 
     backToHome() {
-        this.setState({
-            redirectToHome: true
-        });
+        this.props.history.push('/');
     }
 
     disconnect() {
@@ -175,10 +172,6 @@ export default class Controller extends React.Component {
     }
 
     render() {
-        if (this.state.redirectToHome) {
-            return <Redirect to="/" />;
-        }
-
         return (
             <div id="controller-page">
                 <div id="stage" className={this.state.isConnected ? 'hidden' : ''}>

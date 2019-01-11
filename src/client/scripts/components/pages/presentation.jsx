@@ -18,7 +18,6 @@ export default class Presentation extends React.Component {
             configs: {
                 domain: 'slide-gazer.teamfluxion.com'
             },
-            redirectToHome: false,
             previousPresentationDataExists: window.localStorage.lastPresentationDOM,
             isPresentationLoaded: false,
             presentationCode: '',
@@ -170,9 +169,7 @@ export default class Presentation extends React.Component {
     }
 
     backToHome() {
-        this.setState({
-            redirectToHome: true
-        });
+        this.props.history.push('/');
     }
 
     endPresentation() {
@@ -303,10 +300,6 @@ export default class Presentation extends React.Component {
     }
 
     render() {
-        if (this.state.redirectToHome) {
-            return <Redirect to="/" />;
-        }
-
         return (
             <div id="presentation-page">
                 <div id="top-panel">
