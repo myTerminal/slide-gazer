@@ -198,6 +198,7 @@ class Presentation extends React.Component {
 
     onException(exception) {
         console.error(exception);
+        this.props.setControllerConnectionState(false);
     }
 
     endPresentation() {
