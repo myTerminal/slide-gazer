@@ -223,10 +223,10 @@ class Presentation extends React.Component {
                     </div>
                     <div id="top-panel-body">
                         <div className={'controls-row' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')}>
-                            <div className="controls-row-header">
-                                Remotely control this presentation at this URL
-                            </div>
                             <div id="qr-code-image" style={{ backgroundImage: 'url(' + this.props.presentation.controllerUrlQrCodeData + ')' }} />
+                            <div className="controls-row-header">
+                                Remotely control this presentation
+                            </div>
                             <div>
                                 <a id="controller-url-link" href={'http://' + this.props.configs.domain + '/control/' + this.props.presentation.presentationCode} target="_blank">
                                     {'http://' + this.props.configs.domain + '/control/' + this.props.presentation.presentationCode}
