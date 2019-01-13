@@ -218,6 +218,7 @@ class Presentation extends React.Component {
                     <div id="top-panel-head">
                         <span id="top-panel-pulldown-trigger" className="fa fa-angle-double-down" />
                         <div id="top-panel-progress-bar" style={{ width: this.props.presentation.presentationProgress + '%' }} />
+                        <span id="top-presentation-title-text">{this.props.presentation.title}</span>
                         <span id="controller-connection-icon" className={'fa fa-chain' + (!this.props.presentation.isControllerConnected ? ' hidden' : '')} title="A controller is connected" />
                     </div>
                     <div id="top-panel-body">

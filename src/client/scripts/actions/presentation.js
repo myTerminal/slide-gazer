@@ -32,6 +32,7 @@ const startPresentation = (presentationDomData, domain, presentationCode) =>
             type: presentation.startPresentation,
             payLoad: {
                 presentationCode,
+                title: title,
                 slideCount: document.querySelectorAll('#presentation .slide').length
             }
         });

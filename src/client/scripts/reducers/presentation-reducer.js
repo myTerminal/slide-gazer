@@ -5,6 +5,7 @@ const initialState = {
     isPresentationLoaded: false,
     presentationCode: '',
     controllerUrlQRCodeData: '',
+    title: '',
     slideCount: 0,
     currentSlideIndex: 0,
     isZoomedIn: false,
@@ -26,6 +27,7 @@ const presentationReducer = (state = initialState, action) => {
             ...state,
             isPresentationLoaded: true,
             presentationCode: action.payLoad.presentationCode,
+            title: action.payLoad.title,
             slideCount: action.payLoad.slideCount
         };
     case presentation.showSlide:
@@ -70,6 +72,7 @@ const presentationReducer = (state = initialState, action) => {
             ...state,
             isPresentationLoaded: false,
             presentationCode: '',
+            title: '',
             controllerUrlQRCodeData: '',
             slideCount: 0,
             currentSlideIndex: 0,
