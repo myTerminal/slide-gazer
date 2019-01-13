@@ -14,7 +14,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const copy = new CopyWebpackPlugin([
     {
         from: sourceDir + '/sw.js',
-        transform: function (content, path) {
+        transform: (content, path) => {
             return content.toString()
                 .replace(/#sw-cache-string#/g, (new Date().getTime()))
                 .replace(/#sw-origin#/g, configs.origin);

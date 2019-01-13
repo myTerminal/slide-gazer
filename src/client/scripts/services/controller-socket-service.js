@@ -1,79 +1,71 @@
 /* global WebSocket */
 
-const controllerSocketService = (function () {
-    var self = this,
-        socket,
-        clientId,
-        infoHandler,
-        signalHandler,
-        exceptionHandler,
+let socket,
+    clientId,
+    infoHandler,
+    signalHandler,
+    exceptionHandler;
 
-        open = function (configs, id, onInfo, onSignal, onException) {
-            clientId = id;
-            infoHandler = onInfo;
-            signalHandler = onSignal;
-            exceptionHandler = onException;
+const open = (configs, id, onInfo, onSignal, onException) => {
+    clientId = id;
+    infoHandler = onInfo;
+    signalHandler = onSignal;
+    exceptionHandler = onException;
 
-            socket = new WebSocket('ws://'
-                                   + configs.domain
-                                   + ':'
-                                   + configs['socket-port']);
+    socket = new WebSocket(`ws://${configs.domain}:${configs['socket-port']}`);
 
-            bindEvents(socket);
-        },
+    bindEvents(socket);
+};
 
-        bindEvents = function (s) {
-            s.onopen = handlers.onOpenHandler;
-            s.onmessage = handlers.onMessageHandler;
-            s.onclose = handlers.onCloseHandler;
-        },
+const bindEvents = s => {
+    s.onopen = handlers.onOpenHandler;
+    s.onmessage = handlers.onMessageHandler;
+    s.onclose = handlers.onCloseHandler;
+};
 
-        handlers = {
-            onOpenHandler: function () {
-                socket.send(JSON.stringify({
-                    type: 'IDENTIFY',
-                    clientType: 'controller',
-                    id: clientId
-                }));
-            },
-            onMessageHandler: function (message) {
-                var receivedMessage = JSON.parse(message.data);
+const handlers = {
+    onOpenHandler: () => {
+        socket.send(JSON.stringify({
+            type: 'IDENTIFY',
+            clientType: 'controller',
+            id: clientId
+        }));
+    },
+    onMessageHandler: message => {
+        const receivedMessage = JSON.parse(message.data);
 
-                switch (receivedMessage.type) {
-                case 'INFO':
-                    infoHandler(receivedMessage.subType, receivedMessage.data);
-                    break;
+        switch (receivedMessage.type) {
+        case 'INFO':
+            infoHandler(receivedMessage.subType, receivedMessage.data);
+            break;
 
-                case 'SIGNAL':
-                    signalHandler(receivedMessage.signal, receivedMessage.data);
-                    break;
+        case 'SIGNAL':
+            signalHandler(receivedMessage.signal, receivedMessage.data);
+            break;
 
-                default:
-                    // Do nothing
-                }
-            },
-            onCloseHandler: function () {
-                exceptionHandler('You have been disconnected!');
-            }
-        },
+        default:
+            // Do nothing
+        }
+    },
+    onCloseHandler: () => {
+        exceptionHandler('You have been disconnected!');
+    }
+};
 
-        sendCommand = function (command, param) {
-            socket.send(JSON.stringify({
-                type: 'COMMAND',
-                command: command,
-                param: param
-            }));
-        },
+const sendCommand = (command, param) => {
+    socket.send(JSON.stringify({
+        type: 'COMMAND',
+        command: command,
+        param: param
+    }));
+};
 
-        close = function () {
-            socket.close();
-        };
+const close = () => {
+    socket.close();
+};
 
-    return {
-        open: open,
-        sendCommand: sendCommand,
-        close: close
-    };
-})();
-
-export default controllerSocketService;
+export default {
+    open,
+    sendCommand,
+    close
+};

@@ -4,7 +4,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { FilePicker } from 'react-file-picker';
 import showdown from 'showdown';
-import qrcode from 'qrcode';
 
 import getDomain from '../../actions/configs';
 import presentationActions from '../../actions/presentation';
@@ -58,7 +57,7 @@ class Presentation extends React.Component {
         const context = this,
             reader = new FileReader();
 
-        reader.onload = function (event) {
+        reader.onload = event => {
             const presentationDom = converter.makeHtml(event.target.result);
 
             window.localStorage.lastPresentationDOM = presentationDom;
@@ -321,18 +320,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
     getDomain,
-    getWhetherPreviousPresentationExists: presentationActions.getWhetherPreviousPresentationExists,
-    startPresentation: presentationActions.startPresentation,
-    showSlide: presentationActions.showSlide,
-    setControllerUrlQrCodeData: presentationActions.setControllerUrlQrCodeData,
-    nextSlide: presentationActions.nextSlide,
-    previousSlide: presentationActions.previousSlide,
-    zoomIn: presentationActions.zoomIn,
-    zoomOut: presentationActions.zoomOut,
-    toggleAutoTransition: presentationActions.toggleAutoTransition,
-    setAnimation: presentationActions.setAnimation,
-    setControllerConnectionState: presentationActions.setControllerConnectionState,
-    endPresentation: presentationActions.endPresentation
+    ...presentationActions
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Presentation);

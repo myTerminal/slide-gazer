@@ -50,7 +50,7 @@ class Controller extends React.Component {
     }
 
     highlightSlide(slideIndex) {
-        var slides = document.querySelectorAll('#controller-presentation-view .slide');
+        const slides = document.querySelectorAll('#controller-presentation-view .slide');
 
         slides.forEach(s => {
             s.className = s.className.replace(' active', '');
@@ -212,13 +212,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
     getDomain,
-    setInitialPresentationCode: controllerActions.setInitialPresentationCode,
-    changePresentationCode: controllerActions.changePresentationCode,
-    startControllingPresentation: controllerActions.startControllingPresentation,
-    showSlide: controllerActions.showSlide,
-    zoomIn: controllerActions.zoomIn,
-    zoomOut: controllerActions.zoomOut,
-    reset: controllerActions.reset
+    ...controllerActions
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Controller);
