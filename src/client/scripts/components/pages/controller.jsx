@@ -1,68 +1,36 @@
 /* global document alert */
 
 import React from 'react';
-import { Redirect } from 'react-router-dom';
-import axios from 'axios';
+import { connect } from 'react-redux';
+
+import getDomain from '../../actions/configs';
+import controllerActions from '../../actions/controller';
+import {
+    getSlidesDom,
+    getLastSlide
+} from '../../common';
+
 import socketService from '../../services/controller-socket-service.js';
 
-export default class Controller extends React.Component {
+class Controller extends React.Component {
     constructor(props) {
-        super();
+        super(props);
 
-        this.state = {
-            configs: {
-                domain: 'slide-gazer.teamfluxion.com'
-            },
-            isConnected: false,
-            presentationCode: props.match.params.presentationCode || '',
-            slideCount: 0,
-            currentSlideIndex: 0,
-            isZoomedIn: false,
-            presentationProgress: 0
-        };
+        this.props.setInitialPresentationCode(this.props.match.params.presentationCode);
     }
 
     componentDidMount() {
-        var context = this;
-
-        axios.get('/configs').then(response => {
-            context.setState({
-                configs: response.data
-            });
-        }).catch(() => {
-            alert('Failed to fetch domain details.');
-        });
+        this.props.getDomain();
     }
 
     onPresentationCodeChange(e) {
-        this.setState({
-            presentationCode: e.target.value
-        });
-    }
-
-    backToHome() {
-        this.props.history.push('/');
-    }
-
-    disconnect() {
-        socketService.close();
-        this.reset();
-    }
-
-    reset() {
-        this.setState({
-            isConnected: false,
-            presentationCode: '',
-            slideCount: 0,
-            currentSlideIndex: 0,
-            presentationProgress: 0
-        });
+        this.props.changePresentationCode(e.target.value);
     }
 
     connect() {
         socketService.open(
-            this.state.configs,
-            this.state.presentationCode,
+            this.props.configs,
+            this.props.controller.presentationCode,
             this.onInfo.bind(this),
             this.onSignal.bind(this),
             this.onException.bind(this)
@@ -70,21 +38,15 @@ export default class Controller extends React.Component {
     }
 
     loadPresentation(presentationData) {
-        var presentationView = document.getElementById('controller-presentation-view'),
-            title;
+        const presentationView = document.getElementById('controller-presentation-view');
 
-        presentationView.innerHTML = this.getSlidesDOM(presentationData);
+        presentationView.innerHTML = getSlidesDom(presentationData);
 
-        title = presentationView.querySelector('h1').innerText;
+        const title = presentationView.querySelector('h1').innerText;
 
-        presentationView.innerHTML += this.getLastSlide(title);
+        presentationView.innerHTML += getLastSlide(title);
 
-        this.setState({
-            isConnected: true,
-            slideCount: presentationView.querySelectorAll('.slide').length,
-            currentSlideIndex: 0,
-            presentationProgress: 0
-        });
+        this.props.startControllingPresentation(presentationView.querySelectorAll('.slide').length);
     }
 
     highlightSlide(slideIndex) {
@@ -98,19 +60,19 @@ export default class Controller extends React.Component {
     }
 
     previousSlide() {
-        if (!this.state.currentSlideIndex) {
+        if (!this.props.controller.currentSlideIndex) {
             return;
         }
 
-        socketService.sendCommand('SLIDE-SHOW', this.state.currentSlideIndex - 1);
+        socketService.sendCommand('SLIDE-SHOW', this.props.controller.currentSlideIndex - 1);
     }
 
     nextSlide() {
-        if (this.state.currentSlideIndex + 1 === this.state.slideCount) {
+        if (this.props.controller.currentSlideIndex + 1 === this.props.controller.slideCount) {
             return;
         }
 
-        socketService.sendCommand('SLIDE-SHOW', this.state.currentSlideIndex + 1);
+        socketService.sendCommand('SLIDE-SHOW', this.props.controller.currentSlideIndex + 1);
     }
 
     zoomInOnCurrentSlide() {
@@ -119,20 +81,6 @@ export default class Controller extends React.Component {
 
     zoomOutOnCurrentSlide() {
         socketService.sendCommand('SLIDE-ZOOM-OUT');
-    }
-
-    getSlidesDOM(presentationData) {
-        return '<div class="slide">' +
-            presentationData.replace(/<h2/g,
-                '</div><div class="slide"><h2') +
-            '</div>';
-    }
-
-    getLastSlide(title) {
-        return '<div class="slide last-slide">' +
-               '  <h1>' + title + '</h1>' +
-               '  Thanks for attending the session. Questions please...' +
-               '</div>';
     }
 
     onInfo(info, data) {
@@ -149,20 +97,12 @@ export default class Controller extends React.Component {
 
     onSignal(signal, data) {
         if (signal === 'SLIDE-SHOW') {
-            this.setState({
-                currentSlideIndex: data,
-                presentationProgress: ((data + 1) * 100) / this.state.slideCount
-            });
-
+            this.props.showSlide(data, this.props.controller.slideCount);
             this.highlightSlide(data);
         } else if (signal === 'SLIDE-ZOOM-IN') {
-            this.setState({
-                isZoomedIn: true
-            });
+            this.props.zoomIn();
         } else if (signal === 'SLIDE-ZOOM-OUT') {
-            this.setState({
-                isZoomedIn: false
-            });
+            this.props.zoomOut();
         }
     }
 
@@ -171,10 +111,23 @@ export default class Controller extends React.Component {
         this.reset();
     }
 
+    disconnect() {
+        socketService.close();
+        this.reset();
+    }
+
+    reset() {
+        this.props.reset();
+    }
+
+    backToHome() {
+        this.props.history.push('/');
+    }
+
     render() {
         return (
             <div id="controller-page">
-                <div id="stage" className={this.state.isConnected ? 'hidden' : ''}>
+                <div id="stage" className={this.props.controller.isConnected ? 'hidden' : ''}>
                     <div id="stage-controls">
                         <span id="presentation-code-label" className="regular-text">
                             Enter presentation code to connect
@@ -182,11 +135,11 @@ export default class Controller extends React.Component {
                         <br />
                         <input type="text"
                             id="presentation-code-input"
-                            value={this.state.presentationCode}
+                            value={this.props.controller.presentationCode}
                             onChange={this.onPresentationCodeChange.bind(this)} />
                         <br />
                         <div id="connect-button"
-                            className={'control-button' + (!this.state.presentationCode ? ' disabled' : '')}
+                            className={'control-button' + (!this.props.controller.presentationCode ? ' disabled' : '')}
                             onClick={this.connect.bind(this)}>
                             Connect
                         </div>
@@ -197,16 +150,18 @@ export default class Controller extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div id="controller" className={!this.state.isConnected ? 'hidden' : ''}>
+                <div id="controller" className={!this.props.controller.isConnected ? 'hidden' : ''}>
                     <div id="controller-presentation-view" />
                     <div id="controller-screen-container">
                         <div id="presentation-progress-bar-container">
                             <div id="presentation-progress-bar"
-                                style={{ width: this.state.presentationProgress + '%' }} />
+                                style={{ width: this.props.controller.presentationProgress + '%' }} />
                         </div>
                         <div id="controller-screen">
                             <span className="presentation-detail">
-                                Slide: {this.state.currentSlideIndex + 1} / {this.state.slideCount}
+                                Slide:&nbsp;
+                                {this.props.controller.currentSlideIndex + 1}/
+                                {this.props.controller.slideCount}
                             </span>
                         </div>
                     </div>
@@ -215,10 +170,10 @@ export default class Controller extends React.Component {
                             <div className="presentation-control-button disabled">
                                 <span className="fa fa-3x fa-fast-backward" />
                             </div>
-                            <div className={'presentation-control-button' + (!this.state.currentSlideIndex ? ' disabled' : '')} onClick={this.previousSlide.bind(this)}>
+                            <div className={'presentation-control-button' + (!this.props.controller.currentSlideIndex ? ' disabled' : '')} onClick={this.previousSlide.bind(this)}>
                                 <span className="fa fa-3x fa-step-backward" />
                             </div>
-                            <div className={'presentation-control-button' + (this.state.currentSlideIndex === this.state.slideCount - 1 ? ' disabled' : '')} onClick={this.nextSlide.bind(this)}>
+                            <div className={'presentation-control-button' + (this.props.controller.currentSlideIndex === this.props.controller.slideCount - 1 ? ' disabled' : '')} onClick={this.nextSlide.bind(this)}>
                                 <span className="fa fa-3x fa-step-forward" />
                             </div>
                             <div className="presentation-control-button disabled">
@@ -229,10 +184,10 @@ export default class Controller extends React.Component {
                             <div className="presentation-control-button" onClick={this.disconnect.bind(this)}>
                                 <span className="fa fa-3x fa-power-off" style={{ color: 'red' }} />
                             </div>
-                            <div className={'presentation-control-button' + (!this.state.isZoomedIn ? ' active disabled' : '')} onClick={this.zoomOutOnCurrentSlide.bind(this)}>
+                            <div className={'presentation-control-button' + (!this.props.controller.isZoomedIn ? ' active disabled' : '')} onClick={this.zoomOutOnCurrentSlide.bind(this)}>
                                 <span className="fa fa-3x fa-search-minus" />
                             </div>
-                            <div className={'presentation-control-button' + (this.state.isZoomedIn ? ' active disabled' : '')} onClick={this.zoomInOnCurrentSlide.bind(this)}>
+                            <div className={'presentation-control-button' + (this.props.controller.isZoomedIn ? ' active disabled' : '')} onClick={this.zoomInOnCurrentSlide.bind(this)}>
                                 <span className="fa fa-3x fa-search-plus" />
                             </div>
                             <div className="presentation-control-button disabled">
@@ -245,3 +200,25 @@ export default class Controller extends React.Component {
         );
     }
 }
+
+const mapStateToProps = state => ({
+    configs: {
+        ...state.configs
+    },
+    controller: {
+        ...state.controller
+    }
+});
+
+const mapDispatchToProps = {
+    getDomain,
+    setInitialPresentationCode: controllerActions.setInitialPresentationCode,
+    changePresentationCode: controllerActions.changePresentationCode,
+    startControllingPresentation: controllerActions.startControllingPresentation,
+    showSlide: controllerActions.showSlide,
+    zoomIn: controllerActions.zoomIn,
+    zoomOut: controllerActions.zoomOut,
+    reset: controllerActions.reset
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Controller);

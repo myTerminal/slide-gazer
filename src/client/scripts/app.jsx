@@ -1,22 +1,18 @@
 /* global document */
 
-// Import library scripts
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {
     BrowserRouter,
     Route
 } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
-// Start service worker
+import store from './store';
+
 import './service-worker-starter.js';
 
-// Import styles
-
 import '../styles/styles.less';
-
-// Import pages
 
 import Home from './components/pages/home.jsx';
 import Presentation from './components/pages/presentation.jsx';
@@ -36,9 +32,11 @@ class App extends React.Component {
 }
 
 ReactDOM.render((
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>
+    <Provider store={store}>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+    </Provider>
 ), document.getElementById('page'));
 
 if (module.hot) {
