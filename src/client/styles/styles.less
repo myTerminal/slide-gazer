@@ -572,6 +572,7 @@ body,
                         #presentation {
 
                             .slide {
+                                position: static;
                                 height: auto;
                                 padding: 0 !important;
                                 .opacity(1) !important;
@@ -587,6 +588,17 @@ body,
 
                             .footer {
                                 display: inherit;
+                            }
+
+                            &.zoomed {
+
+                                .slide {
+
+                                    * {
+                                        color: #000;
+                                        font-size: inherit;
+                                    }
+                                }
                             }
                         }
                     }
