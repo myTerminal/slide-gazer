@@ -105,7 +105,7 @@ class Presentation extends React.Component {
     showSlide(slideIndex) {
         const slides = document.querySelectorAll('#presentation .slide');
 
-        this.props.showSlide(slideIndex, this.props.presentation.slideCount);
+        this.props.showSlide(slideIndex, slides.length);
 
         slides.forEach((s, i) => {
             s.className = s.className
