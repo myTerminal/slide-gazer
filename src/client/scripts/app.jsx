@@ -18,6 +18,10 @@ import Home from './components/pages/home.jsx';
 import Presentation from './components/pages/presentation.jsx';
 import Controller from './components/pages/controller.jsx';
 
+const configs = require('../../../configs.json'),
+    isProductionMode = process.env.NODE_ENV === 'production',
+    baseUrl = isProductionMode ? configs.origin : '/';
+
 class App extends React.Component {
     render() {
         return (
@@ -33,7 +37,7 @@ class App extends React.Component {
 
 ReactDOM.render((
     <Provider store={store}>
-        <BrowserRouter>
+        <BrowserRouter basename={baseUrl}>
             <App />
         </BrowserRouter>
     </Provider>

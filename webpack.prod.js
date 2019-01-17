@@ -19,12 +19,20 @@ const copy = new CopyWebpackPlugin([
                 .replace(/#sw-cache-string#/g, (new Date().getTime()))
                 .replace(/#sw-origin#/g, configs.origin);
         }
+    },
+    {
+        from: sourceDir + '/manifest.json',
+        transform: function (content, path) {
+            return content.toString()
+                .replace(/#manifest-origin#/g, configs.origin);
+        }
     }
 ]);
 const html = new HtmlWebpackPlugin({
     template: sourceDir + '/index.ejs',
     templateParameters: {
-        titlePrefix: ''
+        titlePrefix: '',
+        baseUrl: configs['web-protocol'] + '://' + configs.domain + configs.origin
     },
     filename: 'index.html',
     chunks: ['app'],

@@ -16,9 +16,6 @@ const copy = new CopyWebpackPlugin([
         from: sourceDir + '/favicon.ico'
     },
     {
-        from: sourceDir + '/manifest.json'
-    },
-    {
         from: sourceDir + '/icons',
         to: 'icons'
     }
@@ -104,6 +101,6 @@ module.exports = {
     output: {
         filename: 'scripts/[name].js',
         path: path.resolve(__dirname, outputDir),
-        publicPath: '/'
+        publicPath: ''
     }
 };
