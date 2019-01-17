@@ -13,7 +13,7 @@ export const getLastSlide = title =>
     '  Thanks for attending the session. Questions please...' +
     '</div>';
 
-export const getFooter = domain =>
+export const getFooter = (protocol, domain) =>
     '<div class="footer">' +
-    '  Printed from <a href="http://' + domain + '">slide-gazer</a>' +
+    '  Printed from <a href="' + protocol + '://' + domain + '">slide-gazer</a>' +
     '</div>';

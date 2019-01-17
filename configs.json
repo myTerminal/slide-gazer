@@ -1,6 +1,7 @@
 {
     "origin": "/",
     "domain": "localhost",
+    "web-protocol": "http",
     "web-port": "8089",
     "socket-port": "8090"
 }

@@ -17,7 +17,7 @@ const getWhetherPreviousPresentationExists = () =>
         });
     };
 
-const startPresentation = (presentationDomData, domain, presentationCode) =>
+const startPresentation = (presentationDomData, protocol, domain, presentationCode) =>
     dispatch => {
         const presentationContainer = document.getElementById('slides-holder');
 
@@ -26,7 +26,7 @@ const startPresentation = (presentationDomData, domain, presentationCode) =>
         const title = presentationContainer.querySelector('h1').innerText;
 
         presentationContainer.innerHTML += getLastSlide(title);
-        presentationContainer.innerHTML += getFooter(domain);
+        presentationContainer.innerHTML += getFooter(protocol, domain);
 
         dispatch({
             type: presentation.startPresentation,
@@ -49,9 +49,9 @@ const showSlide = (slideIndex, slideCount) =>
         });
     };
 
-const setControllerUrlQrCodeData = (domain, presentationCode) =>
+const setControllerUrlQrCodeData = (protocol, domain, presentationCode) =>
     dispatch => {
-        qrcode.toDataURL('http://' + domain + '/control/' + presentationCode)
+        qrcode.toDataURL(protocol + '://' + domain + '/control/' + presentationCode)
             .then(url => {
                 dispatch({
                     type: presentation.setControllerUrlQrCodeData,

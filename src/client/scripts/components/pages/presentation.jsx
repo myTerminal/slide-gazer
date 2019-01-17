@@ -81,6 +81,7 @@ class Presentation extends React.Component {
 
         this.props.startPresentation(
             presentationData,
+            this.props.configs['web-protocol'],
             this.props.configs.domain,
             generatedPresentationCode
         );
@@ -88,6 +89,7 @@ class Presentation extends React.Component {
         this.showSlide(0);
 
         this.props.setControllerUrlQrCodeData(
+            this.props.configs['web-protocol'],
             this.props.configs.domain,
             generatedPresentationCode
         );
@@ -228,8 +230,8 @@ class Presentation extends React.Component {
                                 Remotely control this presentation
                             </div>
                             <div>
-                                <a id="controller-url-link" href={'http://' + this.props.configs.domain + '/control/' + this.props.presentation.presentationCode} target="_blank">
-                                    {'http://' + this.props.configs.domain + '/control/' + this.props.presentation.presentationCode}
+                                <a id="controller-url-link" href={this.props.configs['web-protocol'] + '://' + this.props.configs.domain + '/control/' + this.props.presentation.presentationCode} target="_blank">
+                                    {this.props.configs['web-protocol'] + '://' + this.props.configs.domain + '/control/' + this.props.presentation.presentationCode}
                                 </a>
                             </div>
                         </div>
