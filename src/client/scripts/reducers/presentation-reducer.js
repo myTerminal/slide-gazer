@@ -17,7 +17,7 @@ const initialState = {
 
 const presentationReducer = (state = initialState, action) => {
     switch (action.type) {
-    case presentation.receiveWhetherPreviousPresentationExists:
+    case presentation.setPreviousPresentationInfo:
         return {
             ...state,
             previousPresentationDataExists: action.payLoad

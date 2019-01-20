@@ -10,12 +10,12 @@ import {
 } from '../common';
 import { presentation } from '../constants/action-names';
 
-const getWhetherPreviousPresentationExists = () =>
+const updatePreviousPresentationInfo = () =>
     (dispatch) => {
         localforage.getItem('lastPresentationDom')
             .then(value => {
                 dispatch({
-                    type: presentation.receiveWhetherPreviousPresentationExists,
+                    type: presentation.setPreviousPresentationInfo,
                     payLoad: value
                 });
             });
@@ -41,7 +41,7 @@ const startPresentation = (presentationDomData, protocol, domain, presentationCo
             }
         });
 
-        dispatch(getWhetherPreviousPresentationExists());
+        dispatch(updatePreviousPresentationInfo());
 
         dispatch(getAnimation());
     };
@@ -149,7 +149,7 @@ const endPresentation = () =>
     };
 
 export default {
-    getWhetherPreviousPresentationExists,
+    updatePreviousPresentationInfo,
     startPresentation,
     showSlide,
     setControllerUrlQrCodeData,

@@ -5,7 +5,7 @@ export const configs = {
 };
 
 export const presentation = {
-    receiveWhetherPreviousPresentationExists: 'RECEIVE_WHETHER_PREVIOUS_PRESENTATION_EXISTS',
+    setPreviousPresentationInfo: 'SET_PREVIOUS_PRESENTATION_INFO',
     startPresentation: 'START_PRESENTATION',
     showSlide: 'SHOW_SLIDE',
     setControllerUrlQrCodeData: 'SET_CONTROLLER_URL_QR_CODE_DATA',

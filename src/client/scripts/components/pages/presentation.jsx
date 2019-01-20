@@ -17,7 +17,7 @@ class Presentation extends React.Component {
     constructor(props) {
         super(props);
 
-        props.getWhetherPreviousPresentationExists();
+        props.updatePreviousPresentationInfo();
 
         this.autoTransitionTimer = null;
     }
