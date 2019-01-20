@@ -40,6 +40,8 @@ const startPresentation = (presentationDomData, protocol, domain, presentationCo
                 slideCount: document.querySelectorAll('#presentation .slide').length
             }
         });
+
+        dispatch(getWhetherPreviousPresentationExists());
     };
 
 const showSlide = (slideIndex, slideCount) =>
