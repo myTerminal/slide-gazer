@@ -25,7 +25,7 @@ const extractCSS = new ExtractTextPlugin('styles/styles.css');
 module.exports = {
     mode: 'development',
     entry: {
-        app: './' + sourceDir + '/scripts/app.jsx'
+        app: './' + sourceDir + '/scripts/index.jsx'
     },
     module: {
         rules: [
