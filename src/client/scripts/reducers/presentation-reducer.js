@@ -62,6 +62,11 @@ const presentationReducer = (state = initialState, action) => {
             ...state,
             animation: action.payLoad
         };
+    case presentation.getAnimation:
+        return {
+            ...state,
+            animation: action.payLoad || state.animation
+        };
     case presentation.setControllerConnectionState:
         return {
             ...state,

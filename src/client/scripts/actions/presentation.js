@@ -42,6 +42,8 @@ const startPresentation = (presentationDomData, protocol, domain, presentationCo
         });
 
         dispatch(getWhetherPreviousPresentationExists());
+
+        dispatch(getAnimation());
     };
 
 const showSlide = (slideIndex, slideCount) =>
@@ -111,10 +113,24 @@ const toggleAutoTransition = () =>
 
 const setAnimation = animationName =>
     dispatch => {
-        dispatch({
-            type: presentation.setAnimation,
-            payLoad: animationName
-        });
+        localforage.setItem('animationName', animationName)
+            .then(() => {
+                dispatch({
+                    type: presentation.setAnimation,
+                    payLoad: animationName
+                });
+            });
+    };
+
+const getAnimation = () =>
+    dispatch => {
+        localforage.getItem('animationName')
+            .then(value => {
+                dispatch({
+                    type: presentation.getAnimation,
+                    payLoad: value
+                });
+            });
     };
 
 const setControllerConnectionState = connectionState =>
@@ -143,6 +159,7 @@ export default {
     zoomOut,
     toggleAutoTransition,
     setAnimation,
+    getAnimation,
     setControllerConnectionState,
     endPresentation
 };
