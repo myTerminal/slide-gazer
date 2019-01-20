@@ -29,6 +29,7 @@
     "body-parser": "1.17.2",
     "express": "4.15.4",
     "font-awesome": "4.7.0",
+    "localforage": "1.7.3",
     "qrcode": "1.2.0",
     "react": "16.7.0",
     "react-dom": "16.7.0",

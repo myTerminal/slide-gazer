@@ -4,6 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { FilePicker } from 'react-file-picker';
 import showdown from 'showdown';
+import localforage from 'localforage';
 
 import getDomain from '../../actions/configs';
 import presentationActions from '../../actions/presentation';
@@ -60,20 +61,22 @@ class Presentation extends React.Component {
         reader.onload = event => {
             const presentationDom = converter.makeHtml(event.target.result);
 
-            window.localStorage.lastPresentationDOM = presentationDom;
-
-            context.startPresentation(presentationDom);
+            localforage.setItem('lastPresentationDom', presentationDom)
+                .then(() => {
+                    context.startPresentation(presentationDom);
+                });
         };
 
         reader.readAsText(file);
     }
 
     reloadLastPresentation() {
-        const lastPresentationDOM = window.localStorage.lastPresentationDOM;
-
-        if (lastPresentationDOM) {
-            this.startPresentation(lastPresentationDOM);
-        }
+        localforage.getItem('lastPresentationDom')
+            .then(value => {
+                if (value) {
+                    this.startPresentation(value);
+                }
+            });
     }
 
     startPresentation(presentationData) {

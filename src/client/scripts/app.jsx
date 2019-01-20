@@ -7,6 +7,7 @@ import {
     Route
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import localforage from 'localforage';
 
 import store from './store';
 
@@ -21,6 +22,11 @@ import Controller from './components/pages/controller.jsx';
 const configs = require('../../../configs.json'),
     isProductionMode = process.env.NODE_ENV === 'production',
     baseUrl = isProductionMode ? configs.origin : '/';
+
+localforage.config({
+    driver: localforage.LOCALSTORAGE,
+    name: 'slide-gazer'
+});
 
 class App extends React.Component {
     render() {

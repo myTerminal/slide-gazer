@@ -1,6 +1,7 @@
 /* global window document */
 
 import qrcode from 'qrcode';
+import localforage from 'localforage';
 
 import {
     getSlidesDom,
@@ -11,10 +12,13 @@ import { presentation } from '../constants/action-names';
 
 const getWhetherPreviousPresentationExists = () =>
     (dispatch) => {
-        dispatch({
-            type: presentation.receiveWhetherPreviousPresentationExists,
-            payLoad: window.localStorage.lastPresentationDOM
-        });
+        localforage.getItem('lastPresentationDom')
+            .then(value => {
+                dispatch({
+                    type: presentation.receiveWhetherPreviousPresentationExists,
+                    payLoad: value
+                });
+            });
     };
 
 const startPresentation = (presentationDomData, protocol, domain, presentationCode) =>
