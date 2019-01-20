@@ -16,7 +16,7 @@ class Controller extends React.Component {
     constructor(props) {
         super(props);
 
-        this.props.setInitialPresentationCode(this.props.match.params.presentationCode);
+        this.props.setInitialPresentationCode(this.props.match.params.presentationCode || '');
     }
 
     componentDidMount() {
