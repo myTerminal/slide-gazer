@@ -248,6 +248,15 @@ body,
                             .transition(1s);
                         }
                     }
+
+                    &.first-slide {
+                        filter: invert(1);
+
+                        .slide-contents {
+                            text-align: center;
+                            margin-top: 50%;
+                        }
+                    }
                 }
 
                 &.fade {
@@ -592,6 +601,10 @@ body,
                                 box-shadow: none !important;
                                 border: none !important;
                                 .transform(none) !important;
+
+                                &.first-slide {
+                                    display: none;
+                                }
 
                                 &.last-slide {
                                     display: none;

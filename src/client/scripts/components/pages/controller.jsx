@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import getDomain from '../../actions/configs';
 import controllerActions from '../../actions/controller';
 import {
+    getFirstSlide,
     getSlidesDom,
     getLastSlide
 } from '../../common';
@@ -44,6 +45,7 @@ class Controller extends React.Component {
 
         const title = presentationView.querySelector('h1').innerText;
 
+        presentationView.innerHTML = getFirstSlide(title) + presentationView.innerHTML;
         presentationView.innerHTML += getLastSlide(title);
 
         this.props.startControllingPresentation(presentationView.querySelectorAll('.slide').length);

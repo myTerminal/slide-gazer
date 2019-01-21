@@ -4,6 +4,7 @@ import qrcode from 'qrcode';
 import localforage from 'localforage';
 
 import {
+    getFirstSlide,
     getSlidesDom,
     getLastSlide,
     getFooter
@@ -29,6 +30,7 @@ const startPresentation = (presentationDomData, protocol, domain, presentationCo
 
         const title = presentationContainer.querySelector('h1').innerText;
 
+        presentationContainer.innerHTML = getFirstSlide(title) + presentationContainer.innerHTML;
         presentationContainer.innerHTML += getLastSlide(title);
         presentationContainer.innerHTML += getFooter(protocol, domain);
 
