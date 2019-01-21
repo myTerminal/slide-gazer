@@ -242,7 +242,7 @@ body,
                     box-shadow: 0 0 5px #888;
 
                     &.visible {
-                        z-index: 2;
+                        z-index: 3;
 
                         * {
                             .transition(1s);
@@ -251,6 +251,7 @@ body,
 
                     &.first-slide {
                         filter: invert(1);
+                        z-index: 2;
 
                         .slide-contents {
                             text-align: center;
