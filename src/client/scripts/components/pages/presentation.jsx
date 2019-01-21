@@ -89,14 +89,6 @@ class Presentation extends React.Component {
             generatedPresentationCode
         );
 
-        this.showSlide(0);
-
-        this.props.setControllerUrlQrCodeData(
-            this.props.configs['web-protocol'],
-            this.props.configs.domain,
-            generatedPresentationCode
-        );
-
         socketService.open(
             this.props.configs,
             generatedPresentationCode,
@@ -104,6 +96,14 @@ class Presentation extends React.Component {
             this.onInfo.bind(this),
             this.onCommand.bind(this),
             this.onException.bind(this)
+        );
+
+        this.showSlide(0);
+
+        this.props.setControllerUrlQrCodeData(
+            this.props.configs['web-protocol'],
+            this.props.configs.domain,
+            generatedPresentationCode
         );
     }
 
@@ -127,7 +127,7 @@ class Presentation extends React.Component {
             }
         });
 
-        if (slideIndex) {
+        if (slideIndex !== undefined && slideIndex !== null) {
             socketService.sendSignal('SLIDE-SHOW', slideIndex);
             socketService.sendSignal('SLIDE-ZOOM-OUT');
         }
