@@ -5,14 +5,16 @@ let socket,
     presentationData,
     infoHandler,
     commandHandler,
-    exceptionHandler;
+    exceptionHandler,
+    afterOpenCallback;
 
-const open = (configs, id, data, onInfo, onCommand, onException) => {
+const open = (configs, id, data, onInfo, onCommand, onException, afterOpen) => {
     clientId = id;
     presentationData = data;
     infoHandler = onInfo;
     commandHandler = onCommand;
     exceptionHandler = onException;
+    afterOpenCallback = afterOpen;
 
     socket = new WebSocket(`ws://${configs.domain}:${configs['socket-port']}`);
 
@@ -33,6 +35,8 @@ const handlers = {
             id: clientId,
             data: presentationData
         }));
+
+        afterOpenCallback();
     },
     onMessageHandler: message => {
         const receivedMessage = JSON.parse(message.data);

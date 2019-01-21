@@ -89,21 +89,22 @@ class Presentation extends React.Component {
             generatedPresentationCode
         );
 
+        this.props.setControllerUrlQrCodeData(
+            this.props.configs['web-protocol'],
+            this.props.configs.domain,
+            generatedPresentationCode
+        );
+
         socketService.open(
             this.props.configs,
             generatedPresentationCode,
             presentationData,
             this.onInfo.bind(this),
             this.onCommand.bind(this),
-            this.onException.bind(this)
-        );
-
-        this.showSlide(0);
-
-        this.props.setControllerUrlQrCodeData(
-            this.props.configs['web-protocol'],
-            this.props.configs.domain,
-            generatedPresentationCode
+            this.onException.bind(this),
+            () => {
+                this.showSlide(0);
+            }
         );
     }
 
