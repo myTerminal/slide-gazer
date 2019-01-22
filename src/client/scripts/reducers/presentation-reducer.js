@@ -1,6 +1,7 @@
 import { presentation } from '../constants/action-names';
 
 const initialState = {
+    isLoading: false,
     previousPresentationDataExists: false,
     isPresentationLoaded: false,
     presentationCode: '',
@@ -29,6 +30,11 @@ const presentationReducer = (state = initialState, action) => {
             presentationCode: action.payLoad.presentationCode,
             title: action.payLoad.title,
             slideCount: action.payLoad.slideCount
+        };
+    case presentation.setLoading:
+        return {
+            ...state,
+            isLoading: action.payLoad
         };
     case presentation.showSlide:
         return {

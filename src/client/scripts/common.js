@@ -1,3 +1,5 @@
+import Promise from 'bluebird';
+
 export const getFirstSlide = (title) =>
     '<div class="slide first-slide">' +
     '  <div class="slide-contents">' +
@@ -31,3 +33,32 @@ export const getFooter = (protocol, domain) =>
     '<div class="footer">' +
     '  Printed from <a href="' + protocol + '://' + domain + '">slide-gazer</a>' +
     '</div>';
+
+export const mutateImageSources = domString =>
+    domString.replace(/src=/g, 'src_=');
+
+export const unmutateImageSources = images => {
+    for (let i = 0; i < images.length; i += 1) {
+        const img = images[i];
+
+        img.setAttribute('src', img.getAttribute('src_'));
+    }
+};
+
+export const allImagesLoaded = images => {
+    const promises = [];
+
+    for (let i = 0; i < images.length; i += 1) {
+        promises.push(
+            new Promise(
+                resolve => {
+                    images[i].onload = () => {
+                        resolve();
+                    };
+                }
+            )
+        );
+    }
+
+    return Promise.all(promises);
+};

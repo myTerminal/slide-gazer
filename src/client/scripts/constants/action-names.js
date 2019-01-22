@@ -7,6 +7,7 @@ export const configs = {
 export const presentation = {
     setPreviousPresentationInfo: 'SET_PREVIOUS_PRESENTATION_INFO',
     startPresentation: 'START_PRESENTATION',
+    setLoading: 'SET_LOADING',
     showSlide: 'SHOW_SLIDE',
     setControllerUrlQrCodeData: 'SET_CONTROLLER_URL_QR_CODE_DATA',
     nextSlide: 'NEXT_SLIDE',

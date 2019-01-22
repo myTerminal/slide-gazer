@@ -7,12 +7,15 @@ import {
     getFirstSlide,
     getSlidesDom,
     getLastSlide,
-    getFooter
+    getFooter,
+    mutateImageSources,
+    unmutateImageSources,
+    allImagesLoaded
 } from '../common';
 import { presentation } from '../constants/action-names';
 
 const updatePreviousPresentationInfo = () =>
-    (dispatch) => {
+    dispatch => {
         localforage.getItem('lastPresentationDom')
             .then(value => {
                 dispatch({
@@ -26,13 +29,22 @@ const startPresentation = (presentationDomData, protocol, domain, presentationCo
     dispatch => {
         const presentationContainer = document.getElementById('slides-holder');
 
-        presentationContainer.innerHTML = getSlidesDom(presentationDomData);
+        presentationContainer.innerHTML = getSlidesDom(mutateImageSources(presentationDomData));
 
-        const title = presentationContainer.querySelector('h1').innerText;
+        const title = presentationContainer.querySelector('h1').innerText,
+            images = document.getElementsByTagName('img');
 
         presentationContainer.innerHTML = getFirstSlide(title) + presentationContainer.innerHTML;
         presentationContainer.innerHTML += getLastSlide(title);
         presentationContainer.innerHTML += getFooter(protocol, domain);
+
+        dispatch(setLoading(true));
+
+        allImagesLoaded(images).then(() => {
+            dispatch(setLoading(false));
+        });
+
+        unmutateImageSources(images);
 
         dispatch({
             type: presentation.startPresentation,
@@ -46,6 +58,14 @@ const startPresentation = (presentationDomData, protocol, domain, presentationCo
         dispatch(updatePreviousPresentationInfo());
 
         dispatch(getAnimation());
+    };
+
+const setLoading = value =>
+    dispatch => {
+        dispatch({
+            type: presentation.setLoading,
+            payLoad: value
+        });
     };
 
 const showSlide = (slideIndex, slideCount) =>
@@ -153,6 +173,7 @@ const endPresentation = () =>
 export default {
     updatePreviousPresentationInfo,
     startPresentation,
+    setLoading,
     showSlide,
     setControllerUrlQrCodeData,
     nextSlide,

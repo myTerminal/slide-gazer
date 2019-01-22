@@ -312,6 +312,11 @@ class Presentation extends React.Component {
                         <div id="slides-holder" />
                     </div>
                 </div>
+                <div id="presentation-loading" className={this.props.presentation.isLoading ? 'loading' : ''}>
+                    <div id="presentation-loading-content">
+                        Loading...
+                    </div>
+                </div>
             </div>
         );
     }
