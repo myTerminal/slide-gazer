@@ -30,7 +30,7 @@ const showSlide = (slideIndex, slideCount) =>
             type: controller.showSlide,
             payLoad: {
                 slideIndex,
-                slideCount
+                presentationProgress: (slideIndex * 100) / (slideCount - 1)
             }
         });
     };
