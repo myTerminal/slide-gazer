@@ -1,4 +1,4 @@
-/* global window document */
+/* global document setTimeout */
 
 import qrcode from 'qrcode';
 import localforage from 'localforage';
@@ -27,6 +27,8 @@ const updatePreviousPresentationInfo = () =>
 
 const startPresentation = (presentationDomData, protocol, domain, presentationCode) =>
     dispatch => {
+        dispatch(setLoading(true));
+
         const presentationContainer = document.getElementById('slides-holder');
 
         presentationContainer.innerHTML = getSlidesDom(mutateImageSources(presentationDomData));
@@ -38,26 +40,26 @@ const startPresentation = (presentationDomData, protocol, domain, presentationCo
         presentationContainer.innerHTML += getLastSlide(title);
         presentationContainer.innerHTML += getFooter(protocol, domain);
 
-        dispatch(setLoading(true));
+        setTimeout(() => {
+            allImagesLoaded(images).then(() => {
+                dispatch(setLoading(false));
+            });
 
-        allImagesLoaded(images).then(() => {
-            dispatch(setLoading(false));
-        });
+            unmutateImageSources(images);
 
-        unmutateImageSources(images);
+            dispatch({
+                type: presentation.startPresentation,
+                payLoad: {
+                    presentationCode,
+                    title: title,
+                    slideCount: document.querySelectorAll('#presentation .slide').length
+                }
+            });
 
-        dispatch({
-            type: presentation.startPresentation,
-            payLoad: {
-                presentationCode,
-                title: title,
-                slideCount: document.querySelectorAll('#presentation .slide').length
-            }
-        });
+            dispatch(updatePreviousPresentationInfo());
 
-        dispatch(updatePreviousPresentationInfo());
-
-        dispatch(getAnimation());
+            dispatch(getAnimation());
+        }, 1000);
     };
 
 const setLoading = value =>
