@@ -314,7 +314,15 @@ class Presentation extends React.Component {
                 </div>
                 <div id="presentation-loading" className={this.props.presentation.isLoading ? 'loading' : ''}>
                     <div id="presentation-loading-content">
-                        Loading...
+                        <div id="presentation-loading-animation">
+                            <div className="sheet sheet-one" />
+                            <div className="sheet sheet-two" />
+                            <div className="sheet sheet-three" />
+                            <div className="sheet sheet-four" />
+                        </div>
+                        <div id="presentation-loading-text">
+                            Loading...
+                        </div>
                     </div>
                 </div>
             </div>
