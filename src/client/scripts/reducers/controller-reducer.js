@@ -33,8 +33,8 @@ const controllerReducer = (state = initialState, action) => {
         return {
             ...state,
             currentSlideIndex: action.payLoad.slideIndex,
-            presentationProgress: ((action.payLoad.slideIndex + 1) * 100) /
-                action.payLoad.slideCount
+            presentationProgress: (action.payLoad.slideIndex * 100) /
+                (action.payLoad.slideCount - 1)
         };
     case controller.zoomIn:
         return {

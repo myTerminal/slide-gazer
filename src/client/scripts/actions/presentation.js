@@ -76,7 +76,7 @@ const showSlide = (slideIndex, slideCount) =>
             type: presentation.showSlide,
             payLoad: {
                 currentSlideIndex: slideIndex,
-                presentationProgress: ((slideIndex + 1) * 100) / slideCount
+                presentationProgress: (slideIndex * 100) / (slideCount - 1)
             }
         });
     };
