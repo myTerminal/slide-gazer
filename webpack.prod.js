@@ -11,6 +11,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const packageDetails = require('./package.json');
+
 const copy = new CopyWebpackPlugin([
     {
         from: sourceDir + '/sw.js',
@@ -32,7 +34,8 @@ const html = new HtmlWebpackPlugin({
     template: sourceDir + '/index.ejs',
     templateParameters: {
         titlePrefix: '',
-        baseUrl: configs['web-protocol'] + '://' + configs.domain + configs.origin
+        baseUrl: configs['web-protocol'] + '://' + configs.domain + configs.origin,
+        version: packageDetails.version
     },
     filename: 'index.html',
     chunks: ['app'],

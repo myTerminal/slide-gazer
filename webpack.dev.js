@@ -7,6 +7,8 @@ const commonConfig = require('./webpack.common.js');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const packageDetails = require('./package.json');
+
 const copy = new CopyWebpackPlugin([
     {
         from: sourceDir + '/manifest.json',
@@ -21,7 +23,8 @@ const html = new HtmlWebpackPlugin({
     template: sourceDir + '/index.ejs',
     templateParameters: {
         titlePrefix: '[DEBUG] ',
-        baseUrl: '/'
+        baseUrl: '/',
+        version: packageDetails.version
     },
     filename: 'index.html',
     chunks: ['app']
