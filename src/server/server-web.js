@@ -20,6 +20,10 @@ module.exports = function (portNumber) {
         res.send(fs.readFileSync(baseUrl + '/configs.json', 'utf8'));
     });
 
+    app.get('/sample-markdown-file', function (req, res) {
+        res.send(fs.readFileSync(baseUrl + '/data/sample-markdown-file.md', 'utf8'));
+    });
+
     app.get('*', function (req, res) {
         res.send(fs.readFileSync(baseUrl + '/public/index.html', 'utf8'));
     });

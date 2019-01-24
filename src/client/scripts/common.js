@@ -1,4 +1,5 @@
 import Promise from 'bluebird';
+import axios from 'axios';
 
 export const getFirstSlide = (title) =>
     '<div class="slide first-slide">' +
@@ -62,3 +63,6 @@ export const allImagesLoaded = images => {
 
     return Promise.all(promises);
 };
+
+export const fetchSampleMarkdownFile = () =>
+    axios.get('/sample-markdown-file');

@@ -1,11 +1,13 @@
-/* global window document alert FileReader */
+/* global window document alert FileReader Blob */
 
 import React from 'react';
 import { connect } from 'react-redux';
 import { FilePicker } from 'react-file-picker';
 import showdown from 'showdown';
 import localforage from 'localforage';
+import FileSaver from 'file-saver';
 
+import { fetchSampleMarkdownFile } from '../../common';
 import getDomain from '../../actions/configs';
 import presentationActions from '../../actions/presentation';
 
@@ -76,6 +78,27 @@ class Presentation extends React.Component {
                 if (value) {
                     this.startPresentation(value);
                 }
+            });
+    }
+
+    loadSamplePresentation() {
+        fetchSampleMarkdownFile()
+            .then(response => {
+                const presentationDom = converter.makeHtml(response.data);
+
+                this.startPresentation(presentationDom);
+            });
+    }
+
+    downloadSamplePresentation() {
+        fetchSampleMarkdownFile()
+            .then(response => {
+                const blob = new Blob(
+                    [response.data],
+                    { type: 'text/markdown;charset=utf-8' }
+                );
+
+                FileSaver.saveAs(blob, 'sample-presentation.md');
             });
     }
 
@@ -304,6 +327,24 @@ class Presentation extends React.Component {
                         <br />
                         <div className={'control-button' + (!this.props.presentation.previousPresentationDataExists ? ' disabled' : '')} onClick={this.reloadLastPresentation.bind(this)}>
                             Reload the last presentation
+                        </div>
+                        <br />
+                        <br />
+                        <span className="regular-text">
+                            OR
+                        </span>
+                        <br />
+                        <br />
+                        <div className="control-button" onClick={this.loadSamplePresentation.bind(this)}>
+                            Load a sample presentation
+                        </div>
+                        <br />
+                        <br />
+                        <h2 className="regular-text">
+                            If you have no idea what a markdown file is:
+                        </h2>
+                        <div className="control-button" onClick={this.downloadSamplePresentation.bind(this)}>
+                            Download a sample
                         </div>
                     </div>
                 </div>
