@@ -188,14 +188,14 @@ body,
             padding-top: 20px;
             width: 100%;
             height: 100%;
-            display: table;
+            overflow-y: auto;
 
             #stage {
-                display: table-cell;
-                vertical-align: middle;
+                position: relative;
                 width: 100%;
-                height: 100%;
                 text-align: center;
+                top: 50%;
+                .transform(translateY(-50%));
                 cursor: default;
 
                 h1,
