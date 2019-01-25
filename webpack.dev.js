@@ -3,10 +3,10 @@
 const sourceDir = 'src/client';
 
 const WebpackMerge = require('webpack-merge');
-const commonConfig = require('./webpack.common.js');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const commonConfig = require('./webpack.common.js');
 const packageDetails = require('./package.json');
 
 const copy = new CopyWebpackPlugin([
