@@ -172,15 +172,19 @@ class Presentation extends React.Component {
     }
 
     zoomInOnCurrentSlide() {
-        this.props.zoomIn();
+        if (document.querySelectorAll('.slide.visible strong').length) {
+            this.props.zoomIn();
 
-        socketService.sendSignal('SLIDE-ZOOM-IN');
+            socketService.sendSignal('SLIDE-ZOOM-IN');
+        }
     }
 
     zoomOutOnCurrentSlide() {
-        this.props.zoomOut();
+        if (document.querySelectorAll('.slide.visible strong').length) {
+            this.props.zoomOut();
 
-        socketService.sendSignal('SLIDE-ZOOM-OUT');
+            socketService.sendSignal('SLIDE-ZOOM-OUT');
+        }
     }
 
     toggleAutoTransition() {
