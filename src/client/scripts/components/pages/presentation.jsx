@@ -306,8 +306,12 @@ class Presentation extends React.Component {
                 <div id="stage-container" className={this.props.presentation.isPresentationLoaded ? 'hidden' : ''}>
                     <div id="stage">
                         <h2 className="regular-text">
-                            To start a presentation, do one of the following:
+                            To start a presentation:
                         </h2>
+                        <span className="regular-text">
+                            Drop a markdown file here
+                        </span>
+                        <br />
                         <br />
                         <FilePicker
                             extensions={['md']}
@@ -318,29 +322,9 @@ class Presentation extends React.Component {
                             </div>
                         </FilePicker>
                         <br />
-                        <span className="regular-text">
-                            OR
-                        </span>
-                        <br />
-                        <br />
-                        <span className="regular-text">
-                            Drop a markdown file on this page
-                        </span>
-                        <br />
-                        <br />
-                        <span className="regular-text">
-                            OR
-                        </span>
-                        <br />
-                        <br />
                         <div className={'control-button' + (!this.props.presentation.previousPresentationDataExists ? ' disabled' : '')} onClick={this.reloadLastPresentation.bind(this)}>
                             Reload the last presentation
                         </div>
-                        <br />
-                        <br />
-                        <span className="regular-text">
-                            OR
-                        </span>
                         <br />
                         <br />
                         <div className="control-button" onClick={this.loadSamplePresentation.bind(this)}>
@@ -349,7 +333,7 @@ class Presentation extends React.Component {
                         <br />
                         <br />
                         <h2 className="regular-text">
-                            If you have no idea what a markdown file is:
+                            To see what a markdown file looks like:
                         </h2>
                         <div className="control-button" onClick={this.downloadSamplePresentation.bind(this)}>
                             Download a sample
