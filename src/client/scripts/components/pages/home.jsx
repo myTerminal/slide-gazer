@@ -11,7 +11,10 @@ export default class Home extends React.Component {
                     <h1 className="regular-text">
                         Slide Gazer
                     </h1>
-                    <div className="regular-text">v{packageDetails.version}</div>
+                    <div className="regular-text">
+                        v
+                        {packageDetails.version}
+                    </div>
                     <h2 className="regular-text">
                         A light-weight presentation tool for presenting your
                         ideas quickly and with style!

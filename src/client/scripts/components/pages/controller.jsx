@@ -162,7 +162,8 @@ class Controller extends React.Component {
                         <div id="controller-screen">
                             <span className="presentation-detail">
                                 Slide:&nbsp;
-                                {this.props.controller.currentSlideIndex + 1}/
+                                {this.props.controller.currentSlideIndex + 1}
+                                /
                                 {this.props.controller.slideCount}
                             </span>
                         </div>
