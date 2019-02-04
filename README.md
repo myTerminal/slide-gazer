@@ -65,10 +65,12 @@ Build the application with
 
     npm run build
 
-Configure domain and port numbers in file `configs.json`.
+Configure hosting information in file `configs.json`.
 
     {
+        "origin": "/",
         "domain": "slide-gazer.teamfluxion.com",
+        "web-protocol": "http",
         "web-port": "8089",
         "socket-port": "8090"
     }
@@ -79,7 +81,8 @@ Start the application with
 
 ## To-do
 
+* Make presentation controls more screen agnostic
 * Touch gestures for mobile devices
-* More commands from controller
+* Implement "jump-to-slide"
 * Multiple instanced presentations
 * Support for less-smart web browsers
