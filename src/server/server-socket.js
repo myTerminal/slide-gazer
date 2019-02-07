@@ -1,20 +1,20 @@
 /* global module require setInterval */
 
+const ws = require('ws');
+
 module.exports = function (portNumber) {
-    var ws = require('ws'),
-        clients = [],
-        pingInterval,
-        noOperation = function () {},
+    const clients = [],
+        noOperation = () => {},
         wss = new ws.Server({
             perMessageDeflate: false,
             port: portNumber
         });
 
-    wss.on('connection', function (ws) {
+    wss.on('connection', ws => {
         ws.isAlive = true;
 
-        ws.on('pong', function () {
-            this.isAlive = true;
+        ws.on('pong', () => {
+            ws.isAlive = true;
         });
 
         clients.push({
@@ -23,16 +23,16 @@ module.exports = function (portNumber) {
             id: 'unknown'
         });
 
-        ws.on('message', function (message) {
-            var self = this,
-                receivedMessage = JSON.parse(message),
-                currentClient,
+        ws.on('message', message => {
+            const receivedMessage = JSON.parse(message);
+
+            let currentClient,
                 targetClient;
 
             switch (receivedMessage.type) {
             case 'IDENTIFY':
                 // Find the current client in the list of connected clients
-                currentClient = clients.filter(c => c.ws === self)[0];
+                currentClient = clients.filter(c => c.ws === ws)[0];
 
                 // Determine whether the client is a presentation or a controller
                 currentClient.clientType = receivedMessage.clientType;
@@ -58,7 +58,7 @@ module.exports = function (portNumber) {
                         }));
 
                         // Close connection
-                        self.close();
+                        ws.close();
 
                         // Log information to the console and stop processing
                         console.log('Redundant controller ' + currentClient.id + ' attempted to connect.');
@@ -97,7 +97,7 @@ module.exports = function (portNumber) {
 
             case 'COMMAND':
                 // Find the current client in the list of connected clients
-                currentClient = clients.filter(c => c.ws === self)[0];
+                currentClient = clients.filter(c => c.ws === ws)[0];
 
                 // Find the corresponding presentation
                 targetClient = clients.filter(c => c.clientType === 'presentation' && c.id === currentClient.id)[0];
@@ -114,7 +114,7 @@ module.exports = function (portNumber) {
 
             case 'SIGNAL':
                 // Find the current client in the list of connected clients
-                currentClient = clients.filter(c => c.ws === self)[0];
+                currentClient = clients.filter(c => c.ws === ws)[0];
 
                 // Find the corresponding controller
                 targetClient = clients.filter(c => c.clientType === 'controller' && c.id === currentClient.id)[0];
@@ -134,15 +134,15 @@ module.exports = function (portNumber) {
             }
         });
 
-        ws.on('error', function () {
+        ws.on('error', () => {
             // Do nothing
         });
 
-        ws.on('close', function () {
-            var self = this,
-                currentClient = clients.filter(c => c.ws === self)[0],
-                index = clients.indexOf(currentClient),
-                pairedClient;
+        ws.on('close', () => {
+            const currentClient = clients.filter(c => c.ws === ws)[0],
+                index = clients.indexOf(currentClient);
+
+            let pairedClient;
 
             // Check if it is a redundant client
             if (index === -1) {
@@ -185,7 +185,7 @@ module.exports = function (portNumber) {
         });
     });
 
-    pingInterval = setInterval(function ping() {
+    const pingInterval = setInterval(() => {
         clients
             .map(c => c.ws)
             .forEach(ws => {
