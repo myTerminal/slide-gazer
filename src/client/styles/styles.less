@@ -364,6 +364,27 @@ body,
                     }
                 }
 
+                &.cube {
+
+                    .slide {
+                        .transitions(0.5s transform ease-in-out, 1s opacity);
+
+                        &.previous {
+                            .transform(translateX(-100%) rotateY(-90deg));
+                            .opacity(0);
+                        }
+
+                        &.visible {
+                            .opacity(1);
+                        }
+
+                        &.next {
+                            .transform(translateX(100%) rotateY(90deg));
+                            .opacity(0);
+                        }
+                    }
+                }
+
                 &.carousel {
 
                     .slide {
