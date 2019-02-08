@@ -266,7 +266,7 @@ body,
                 &.fade {
 
                     .slide {
-                        .transition(1s opacity);
+                        .transition(1s opacity ease-in-out);
 
                         .opacity(0);
 
@@ -279,7 +279,7 @@ body,
                 &.scroll-down {
 
                     .slide {
-                        .transition(1s);
+                        .transition(1s ease-in-out);
 
                         &.previous {
                             .transform(translateY(-120%));
@@ -287,8 +287,7 @@ body,
                         }
 
                         &.visible {
-                            .transform(translateY(0));
-                            .opacity(1);
+
                         }
 
                         &.next {
@@ -301,7 +300,7 @@ body,
                 &.scroll-right {
 
                     .slide {
-                        .transition(1s);
+                        .transition(1s ease-in-out);
 
                         &.previous {
                             .transform(translateX(-120%));
@@ -309,8 +308,7 @@ body,
                         }
 
                         &.visible {
-                            .transform(translateX(0));
-                            .opacity(1);
+
                         }
 
                         &.next {
@@ -323,7 +321,7 @@ body,
                 &.zoom {
 
                     .slide {
-                        .transition(1s);
+                        .transition(1s ease-in-out);
 
                         &.previous {
                             .transform(scale(1.5));
@@ -331,8 +329,7 @@ body,
                         }
 
                         &.visible {
-                            .transform(scale(1));
-                            .opacity(1);
+
                         }
 
                         &.next {
@@ -345,7 +342,7 @@ body,
                 &.flip {
 
                     .slide {
-                        .transitions(0.5s transform, 1s opacity);
+                        .transitions(0.5s transform ease-in-out, 1s opacity);
 
                         &.previous {
                             .transform(rotate3d(0, 1, 0, -90deg));
@@ -353,8 +350,7 @@ body,
                         }
 
                         &.visible {
-                            .transform(rotate3d(0, 0, 0, 0deg));
-                            .opacity(1);
+
                         }
 
                         &.next {
@@ -367,7 +363,7 @@ body,
                 &.cube {
 
                     .slide {
-                        .transitions(0.5s transform ease-in-out, 1s opacity);
+                        .transitions(0.5s ease-in-out);
 
                         &.previous {
                             .transform(translateX(-100%) rotateY(-90deg));
@@ -375,7 +371,7 @@ body,
                         }
 
                         &.visible {
-                            .opacity(1);
+
                         }
 
                         &.next {
@@ -388,7 +384,7 @@ body,
                 &.carousel {
 
                     .slide {
-                        .transitions(0.5s transform, 1s opacity);
+                        .transitions(0.5s transform ease-in-out, 1s opacity);
 
                         &.previous {
                             .transform(translate3d(-70%, 0, -500px));
@@ -396,8 +392,7 @@ body,
                         }
 
                         &.visible {
-                            .transform(translate3d(0, 0, 0));
-                            .opacity(1);
+
                         }
 
                         &.next {
