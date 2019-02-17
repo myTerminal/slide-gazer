@@ -289,7 +289,7 @@ class Presentation extends React.Component {
                                 Animation
                             </div>
                             {
-                                ['none', 'fade', 'scroll-down', 'scroll-right', 'zoom', 'flip', 'cube', 'carousel'].map(animation =>
+                                ['none', 'fade', 'scroll-down', 'scroll-right', 'zoom', 'flip', 'cube', 'cube-inverse', 'carousel'].map(animation =>
                                     (
                                         <div key={animation} className={'control-button' + (this.props.presentation.animation === animation ? ' active' : '')} onClick={() => this.setAnimation.bind(this)(animation)}>
                                             {

@@ -381,6 +381,27 @@ body,
                     }
                 }
 
+                &.cube-inverse {
+
+                    .slide {
+                        .transitions(0.5s ease-in-out);
+
+                        &.previous {
+                            .transform(translateX(-100%) rotateY(90deg));
+                            .opacity(0);
+                        }
+
+                        &.visible {
+
+                        }
+
+                        &.next {
+                            .transform(translateX(100%) rotateY(-90deg));
+                            .opacity(0);
+                        }
+                    }
+                }
+
                 &.carousel {
 
                     .slide {
