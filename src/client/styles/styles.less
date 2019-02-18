@@ -14,6 +14,21 @@
     src: url('../fonts/OpenSans-Bold.ttf');
 }
 
+@lightest-color: #fff;
+@highlight-color: #ccc;
+@dark-color: #333;
+@darkest-color: #000;
+
+@top-panel-color-one: #444;
+@top-panel-color-two: #222;
+@controller-url-color: #aaa;
+
+@accent-primary: #35a5ab;
+@accent-secondary: #1b4048;
+
+@emphasis-color-one: #f00;
+@emphasis-color-two: #0f0;
+
 html,
 body,
 #page {
@@ -38,34 +53,34 @@ body,
     }
 
     .regular-text {
-        color: #fff;
-        text-shadow: 0 0 20px #000;
+        color: @lightest-color;
+        text-shadow: 0 0 20px @darkest-color;
     }
 
     .control-button {
         display: inline-block;
         min-width: 40px;
         height: 30px;
-        border: 2px solid #fff;
+        border: 2px solid @lightest-color;
         .round-borders(5px);
         cursor: pointer;
         padding: 5px;
         margin: 0 5px;
-        background-color: #333;
-        color: #fff;
+        background-color: @dark-color;
+        color: @lightest-color;
         text-decoration: none;
         text-align: center;
         line-height: 30px;
-        box-shadow: 0 0 10px #000;
+        box-shadow: 0 0 10px @darkest-color;
 
         &.active {
-            background-color: #ccc;
-            color: #000;
+            background-color: @highlight-color;
+            color: @darkest-color;
         }
 
         &:hover {
-            background-color: #fff;
-            color: #000;
+            background-color: @lightest-color;
+            color: @darkest-color;
         }
     }
 
@@ -102,8 +117,8 @@ body,
             left: 0;
             width: 100%;
             height: 20px;
-            .background-gradient-twoColor(#000, transparent);
-            color: #fff;
+            .background-gradient-twoColor(@darkest-color, transparent);
+            color: @lightest-color;
             overflow: hidden;
             z-index: 3;
             .transition (0.5s);
@@ -115,8 +130,8 @@ body,
                 width: 100%;
                 height: 20px;
                 text-align: center;
-                .background-gradient-twoColor(#444, #222);
-                color: #fff;
+                .background-gradient-twoColor(@top-panel-color-one, @top-panel-color-two);
+                color: @lightest-color;
                 cursor: pointer;
 
                 #top-panel-pulldown-trigger {
@@ -128,8 +143,8 @@ body,
                     top: 0;
                     left: 0;
                     height: 20px;
-                    .background-gradient-twoColor(#0f0, #070);
-                    .opacity(0.5);
+                    .background-gradient-twoColor(@accent-primary, @accent-secondary);
+                    .opacity(0.7);
                     .transition(1s);
                 }
 
@@ -140,7 +155,7 @@ body,
                     height: 20px;
                     line-height: 20px;
                     font-size: 0.7em;
-                    text-shadow: 0 0 5px #000;
+                    text-shadow: 0 0 5px @darkest-color;
                 }
 
                 #controller-connection-icon {
@@ -159,7 +174,7 @@ body,
 
                     .controls-row-header {
                         margin: 5px 0px;
-                        text-shadow: 0 0 10px #000;
+                        text-shadow: 0 0 10px @darkest-color;
                     }
 
                     #qr-code-image {
@@ -172,7 +187,7 @@ body,
                     #controller-url-link {
                         display: inline-block;
                         padding: 2px;
-                        background-color: #aaa;
+                        background-color: @controller-url-color;
                         .round-borders(3px);
                     }
                 }
@@ -210,7 +225,7 @@ body,
             .box-sizing(border-box);
             padding-top: 20px;
             height: 100%;
-            background-color: #ccc;
+            background-color: @highlight-color;
 
             #presentation {
                 .perspective(500px);
@@ -233,14 +248,14 @@ body,
                     margin: 0 auto;
                     max-width: 960px;
                     overflow-y: scroll;
-                    background-color: #fff;
+                    background-color: @lightest-color;
                     position: absolute;
                     width: 100%;
                     height: 100%;
                     padding: 25px 50px;
                     height: 100%;
-                    border: 1px solid #fff;
-                    box-shadow: 0 0 5px #888;
+                    border: 1px solid @lightest-color;
+                    box-shadow: 0 0 5px @dark-color;
 
                     &.visible {
                         z-index: 3;
@@ -425,7 +440,7 @@ body,
 
                 .footer {
                     margin-top: 50px;
-                    border-top: 1px solid #000;
+                    border-top: 1px solid @darkest-color;
                     display: none;
                     text-align: center;
                 }
@@ -435,11 +450,11 @@ body,
                     .slide {
 
                         * {
-                            color: #ccc;
+                            color: @highlight-color;
                         }
 
                         strong {
-                            color: #f00;
+                            color: @emphasis-color-one;
                             font-size: 2em;
                         }
                     }
@@ -453,7 +468,7 @@ body,
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #1b4048;
+            background-color: @accent-secondary;
             z-index: 5;
             .transition(0.5s);
 
@@ -480,7 +495,7 @@ body,
                         position: absolute;
                         width: 100%;
                         height: 100%;
-                        background-color: #35a5ab;
+                        background-color: @accent-primary;
                         animation-name: lift;
                         animation-duration: 2s;
                         animation-iteration-count: infinite;
@@ -507,7 +522,7 @@ body,
 
                 #presentation-loading-text {
                     margin-top: 15px;
-                    color: #fff;
+                    color: @lightest-color;
                 }
             }
         }
@@ -553,12 +568,12 @@ body,
             #controller-presentation-view {
                 height: 70%;
                 font-size: 0.5em;
-                background-color: #fff;
+                background-color: @lightest-color;
                 overflow-y: scroll;
 
                 .slide {
                     padding: 5px;
-                    border: 1px solid #777;
+                    border: 1px solid @dark-color;
                     .opacity(0.3);
 
                     img {
@@ -574,8 +589,8 @@ body,
                     }
 
                     &.active {
-                        background: #ddd;
-                        border-color: #0f0;
+                        background: @highlight-color;
+                        border-color: @emphasis-color-two;
                         .opacity(1);
 
                         &+ .slide {
@@ -595,26 +610,27 @@ body,
                 #presentation-progress-bar-container {
                     position: relative;
                     height: 20px;
-                    .background-gradient-twoColor(#444, #222);
-                    border-top: 5px solid #777;
+                    .background-gradient-twoColor(@top-panel-color-one, @top-panel-color-two);
+                    border: 2px solid @darkest-color;
+                    border-width: 2px 0;
 
                     #presentation-progress-bar {
                         position: absolute;
                         top: 0;
                         left: 0;
                         height: 20px;
-                        .background-gradient-twoColor(#0f0, #070);
+                        .background-gradient-twoColor(@accent-primary, @accent-secondary);
                         .transition(1s);
                     }
                 }
 
                 #controller-screen {
-                    height: 25px;
-                    line-height: 25px;
+                    height: 26px;
+                    line-height: 26px;
                     text-align: center;
-                    background-color: #040;
-                    color: #0f0;
-                    box-shadow: 0 0 15px 0 #0f0 inset;
+                    background-color: @accent-secondary;
+                    color: @accent-primary;
+                    box-shadow: 0 0 15px 0 @accent-primary inset;
 
                     .presentation-detail {
 
@@ -626,7 +642,7 @@ body,
                 .box-sizing(border-box);
                 height: 30%;
                 padding-top: 50px;
-                background-color: #000;
+                background-color: @darkest-color;
 
                 .control-row {
                     height: 50%;
@@ -634,12 +650,12 @@ body,
                     .presentation-control-button {
                         float: left;
                         .box-sizing(border-box);
-                        border: 5px solid #000;
+                        border: 5px solid @darkest-color;
                         width: 25%;
                         height: 100%;
                         text-align: center;
-                        .background-gradient-twoColor(#000, #444);
-                        color: #fff;
+                        .background-gradient-twoColor(@dark-color, @dark-color);
+                        color: @lightest-color;
                         cursor: pointer;
                         .round-borders(10px);
 
@@ -650,13 +666,13 @@ body,
                         }
 
                         &.active {
-                            .background-gradient-twoColor(#fff, #ccc);
-                            color: #000;
+                            .background-gradient-twoColor(@accent-primary, @accent-secondary);
+                            color: @lightest-color;
                         }
 
                         &:hover {
-                            .background-gradient-twoColor(#444, #888);
-                            color: #fff;
+                            .background-gradient-twoColor(@highlight-color, @dark-color);
+                            color: @lightest-color;
                         }
                     }
                 }
@@ -694,7 +710,7 @@ body,
                     }
 
                     #presentation-container {
-                        background-color: #fff;
+                        background-color: @lightest-color;
 
                         #presentation {
 
@@ -726,7 +742,7 @@ body,
                                 .slide {
 
                                     * {
-                                        color: #000;
+                                        color: @darkest-color;
                                         font-size: inherit;
                                     }
                                 }

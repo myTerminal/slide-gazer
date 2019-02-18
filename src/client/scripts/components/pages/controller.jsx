@@ -185,7 +185,7 @@ class Controller extends React.Component {
                         </div>
                         <div className="control-row">
                             <div className="presentation-control-button" onClick={this.disconnect.bind(this)}>
-                                <span className="fa fa-3x fa-power-off" style={{ color: 'red' }} />
+                                <span className="fa fa-3x fa-power-off" style={{ color: '#f00' }} />
                             </div>
                             <div className={'presentation-control-button' + (!this.props.controller.isZoomedIn ? ' active disabled' : '')} onClick={this.zoomOutOnCurrentSlide.bind(this)}>
                                 <span className="fa fa-3x fa-search-minus" />
