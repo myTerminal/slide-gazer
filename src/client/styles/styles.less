@@ -121,12 +121,10 @@ body,
             color: @lightest-color;
             overflow: hidden;
             z-index: 3;
-            .transition (0.5s);
+            .transition(0.5s);
 
             #top-panel-head {
-                position: fixed;
-                top: 0;
-                left: 0;
+                position: absolute;
                 width: 100%;
                 height: 20px;
                 text-align: center;
@@ -198,9 +196,30 @@ body,
             }
         }
 
+        #bottom-panel {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            .background-gradient-twoColor(transparent, @darkest-color);
+            color: @lightest-color;
+            overflow: hidden;
+            z-index: 3;
+            .transition(0.5s);
+
+            #bottom-panel-head {
+                position: absolute;
+                width: 100%;
+                height: 20px;
+                .background-gradient-twoColor(@top-panel-color-one, @top-panel-color-two);
+                color: @lightest-color;
+            }
+        }
+
         #stage-container {
             .box-sizing(border-box);
-            padding-top: 20px;
+            padding: 20px 0;
             width: 100%;
             height: 100%;
             overflow-y: auto;
@@ -223,7 +242,7 @@ body,
 
         #presentation-container {
             .box-sizing(border-box);
-            padding-top: 20px;
+            padding: 20px 0;
             height: 100%;
             background-color: @highlight-color;
 
