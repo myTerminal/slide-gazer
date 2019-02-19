@@ -41,11 +41,11 @@ You can select a presentation to be presented in one of the following three ways
 Once a presentation is started, navigate through the slides using the right and left arrow keys on the keyboard.
 Use the up and down arrow keys to focus a few emphasized words on a slide and restore view back to normal respectively.
 
-Hover on the top-menu to reveal more options like animations and slide auto-transition.
+Use the buttons on the bottom edge of the screen to reveal more options like animations and slide auto-transition.
 
 ### Controlling a slide-show
 
-While a presentation is being presented, expand the top-menu to view the URL that can be used to control the presentation from another device.
+While a presentation is being presented, select **Control** from the bottom edge of the screen to view the URL that can be used to control the presentation from another device.
 
 You can also scan the QR code to navigate to the URL.
 
@@ -81,7 +81,6 @@ Start the application with
 
 ## To-do
 
-* Make presentation controls more screen agnostic
 * Touch gestures for mobile devices
 * Implement "jump-to-slide"
 * Multiple instanced presentations
