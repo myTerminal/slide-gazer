@@ -15,6 +15,7 @@ const initialState = {
     currentSlideIndex: 0,
     isZoomedIn: false,
     presentationProgress: 0,
+    controlMode: null,
     isAutoTransitionEnabled: false,
     animation: 'scroll-down',
     isControllerConnected: false
@@ -62,6 +63,11 @@ const presentationReducer = (state = initialState, action) => {
             ...state,
             isZoomedIn: false
         };
+    case presentation.setControlMode:
+        return {
+            ...state,
+            controlMode: action.payLoad
+        };
     case presentation.toggleAutoTransition:
         return {
             ...state,
@@ -92,6 +98,7 @@ const presentationReducer = (state = initialState, action) => {
             slideCount: 0,
             currentSlideIndex: 0,
             presentationProgress: 0,
+            controlMode: null,
             isAutoTransitionEnabled: false
         };
     default:

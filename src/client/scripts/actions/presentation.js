@@ -128,6 +128,14 @@ const zoomOut = () =>
         });
     };
 
+const setControlMode = mode =>
+    dispatch => {
+        dispatch({
+            type: presentation.setControlMode,
+            payLoad: mode
+        });
+    };
+
 const toggleAutoTransition = () =>
     dispatch => {
         dispatch({
@@ -182,6 +190,7 @@ export default {
     previousSlide,
     zoomIn,
     zoomOut,
+    setControlMode,
     toggleAutoTransition,
     setAnimation,
     getAnimation,

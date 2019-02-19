@@ -29,6 +29,8 @@
 @emphasis-color-one: #f00;
 @emphasis-color-two: #0f0;
 
+@backdrop-color: rgba(0, 0, 0, 0.8);
+
 html,
 body,
 #page {
@@ -117,11 +119,9 @@ body,
             left: 0;
             width: 100%;
             height: 20px;
-            .background-gradient-twoColor(@darkest-color, transparent);
             color: @lightest-color;
             overflow: hidden;
-            z-index: 3;
-            .transition(0.5s);
+            z-index: 4;
 
             #top-panel-head {
                 position: absolute;
@@ -132,17 +132,12 @@ body,
                 color: @lightest-color;
                 cursor: pointer;
 
-                #top-panel-pulldown-trigger {
-                    line-height: 20px;
-                }
-
                 #top-panel-progress-bar {
                     position: absolute;
                     top: 0;
                     left: 0;
                     height: 20px;
                     .background-gradient-twoColor(@accent-primary, @accent-secondary);
-                    .opacity(0.7);
                     .transition(1s);
                 }
 
@@ -163,15 +158,77 @@ body,
                     line-height: 20px;
                 }
             }
+        }
 
-            #top-panel-body {
-                margin-top: 20px;
+        #bottom-panel {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            color: @lightest-color;
+            overflow: hidden;
+            z-index: 3;
 
-                .controls-row {
-                    padding: 10px;
+            #bottom-panel-head {
+                position: absolute;
+                width: 100%;
+                height: 20px;
+                .background-gradient-twoColor(@top-panel-color-one, @top-panel-color-two);
+                color: @lightest-color;
+                z-index: 2;
 
-                    .controls-row-header {
-                        margin: 5px 0px;
+                .bottom-panel-control {
+                    display: inline-block;
+                    float: left;
+                    margin-left: 3px;
+                    padding: 0 2px;
+                    font-size: 0.7em;
+                    line-height: 20px;
+                    cursor: pointer;
+                    background-color: @accent-secondary;
+
+                    &:hover {
+                        color: @accent-primary;
+                    }
+
+                    &.active {
+                        background-color: @accent-primary;
+                        color: @darkest-color;
+                    }
+
+                    &.hidden {
+                        display: none;
+                    }
+                }
+            }
+
+            #bottom-panel-body {
+                .box-sizing(border-box);
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 0;
+                background-color: @backdrop-color;
+                .transition(0.5s);
+
+                &.active {
+                    padding: 30px;
+                    height: 100%;
+                }
+
+                .bottom-panel-body-content {
+                    display: none;
+                    width: 100%;
+                    height: 100%;
+
+                    &.visible {
+                        display: inline-block;
+                    }
+
+                    .controls-header {
+                        margin: 10px 0;
                         text-shadow: 0 0 10px @darkest-color;
                     }
 
@@ -188,32 +245,11 @@ body,
                         background-color: @controller-url-color;
                         .round-borders(3px);
                     }
+
+                    .control-button {
+                        margin: 0 5px 5px 0;
+                    }
                 }
-            }
-
-            &:hover {
-                height: 70%;
-            }
-        }
-
-        #bottom-panel {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 20px;
-            .background-gradient-twoColor(transparent, @darkest-color);
-            color: @lightest-color;
-            overflow: hidden;
-            z-index: 3;
-            .transition(0.5s);
-
-            #bottom-panel-head {
-                position: absolute;
-                width: 100%;
-                height: 20px;
-                .background-gradient-twoColor(@top-panel-color-one, @top-panel-color-two);
-                color: @lightest-color;
             }
         }
 

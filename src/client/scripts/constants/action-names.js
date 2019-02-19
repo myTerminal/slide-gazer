@@ -14,6 +14,7 @@ export const presentation = {
     previousSlide: 'PREVIOUS_SLIDE',
     zoomIn: 'ZOOM_IN',
     zoomOut: 'ZOOM_OUT',
+    setControlMode: 'SET_CONTROL_MODE',
     toggleAutoTransition: 'TOGGLE_AUTO_TRANSITION',
     setAnimation: 'SET_ANIMATION',
     getAnimation: 'GET_ANIMATION',

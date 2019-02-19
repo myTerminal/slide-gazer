@@ -253,54 +253,9 @@ class Presentation extends React.Component {
             <div id="presentation-page">
                 <div id="top-panel">
                     <div id="top-panel-head">
-                        <span id="top-panel-pulldown-trigger" className="fa fa-angle-double-down" />
                         <div id="top-panel-progress-bar" style={{ width: this.props.presentation.presentationProgress + '%' }} />
                         <span id="top-presentation-title-text">{this.props.presentation.title}</span>
                         <span id="controller-connection-icon" className={'fa fa-chain' + (!this.props.presentation.isControllerConnected ? ' hidden' : '')} title="A controller is connected" />
-                    </div>
-                    <div id="top-panel-body">
-                        <div className={'controls-row' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')}>
-                            <div id="qr-code-image" style={{ backgroundImage: 'url(' + this.props.presentation.controllerUrlQrCodeData + ')' }} />
-                            <div className="controls-row-header">
-                                Remotely control this presentation
-                            </div>
-                            <div>
-                                <a id="controller-url-link" href={this.props.configs['web-protocol'] + '://' + this.props.configs.domain + '/control/' + this.props.presentation.presentationCode} target="_blank">
-                                    {this.props.configs['web-protocol'] + '://' + this.props.configs.domain + '/control/' + this.props.presentation.presentationCode}
-                                </a>
-                            </div>
-                        </div>
-                        <div className="controls-row">
-                            <div className="controls-row-header">
-                                Presentation
-                            </div>
-                            <div className={'control-button' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')} onClick={this.endPresentation.bind(this)}>
-                                End
-                            </div>
-                            <div className={'control-button' + (this.props.presentation.isPresentationLoaded ? ' hidden' : '')} onClick={this.backToHome.bind(this)}>
-                                Back
-                            </div>
-                            <div className={'control-button' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '') + (this.props.presentation.isAutoTransitionEnabled ? ' active' : '')} onClick={this.toggleAutoTransition.bind(this)}>
-                                Auto-Transition
-                            </div>
-                        </div>
-                        <div className={'controls-row' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')}>
-                            <div className="controls-row-header">
-                                Animation
-                            </div>
-                            {
-                                ['none', 'fade', 'scroll-down', 'scroll-right', 'zoom', 'flip', 'cube', 'cube-inverse', 'carousel'].map(animation =>
-                                    (
-                                        <div key={animation} className={'control-button' + (this.props.presentation.animation === animation ? ' active' : '')} onClick={() => this.setAnimation.bind(this)(animation)}>
-                                            {
-                                                animation.slice(0, 1)
-                                                    .toUpperCase()
-                                                + animation.slice(1)
-                                            }
-                                        </div>
-                                    ))
-                            }
-                        </div>
                     </div>
                 </div>
                 <div id="stage-container" className={this.props.presentation.isPresentationLoaded ? 'hidden' : ''}>
@@ -322,12 +277,12 @@ class Presentation extends React.Component {
                             </div>
                         </FilePicker>
                         <br />
-                        <div className={'control-button' + (!this.props.presentation.previousPresentationDataExists ? ' disabled' : '')} onClick={this.reloadLastPresentation.bind(this)}>
+                        <div className={'control-button' + (!this.props.presentation.previousPresentationDataExists ? ' disabled' : '')} onClick={() => this.reloadLastPresentation()}>
                             Reload the last presentation
                         </div>
                         <br />
                         <br />
-                        <div className="control-button" onClick={this.loadSamplePresentation.bind(this)}>
+                        <div className="control-button" onClick={() => this.loadSamplePresentation()}>
                             Load a sample presentation
                         </div>
                         <br />
@@ -335,7 +290,7 @@ class Presentation extends React.Component {
                         <h2 className="regular-text">
                             To see what a markdown file looks like:
                         </h2>
-                        <div className="control-button" onClick={this.downloadSamplePresentation.bind(this)}>
+                        <div className="control-button" onClick={() => this.downloadSamplePresentation()}>
                             Download a sample
                         </div>
                     </div>
@@ -347,7 +302,62 @@ class Presentation extends React.Component {
                 </div>
                 <div id="bottom-panel">
                     <div id="bottom-panel-head">
-                        &nbsp;
+                        <div className={'bottom-panel-control' + (this.props.presentation.isPresentationLoaded ? ' hidden' : '')} onClick={() => this.backToHome()}>
+                            Back
+                        </div>
+                        <div className={'bottom-panel-control' + (this.props.presentation.controlMode === 'presentation' ? ' active' : '') + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')} onClick={() => this.props.setControlMode('presentation')}>
+                            Presentation
+                        </div>
+                        <div className={'bottom-panel-control' + (this.props.presentation.controlMode === 'control' ? ' active' : '') + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')} onClick={() => this.props.setControlMode('control')}>
+                            Control
+                        </div>
+                        <div className={'bottom-panel-control' + (this.props.presentation.controlMode === 'transition' ? ' active' : '') + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')} onClick={() => this.props.setControlMode('transition')}>
+                            Slide-Transition
+                        </div>
+                        <div className={'bottom-panel-control' + (!this.props.presentation.controlMode ? ' hidden' : '')} onClick={() => this.props.setControlMode(null)}>
+                            Close
+                        </div>
+                    </div>
+                    <div id="bottom-panel-body" className={this.props.presentation.controlMode ? 'active' : ''}>
+                        <div className={'bottom-panel-body-content' + (this.props.presentation.controlMode === 'presentation' ? ' visible' : '')}>
+                            <div className="controls-header">
+                                Presentation
+                            </div>
+                            <div className={'control-button' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')} onClick={() => this.endPresentation()}>
+                                End
+                            </div>
+                            <div className={'control-button' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '') + (this.props.presentation.isAutoTransitionEnabled ? ' active' : '')} onClick={() => this.toggleAutoTransition()}>
+                                Auto-Transition
+                            </div>
+                        </div>
+                        <div className={'bottom-panel-body-content' + (this.props.presentation.controlMode === 'control' ? ' visible' : '')}>
+                            <div className="controls-header">
+                                Remotely control this presentation
+                            </div>
+                            <div id="qr-code-image" style={{ backgroundImage: 'url(' + this.props.presentation.controllerUrlQrCodeData + ')' }} />
+                            <div>
+                                <a id="controller-url-link" href={this.props.configs['web-protocol'] + '://' + this.props.configs.domain + '/control/' + this.props.presentation.presentationCode} target="_blank">
+                                    {this.props.configs['web-protocol'] + '://' + this.props.configs.domain + '/control/' + this.props.presentation.presentationCode}
+                                </a>
+                            </div>
+                        </div>
+                        <div className={'bottom-panel-body-content' + (this.props.presentation.controlMode === 'transition' ? ' visible' : '')}>
+                            <div className="controls-header">
+                                Animation
+                            </div>
+                            {
+                                ['none', 'fade', 'scroll-down', 'scroll-right', 'zoom', 'flip', 'cube', 'cube-inverse', 'carousel'].map(animation =>
+                                    (
+                                        <div key={animation} className={'control-button' + (this.props.presentation.animation === animation ? ' active' : '')} onClick={() => this.setAnimation(animation)}>
+                                            {
+                                                animation.slice(0, 1)
+                                                    .toUpperCase()
+                                                + animation.slice(1)
+                                            }
+                                        </div>
+                                    ))
+                            }
+                        </div>
                     </div>
                 </div>
                 <div id="presentation-loading" className={this.props.presentation.isLoading ? 'loading' : ''}>
