@@ -1,4 +1,8 @@
+/* global require */
+
 import { presentation } from '../constants/action-names';
+
+const packageDetails = require('../../../../package.json');
 
 const initialState = {
     isLoading: false,
@@ -6,7 +10,7 @@ const initialState = {
     isPresentationLoaded: false,
     presentationCode: '',
     controllerUrlQRCodeData: '',
-    title: '',
+    title: `Slide Gazer v${packageDetails.version}`,
     slideCount: 0,
     currentSlideIndex: 0,
     isZoomedIn: false,
@@ -83,7 +87,7 @@ const presentationReducer = (state = initialState, action) => {
             ...state,
             isPresentationLoaded: false,
             presentationCode: '',
-            title: '',
+            title: initialState.title,
             controllerUrlQRCodeData: '',
             slideCount: 0,
             currentSlideIndex: 0,
