@@ -251,11 +251,50 @@ class Presentation extends React.Component {
     render() {
         return (
             <div id="presentation-page">
-                <div id="top-panel">
-                    <div id="top-panel-head">
+                <div id="top-panel" className="horizontal-panel">
+                    <div id="top-panel-head" className="panel-head">
                         <div id="top-panel-progress-bar" style={{ width: this.props.presentation.presentationProgress + '%' }} />
                         <span id="top-presentation-title-text">{this.props.presentation.title}</span>
-                        <span id="controller-connection-icon" className={'fa fa-chain' + (!this.props.presentation.isControllerConnected ? ' hidden' : '')} title="A controller is connected" />
+                        <div id="top-panel-icons" className="panel-icons">
+                            <span id="preferences-icon" className={'icon interactive fa fa-gear' + (!this.props.presentation.isPresentationLoaded || this.props.presentation.controlMode ? ' hidden' : '') + (this.props.presentation.controlMode ? ' active' : '')} onClick={() => this.props.setControlMode('presentation')} title="Set presentation preferences" />
+                            <span id="close-icon" className={'icon interactive fa fa-close' + (!this.props.presentation.isPresentationLoaded || !this.props.presentation.controlMode ? ' hidden' : '')} onClick={() => this.props.setControlMode(null)} title="Close" />
+                        </div>
+                    </div>
+                    <div id="top-panel-body" className={'panel-body' + (this.props.presentation.controlMode ? ' active' : '')}>
+                        <div className={'top-panel-body-content' + (this.props.presentation.controlMode === 'presentation' ? ' visible' : '')}>
+                            <div className="controls-header">
+                                Presentation
+                            </div>
+                            <div className={'control-button' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '') + (this.props.presentation.isAutoTransitionEnabled ? ' active' : '')} onClick={() => this.toggleAutoTransition()}>
+                                Auto-Transition
+                            </div>
+                            <div className="controls-header">
+                                Slide-transition Animation
+                            </div>
+                            {
+                                ['none', 'fade', 'scroll-down', 'scroll-right', 'zoom', 'flip', 'cube', 'cube-inverse', 'carousel'].map(animation =>
+                                    (
+                                        <div key={animation} className={'control-button' + (this.props.presentation.animation === animation ? ' active' : '')} onClick={() => this.setAnimation(animation)}>
+                                            {
+                                                animation.slice(0, 1)
+                                                    .toUpperCase()
+                                                + animation.slice(1)
+                                            }
+                                        </div>
+                                    ))
+                            }
+                        </div>
+                        <div className={'top-panel-body-content' + (this.props.presentation.controlMode === 'control' ? ' visible' : '')}>
+                            <div className="controls-header">
+                                Remotely control this presentation
+                            </div>
+                            <div id="qr-code-image" style={{ backgroundImage: 'url(' + this.props.presentation.controllerUrlQrCodeData + ')' }} />
+                            <div>
+                                <a id="controller-url-link" href={this.props.configs['web-protocol'] + '://' + this.props.configs.domain + '/control/' + this.props.presentation.presentationCode} target="_blank">
+                                    {this.props.configs['web-protocol'] + '://' + this.props.configs.domain + '/control/' + this.props.presentation.presentationCode}
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div id="stage-container" className={this.props.presentation.isPresentationLoaded ? 'hidden' : ''}>
@@ -300,63 +339,16 @@ class Presentation extends React.Component {
                         <div id="slides-holder" />
                     </div>
                 </div>
-                <div id="bottom-panel">
-                    <div id="bottom-panel-head">
-                        <div className={'bottom-panel-control' + (this.props.presentation.isPresentationLoaded ? ' hidden' : '')} onClick={() => this.backToHome()}>
-                            Back
+                <div id="bottom-panel" className="horizontal-panel">
+                    <div id="bottom-panel-head" className="panel-head">
+                        <div className={'panel-control' + (this.props.presentation.isPresentationLoaded ? ' hidden' : '')} onClick={() => this.backToHome()}>
+                            Go Back
                         </div>
-                        <div className={'bottom-panel-control' + (this.props.presentation.controlMode === 'presentation' ? ' active' : '') + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')} onClick={() => this.props.setControlMode('presentation')}>
-                            Presentation
+                        <div className={'panel-control' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')} onClick={() => this.endPresentation()}>
+                            End Presentation
                         </div>
-                        <div className={'bottom-panel-control' + (this.props.presentation.controlMode === 'control' ? ' active' : '') + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')} onClick={() => this.props.setControlMode('control')}>
-                            Control
-                        </div>
-                        <div className={'bottom-panel-control' + (this.props.presentation.controlMode === 'transition' ? ' active' : '') + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')} onClick={() => this.props.setControlMode('transition')}>
-                            Slide-Transition
-                        </div>
-                        <div className={'bottom-panel-control' + (!this.props.presentation.controlMode ? ' hidden' : '')} onClick={() => this.props.setControlMode(null)}>
-                            Close
-                        </div>
-                    </div>
-                    <div id="bottom-panel-body" className={this.props.presentation.controlMode ? 'active' : ''}>
-                        <div className={'bottom-panel-body-content' + (this.props.presentation.controlMode === 'presentation' ? ' visible' : '')}>
-                            <div className="controls-header">
-                                Presentation
-                            </div>
-                            <div className={'control-button' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')} onClick={() => this.endPresentation()}>
-                                End
-                            </div>
-                            <div className={'control-button' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '') + (this.props.presentation.isAutoTransitionEnabled ? ' active' : '')} onClick={() => this.toggleAutoTransition()}>
-                                Auto-Transition
-                            </div>
-                        </div>
-                        <div className={'bottom-panel-body-content' + (this.props.presentation.controlMode === 'control' ? ' visible' : '')}>
-                            <div className="controls-header">
-                                Remotely control this presentation
-                            </div>
-                            <div id="qr-code-image" style={{ backgroundImage: 'url(' + this.props.presentation.controllerUrlQrCodeData + ')' }} />
-                            <div>
-                                <a id="controller-url-link" href={this.props.configs['web-protocol'] + '://' + this.props.configs.domain + '/control/' + this.props.presentation.presentationCode} target="_blank">
-                                    {this.props.configs['web-protocol'] + '://' + this.props.configs.domain + '/control/' + this.props.presentation.presentationCode}
-                                </a>
-                            </div>
-                        </div>
-                        <div className={'bottom-panel-body-content' + (this.props.presentation.controlMode === 'transition' ? ' visible' : '')}>
-                            <div className="controls-header">
-                                Animation
-                            </div>
-                            {
-                                ['none', 'fade', 'scroll-down', 'scroll-right', 'zoom', 'flip', 'cube', 'cube-inverse', 'carousel'].map(animation =>
-                                    (
-                                        <div key={animation} className={'control-button' + (this.props.presentation.animation === animation ? ' active' : '')} onClick={() => this.setAnimation(animation)}>
-                                            {
-                                                animation.slice(0, 1)
-                                                    .toUpperCase()
-                                                + animation.slice(1)
-                                            }
-                                        </div>
-                                    ))
-                            }
+                        <div id="bottom-panel-icons" className="panel-icons">
+                            <span id="controller-connection-icon" className={'icon interactive fa fa-chain' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '') + (this.props.presentation.isControllerConnected ? ' active' : '')} onClick={() => this.props.setControlMode('control')} title={this.props.presentation.isControllerConnected ? 'A controller is connected' : 'Connect a controller'} />
                         </div>
                     </div>
                 </div>

@@ -113,56 +113,8 @@ body,
     #presentation-page {
         height: 100%;
 
-        #top-panel {
+        .horizontal-panel {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 20px;
-            color: @lightest-color;
-            overflow: hidden;
-            z-index: 4;
-
-            #top-panel-head {
-                position: absolute;
-                width: 100%;
-                height: 20px;
-                text-align: center;
-                .background-gradient-twoColor(@top-panel-color-one, @top-panel-color-two);
-                color: @lightest-color;
-                cursor: pointer;
-
-                #top-panel-progress-bar {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    height: 20px;
-                    .background-gradient-twoColor(@accent-primary, @accent-secondary);
-                    .transition(1s);
-                }
-
-                #top-presentation-title-text {
-                    position: absolute;
-                    top: 0;
-                    left: 2px;
-                    height: 20px;
-                    line-height: 20px;
-                    font-size: 0.7em;
-                    text-shadow: 0 0 5px @darkest-color;
-                }
-
-                #controller-connection-icon {
-                    position: absolute;
-                    top: 0;
-                    right: 2px;
-                    line-height: 20px;
-                }
-            }
-        }
-
-        #bottom-panel {
-            position: fixed;
-            bottom: 0;
             left: 0;
             width: 100%;
             height: 20px;
@@ -170,15 +122,16 @@ body,
             overflow: hidden;
             z-index: 3;
 
-            #bottom-panel-head {
+            .panel-head {
                 position: absolute;
                 width: 100%;
                 height: 20px;
                 .background-gradient-twoColor(@top-panel-color-one, @top-panel-color-two);
                 color: @lightest-color;
                 z-index: 2;
+                cursor: default;
 
-                .bottom-panel-control {
+                .panel-control {
                     display: inline-block;
                     float: left;
                     margin-left: 3px;
@@ -201,24 +154,85 @@ body,
                         display: none;
                     }
                 }
+
+                .panel-icons {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    height: 20px;
+                    width: 30%;
+                    line-height: 20px;
+
+                    .icon {
+                        float: right;
+                        margin: 0 3px;
+                        padding: 0 3px;
+                        line-height: 20px;
+                        background-color: @accent-secondary;
+
+                        &.interactive {
+                            cursor: pointer;
+
+                            &:hover {
+                                color: @accent-primary;
+                            }
+
+                            &.active {
+                                color: @darkest-color;
+                                background-color: @accent-primary;
+                            }
+                        }
+                    }
+                }
             }
 
-            #bottom-panel-body {
+            .panel-body {
+
+            }
+        }
+
+        #top-panel {
+            top: 0;
+
+            #top-panel-head {
+
+                #top-panel-progress-bar {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    height: 20px;
+                    .background-gradient-twoColor(@accent-primary, @accent-secondary);
+                    .transition(1s);
+                }
+
+                #top-presentation-title-text {
+                    position: absolute;
+                    top: 0;
+                    left: 2px;
+                    height: 20px;
+                    line-height: 20px;
+                    font-size: 0.7em;
+                    text-shadow: 0 0 5px @darkest-color;
+                }
+            }
+
+            #top-panel-body {
                 .box-sizing(border-box);
                 position: fixed;
-                bottom: 0;
+                top: 0;
                 left: 0;
                 width: 100%;
                 height: 0;
                 background-color: @backdrop-color;
                 .transition(0.5s);
+                padding: 0 30px;
 
                 &.active {
                     padding: 30px;
                     height: 100%;
                 }
 
-                .bottom-panel-body-content {
+                .top-panel-body-content {
                     display: none;
                     width: 100%;
                     height: 100%;
@@ -251,6 +265,10 @@ body,
                     }
                 }
             }
+        }
+
+        #bottom-panel {
+            bottom: 0;
         }
 
         #stage-container {
