@@ -1,6 +1,5 @@
-/* global alert */
-
 import axios from 'axios';
+import { alert } from 'ample-alerts';
 import { configs } from '../constants/action-names';
 
 const getDomain = () =>
@@ -11,7 +10,7 @@ const getDomain = () =>
                 payLoad: response.data
             });
         }).catch(() => {
-            alert('Failed to fetch domain details.');
+            alert(['Error!', 'Failed to fetch domain details.']);
         });
     };
 

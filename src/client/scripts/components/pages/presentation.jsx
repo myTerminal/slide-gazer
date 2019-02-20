@@ -1,4 +1,4 @@
-/* global window document alert FileReader Blob */
+/* global window document FileReader Blob */
 
 import React from 'react';
 import { connect } from 'react-redux';
@@ -310,7 +310,7 @@ class Presentation extends React.Component {
                         <FilePicker
                             extensions={['md']}
                             onChange={file => this.onFilePick(file)}
-                            onError={err => alert(err)}>
+                            onError={err => document.alert(err)}>
                             <div className="control-button">
                                 Pick a markdown file
                             </div>

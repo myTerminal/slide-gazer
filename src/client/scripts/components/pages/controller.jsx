@@ -1,7 +1,8 @@
-/* global document alert */
+/* global document */
 
 import React from 'react';
 import { connect } from 'react-redux';
+import { alert } from 'ample-alerts';
 
 import getDomain from '../../actions/configs';
 import controllerActions from '../../actions/controller';
@@ -89,11 +90,11 @@ class Controller extends React.Component {
         if (info === 'DATA') {
             this.loadPresentation(data);
         } else if (info === 'NO-PRESENTATION') {
-            alert('The presentation you tried to connect to does not exist!');
+            alert(['Sorry!', 'The presentation you tried to connect to does not exist!']);
         } else if (info === 'DISCONNECTION') {
-            alert('The presentation you were controlling has ended');
+            alert(['Oops!', 'The presentation you were controlling has ended']);
         } else if (info === 'DUPLICATE') {
-            alert('Someone is already controlling the presentation you tried to connect!');
+            alert(['Hey!', 'Someone is already controlling the presentation you tried to connect to!']);
         }
     }
 
