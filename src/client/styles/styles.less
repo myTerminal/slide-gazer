@@ -765,7 +765,7 @@ body,
 
                 #presentation-page {
 
-                    #top-panel {
+                    .horizontal-panel {
                         display: none;
                     }
 
@@ -774,9 +774,11 @@ body,
                     }
 
                     #presentation-container {
+                        padding: 0;
                         background-color: @lightest-color;
 
                         #presentation {
+                            padding: 0;
 
                             .slide {
                                 position: static;
@@ -812,6 +814,10 @@ body,
                                 }
                             }
                         }
+                    }
+
+                    #presentation-loading {
+                        display: none;
                     }
                 }
 
