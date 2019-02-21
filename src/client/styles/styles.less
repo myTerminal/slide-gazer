@@ -51,7 +51,7 @@ body,
 
     .disabled {
         cursor: not-allowed !important;
-        .opacity(0.5);
+        .opacity(0.3);
     }
 
     .regular-text {
@@ -698,6 +698,7 @@ body,
                         text-align: center;
                         line-height: 25px;
                         color: @accent-primary;
+                        cursor: default;
                     }
                 }
 
@@ -728,14 +729,17 @@ body,
                                 .transform(translateY(-50%));
                             }
 
-                            &.active {
-                                .background-gradient-twoColor(@accent-primary, @accent-secondary);
-                                color: @lightest-color;
-                            }
+                            &:not(.disabled) {
 
-                            &:hover {
-                                .background-gradient-twoColor(@highlight-color, @dark-color);
-                                color: @lightest-color;
+                                &.active {
+                                    .background-gradient-twoColor(@accent-primary, @accent-secondary);
+                                    color: @lightest-color;
+                                }
+
+                                &:hover {
+                                    .background-gradient-twoColor(@accent-secondary, @dark-color);
+                                    color: @accent-primary;
+                                }
                             }
                         }
                     }

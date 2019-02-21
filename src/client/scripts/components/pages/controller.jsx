@@ -192,7 +192,7 @@ class Controller extends React.Component {
                                     <span className="fa fa-3x fa-search-plus" />
                                 </div>
                                 <div className="presentation-control-button disabled">
-                                    <span className="fa fa-3x fa-times" />
+                                    <span className="fa fa-3x" />
                                 </div>
                             </div>
                         </div>
