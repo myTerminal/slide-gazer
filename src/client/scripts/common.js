@@ -69,3 +69,7 @@ export const allImagesLoaded = images => {
 
 export const fetchSampleMarkdownFile = () =>
     axios.get('/sample-markdown-file');
+
+export const timers = {
+    slideTransitionTimer: null
+};

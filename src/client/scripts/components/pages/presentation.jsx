@@ -7,7 +7,7 @@ import showdown from 'showdown';
 import localforage from 'localforage';
 import FileSaver from 'file-saver';
 
-import { fetchSampleMarkdownFile } from '../../common';
+import { fetchSampleMarkdownFile, timers } from '../../common';
 import getDomain from '../../actions/configs';
 import presentationActions from '../../actions/presentation';
 
@@ -20,8 +20,6 @@ class Presentation extends React.Component {
         super(props);
 
         props.updatePreviousPresentationInfo();
-
-        this.autoTransitionTimer = null;
     }
 
     componentDidMount() {
@@ -189,10 +187,10 @@ class Presentation extends React.Component {
 
     toggleAutoTransition() {
         if (this.props.presentation.isAutoTransitionEnabled) {
-            window.clearInterval(this.autoTransitionTimer);
-            this.autoTransitionTimer = null;
+            window.clearInterval(timers.slideTransitionTimer);
+            timers.slideTransitionTimer = null;
         } else {
-            this.autoTransitionTimer = window.setInterval(
+            timers.slideTransitionTimer = window.setInterval(
                 this.autoTransitToNextSlide.bind(this),
                 5000
             );

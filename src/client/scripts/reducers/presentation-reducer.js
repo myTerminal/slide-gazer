@@ -1,6 +1,7 @@
-/* global require */
+/* global require, window */
 
 import { presentation } from '../constants/action-names';
+import { timers } from '../common';
 
 const packageDetails = require('../../../../package.json');
 
@@ -89,6 +90,10 @@ const presentationReducer = (state = initialState, action) => {
             isControllerConnected: action.payLoad
         };
     case presentation.endPresentation:
+        if (state.isAutoTransitionEnabled) {
+            window.clearTimeout(timers.slideTransitionTimer);
+        }
+
         return {
             ...state,
             isPresentationLoaded: false,
