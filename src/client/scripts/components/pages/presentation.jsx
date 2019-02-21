@@ -253,9 +253,14 @@ class Presentation extends React.Component {
                     <div id="top-panel-head" className="panel-head">
                         <div id="top-panel-progress-bar" style={{ width: this.props.presentation.presentationProgress + '%' }} />
                         <span id="top-presentation-title-text">{this.props.presentation.title}</span>
-                        <div id="top-panel-icons" className="panel-icons">
-                            <span id="preferences-icon" className={'icon interactive fa fa-gear' + (!this.props.presentation.isPresentationLoaded || this.props.presentation.controlMode ? ' hidden' : '') + (this.props.presentation.controlMode ? ' active' : '')} onClick={() => this.props.setControlMode('presentation')} title="Set presentation preferences" />
-                            <span id="close-icon" className={'icon interactive fa fa-close' + (!this.props.presentation.isPresentationLoaded || !this.props.presentation.controlMode ? ' hidden' : '')} onClick={() => this.props.setControlMode(null)} title="Close" />
+                        <div className="panel-controls-group panel-controls-group-right">
+                            <div className={'control-button smaller fa fa-close' + (!this.props.presentation.isPresentationLoaded || !this.props.presentation.controlMode ? ' invisible' : '') + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')} onClick={() => this.props.setControlMode(null)} title="Close" />
+                            <div className={'control-button smaller fa fa-gear' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')} onClick={() => this.props.setControlMode('presentation')} title="Set presentation preferences" />
+                            <div className={'control-button smaller fa fa-chain' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '') + (this.props.presentation.isControllerConnected ? ' active' : '')} onClick={() => this.props.setControlMode('control')} title={this.props.presentation.isControllerConnected ? 'A controller is connected' : 'Connect a controller'} />
+                            <div className={'control-button smaller fa fa-stop' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')} onClick={() => this.endPresentation()} title="End presentation" />
+                            <div className={'control-button smaller' + (this.props.presentation.isPresentationLoaded ? ' hidden' : '')} onClick={() => this.backToHome()}>
+                                Go Back
+                            </div>
                         </div>
                     </div>
                     <div id="top-panel-body" className={'panel-body' + (this.props.presentation.controlMode ? ' active' : '')}>
@@ -335,19 +340,6 @@ class Presentation extends React.Component {
                 <div id="presentation-container" className={!this.props.presentation.isPresentationLoaded ? 'hidden' : ''}>
                     <div id="presentation" className={'markdown-body ' + this.props.presentation.animation + (this.props.presentation.isZoomedIn ? ' zoomed' : '')}>
                         <div id="slides-holder" />
-                    </div>
-                </div>
-                <div id="bottom-panel" className="horizontal-panel">
-                    <div id="bottom-panel-head" className="panel-head">
-                        <div className={'panel-control' + (this.props.presentation.isPresentationLoaded ? ' hidden' : '')} onClick={() => this.backToHome()}>
-                            Go Back
-                        </div>
-                        <div className={'panel-control' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')} onClick={() => this.endPresentation()}>
-                            End Presentation
-                        </div>
-                        <div id="bottom-panel-icons" className="panel-icons">
-                            <span id="controller-connection-icon" className={'icon interactive fa fa-chain' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '') + (this.props.presentation.isControllerConnected ? ' active' : '')} onClick={() => this.props.setControlMode('control')} title={this.props.presentation.isControllerConnected ? 'A controller is connected' : 'Connect a controller'} />
-                        </div>
                     </div>
                 </div>
                 <div id="presentation-loading" className={this.props.presentation.isLoading ? 'loading' : ''}>
