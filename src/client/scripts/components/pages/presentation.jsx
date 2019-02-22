@@ -6,6 +6,7 @@ import { FilePicker } from 'react-file-picker';
 import showdown from 'showdown';
 import localforage from 'localforage';
 import FileSaver from 'file-saver';
+import Hammer from 'hammerjs';
 
 import { fetchSampleMarkdownFile, timers } from '../../common';
 import getDomain from '../../actions/configs';
@@ -20,6 +21,11 @@ class Presentation extends React.Component {
         super(props);
 
         props.updatePreviousPresentationInfo();
+
+        this.touchGestures = new Hammer(document.body);
+        this.touchGestures.get('swipe').set({
+            direction: Hammer.DIRECTION_ALL
+        });
     }
 
     componentDidMount() {
@@ -126,6 +132,32 @@ class Presentation extends React.Component {
             () => {
                 this.showSlide(0);
             }
+        );
+
+        this.touchGestures.on(
+            'swipe',
+            (function (evt) {
+                switch (evt.offsetDirection) {
+                case 2:
+                    // Swipe left = move to next slide
+                    this.props.nextSlide(this.showSlide.bind(this));
+                    break;
+                case 4:
+                    // Swipe right = move to previous slide
+                    this.props.previousSlide(this.showSlide.bind(this));
+                    break;
+                case 8:
+                    // Swipe up = zoom-in
+                    this.zoomInOnCurrentSlide();
+                    break;
+                case 16:
+                    // Swipe down = xoom-out
+                    this.zoomOutOnCurrentSlide();
+                    break;
+                default:
+                    // Do nothing
+                }
+            }).bind(this)
         );
     }
 
@@ -240,6 +272,8 @@ class Presentation extends React.Component {
         this.props.endPresentation();
 
         socketService.close();
+
+        this.touchGestures.off('swipe');
     }
 
     backToHome() {

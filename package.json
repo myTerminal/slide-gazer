@@ -1,6 +1,6 @@
 {
   "name": "slide-gazer",
-  "version": "0.26.0",
+  "version": "0.27.0",
   "description": "slide-gazer",
   "main": "src/server/index.js",
   "scripts": {
@@ -31,6 +31,7 @@
     "express": "4.16.4",
     "file-saver": "2.0.0",
     "font-awesome": "4.7.0",
+    "hammerjs": "2.0.8",
     "localforage": "1.7.3",
     "qrcode": "1.3.3",
     "react": "16.7.0",
