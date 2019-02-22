@@ -28,6 +28,7 @@
 
 @emphasis-color-one: #f00;
 @emphasis-color-two: #0f0;
+@red-color: #ff4444;
 
 @backdrop-color: rgba(0, 0, 0, 0.8);
 
@@ -74,6 +75,7 @@ body,
         text-align: center;
         line-height: 26px;
         .round-borders(5px);
+        .transition(0.25s);
         cursor: pointer;
 
         &.smaller {
@@ -85,11 +87,15 @@ body,
             line-height: 16px;
         }
 
-        &.invisible {
-            .opacity(0);
+        &.offsetted {
+            margin-left: -10% !important;
         }
 
         &:not(.disabled) {
+
+            &.red {
+                background-color: @red-color;
+            }
 
             &:hover {
                 background-color: @accent-primary;
