@@ -31,6 +31,6 @@ From **Preferences**, select Auto-Transition and the presentation will keep movi
 
 To control a presentation remotely, do one of the following:
 
-1. Open the **Control** menu from the bottom-right corner while in a presentation, open the link provided
+1. Open the **Control** menu from the top-right corner while in a presentation, open the link provided
 2. You can also scan the QR code to generate the URL
 3. Enter the numeric code at the end of the link and enter the same after selecting *Control* from the home page, on another device that you want to control the current presentation from.

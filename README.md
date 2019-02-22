@@ -45,7 +45,7 @@ Use the **Preferences** button on the top-right corner to reveal more options li
 
 ### Controlling a slide-show
 
-While a presentation is being presented, select **Control** from the bottom-right corner of the screen to view the URL that can be used to control the presentation from another device.
+While a presentation is being presented, select **Control** from the top-right corner of the screen to view the URL that can be used to control the presentation from another device.
 
 You can also scan the QR code to navigate to the URL.
 
@@ -82,6 +82,5 @@ Start the application with
 ## To-do
 
 * Touch gestures for mobile devices
-* Implement "jump-to-slide"
-* Multiple instanced presentations
+* "Slide-seek" to be able to jump to a specific slide
 * Support for less-smart web browsers
