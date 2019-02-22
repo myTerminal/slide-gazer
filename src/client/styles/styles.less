@@ -32,6 +32,9 @@
 
 @backdrop-color: rgba(0, 0, 0, 0.8);
 
+@panel-size: 30px;
+@panel-size-touch: 40px;
+
 html,
 body,
 #page {
@@ -140,7 +143,7 @@ body,
             position: fixed;
             left: 0;
             width: 100%;
-            height: 30px;
+            height: @panel-size;
             color: @lightest-color;
             overflow: hidden;
             z-index: 3;
@@ -148,7 +151,7 @@ body,
             .panel-head {
                 position: absolute;
                 width: 100%;
-                height: 30px;
+                height: @panel-size;
                 .background-gradient-twoColor(@top-panel-color-one, @top-panel-color-two);
                 color: @lightest-color;
                 z-index: 2;
@@ -157,9 +160,9 @@ body,
                 .panel-controls-group {
                     position: absolute;
                     top: 0;
-                    height: 30px;
+                    height: @panel-size;
                     width: 50%;
-                    line-height: 30px;
+                    line-height: @panel-size;
                     .transition(0.5s);
                     .opacity(0.5);
 
@@ -207,7 +210,7 @@ body,
                     position: absolute;
                     top: 0;
                     left: 0;
-                    height: 30px;
+                    height: @panel-size;
                     .background-gradient-twoColor(@accent-primary, @accent-secondary);
                     .transition(1s);
                 }
@@ -216,9 +219,9 @@ body,
                     position: absolute;
                     top: 0;
                     left: 2px;
-                    height: 30px;
+                    height: @panel-size;
                     font-size: 0.9em;
-                    line-height: 30px;
+                    line-height: @panel-size;
                     text-shadow: 0 0 5px @darkest-color;
                 }
             }
@@ -235,7 +238,7 @@ body,
                 .transition(0.5s);
 
                 &.active {
-                    padding: 30px;
+                    padding: @panel-size;
                     height: 100%;
                 }
 
@@ -276,7 +279,7 @@ body,
 
         #stage-container {
             .box-sizing(border-box);
-            padding-top: 30px;
+            padding-top: @panel-size;
             width: 100%;
             height: 100%;
             overflow-y: auto;
@@ -298,7 +301,7 @@ body,
 
         #presentation-container {
             .box-sizing(border-box);
-            padding-top: 30px;
+            padding-top: @panel-size;
             height: 100%;
             background-color: @highlight-color;
 
@@ -747,6 +750,66 @@ body,
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+body.mobile-mode {
+
+    .canvas {
+
+        .control-button {
+
+            &.smaller {
+                height: 34px;
+                line-height: 26px;
+            }
+        }
+
+        #presentation-page {
+
+            .horizontal-panel {
+                height: @panel-size-touch;
+
+                .panel-head {
+                    height: @panel-size-touch;
+
+                    .panel-controls-group {
+                        height: @panel-size-touch;
+                        line-height: @panel-size-touch;
+                    }
+                }
+            }
+
+            #top-panel {
+
+                #top-panel-head {
+
+                    #top-panel-progress-bar {
+                        height: @panel-size-touch;
+                    }
+
+                    #top-presentation-title-text {
+                        height: @panel-size-touch;
+                        line-height: @panel-size-touch;
+                    }
+                }
+
+                #top-panel-body {
+
+                    &.active {
+                        padding: @panel-size-touch;
+                    }
+                }
+            }
+
+            #stage-container {
+                padding-top: @panel-size-touch;
+            }
+
+            #presentation-container {
+                padding-top: @panel-size-touch;
             }
         }
     }
