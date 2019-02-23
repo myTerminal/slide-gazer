@@ -24,7 +24,7 @@ class Presentation extends React.Component {
 
         this.touchGestures = new Hammer(document.body);
         this.touchGestures.get('swipe').set({
-            direction: Hammer.DIRECTION_ALL
+            direction: Hammer.DIRECTION_HORIZONTAL
         });
     }
 
@@ -145,14 +145,6 @@ class Presentation extends React.Component {
                 case 4:
                     // Swipe right = move to previous slide
                     this.props.previousSlide(this.showSlide.bind(this));
-                    break;
-                case 8:
-                    // Swipe up = zoom-in
-                    this.zoomInOnCurrentSlide();
-                    break;
-                case 16:
-                    // Swipe down = xoom-out
-                    this.zoomOutOnCurrentSlide();
                     break;
                 default:
                     // Do nothing
@@ -374,6 +366,19 @@ class Presentation extends React.Component {
                 <div id="presentation-container" className={!this.props.presentation.isPresentationLoaded ? 'hidden' : ''}>
                     <div id="presentation" className={'markdown-body ' + this.props.presentation.animation + (this.props.presentation.isZoomedIn ? ' zoomed' : '')}>
                         <div id="slides-holder" />
+                    </div>
+                </div>
+                <div id="bottom-panel" className="horizontal-panel">
+                    <div id="bottom-panel-head" className="panel-head">
+                        <div className="panel-controls-group panel-controls-group-left">
+                            <div className={'control-button smaller fa fa-search-minus' + (!this.props.presentation.isZoomedIn ? ' active' : '')} onClick={() => this.zoomOutOnCurrentSlide(null)} title="Zoom out" />
+                        </div>
+                        <div id="gestures-help-text">
+                            Swipe here to change slide
+                        </div>
+                        <div className="panel-controls-group panel-controls-group-right">
+                            <div className={'control-button smaller fa fa-search-plus' + (this.props.presentation.isZoomedIn ? ' active' : '')} onClick={() => this.zoomInOnCurrentSlide(null)} title="Zoom in" />
+                        </div>
                     </div>
                 </div>
                 <div id="presentation-loading" className={this.props.presentation.isLoading ? 'loading' : ''}>

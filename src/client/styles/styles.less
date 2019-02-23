@@ -277,6 +277,22 @@ body,
             }
         }
 
+        #bottom-panel {
+            bottom: 0;
+            display: none;
+
+            #bottom-panel-head {
+
+                #gestures-help-text {
+                    height: @panel-size;
+                    font-size: 0.9em;
+                    line-height: @panel-size;
+                    text-align: center;
+                    text-shadow: 0 0 5px @darkest-color;
+                }
+            }
+        }
+
         #stage-container {
             .box-sizing(border-box);
             padding-top: @panel-size;
@@ -804,12 +820,24 @@ body.mobile-mode {
                 }
             }
 
+            #bottom-panel {
+                display: inherit;
+
+                #bottom-panel-head {
+
+                    #gestures-help-text {
+                        height: @panel-size-touch;
+                        line-height: @panel-size-touch;
+                    }
+                }
+            }
+
             #stage-container {
-                padding-top: @panel-size-touch;
+                padding: @panel-size-touch 0;
             }
 
             #presentation-container {
-                padding-top: @panel-size-touch;
+                padding: @panel-size-touch 0;
             }
         }
     }
