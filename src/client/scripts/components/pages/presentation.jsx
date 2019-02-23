@@ -371,13 +371,13 @@ class Presentation extends React.Component {
                 <div id="bottom-panel" className="horizontal-panel">
                     <div id="bottom-panel-head" className="panel-head">
                         <div className="panel-controls-group panel-controls-group-left">
-                            <div className={'control-button smaller fa fa-search-minus' + (!this.props.presentation.isZoomedIn ? ' active' : '')} onClick={() => this.zoomOutOnCurrentSlide(null)} title="Zoom out" />
+                            <div className={'control-button smaller fa fa-search-minus' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '') + (!this.props.presentation.isZoomedIn ? ' active' : '')} onClick={() => this.zoomOutOnCurrentSlide(null)} title="Zoom out" />
                         </div>
-                        <div id="gestures-help-text">
+                        <div id="gestures-help-text" className={(!this.props.presentation.isPresentationLoaded ? ' hidden' : '')}>
                             Swipe here to change slide
                         </div>
                         <div className="panel-controls-group panel-controls-group-right">
-                            <div className={'control-button smaller fa fa-search-plus' + (this.props.presentation.isZoomedIn ? ' active' : '')} onClick={() => this.zoomInOnCurrentSlide(null)} title="Zoom in" />
+                            <div className={'control-button smaller fa fa-search-plus' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '') + (this.props.presentation.isZoomedIn ? ' active' : '')} onClick={() => this.zoomInOnCurrentSlide(null)} title="Zoom in" />
                         </div>
                     </div>
                 </div>
