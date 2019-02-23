@@ -25,7 +25,11 @@ Select a slide-transition animation to use while moving between slides.
 
 ## Enabling auto-transition
 
-From **Preferences**, select Auto-Transition and the presentation will keep moving to the next slide automatically, currently every 5 seconds.
+From **Preferences**, select Auto-Transition and the presentation will keep moving to the next slide automatically.
+
+By default, the slides will start changing every 5 seconds.
+
+You can use change the delay using a slider next to the button.
 
 ## Controlling the presentation remotely
 
