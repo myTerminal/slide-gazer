@@ -143,6 +143,14 @@ const toggleAutoTransition = () =>
         });
     };
 
+const setAutoTransitionDelay = delay =>
+    dispatch => {
+        dispatch({
+            type: presentation.setAutoTransitionDelay,
+            payLoad: delay
+        });
+    };
+
 const setAnimation = animationName =>
     dispatch => {
         localforage.setItem('animationName', animationName)
@@ -192,6 +200,7 @@ export default {
     zoomOut,
     setControlMode,
     toggleAutoTransition,
+    setAutoTransitionDelay,
     setAnimation,
     getAnimation,
     setControllerConnectionState,

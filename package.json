@@ -1,6 +1,6 @@
 {
   "name": "slide-gazer",
-  "version": "0.28.0",
+  "version": "0.29.0",
   "description": "slide-gazer",
   "main": "src/server/index.js",
   "scripts": {
@@ -39,6 +39,7 @@
     "react-file-picker": "0.0.5",
     "react-redux": "6.0.0",
     "react-router-dom": "4.3.1",
+    "react-slider": "0.11.2",
     "redux": "4.0.1",
     "redux-thunk": "2.3.0",
     "showdown": "1.9.0",

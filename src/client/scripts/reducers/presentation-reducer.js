@@ -18,6 +18,7 @@ const initialState = {
     presentationProgress: 0,
     controlMode: null,
     isAutoTransitionEnabled: false,
+    autoTransitionDelay: 1,
     animation: 'scroll-down',
     isControllerConnected: false
 };
@@ -73,6 +74,11 @@ const presentationReducer = (state = initialState, action) => {
         return {
             ...state,
             isAutoTransitionEnabled: !state.isAutoTransitionEnabled
+        };
+    case presentation.setAutoTransitionDelay:
+        return {
+            ...state,
+            autoTransitionDelay: action.payLoad
         };
     case presentation.setAnimation:
         return {

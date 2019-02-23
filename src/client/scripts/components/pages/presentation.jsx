@@ -15,6 +15,7 @@ import presentationActions from '../../actions/presentation';
 import socketService from '../../services/presentation-socket-service.js';
 
 const converter = new showdown.Converter();
+const minimumSlideTransitionDelay = 5000;
 
 class Presentation extends React.Component {
     constructor(props) {
@@ -58,6 +59,16 @@ class Presentation extends React.Component {
 
     onFilePick(file) {
         this.loadFile(file);
+    }
+
+    onAutoTransitionDelayChange(event) {
+        const value = event.target.value,
+            newDelay = value * minimumSlideTransitionDelay;
+
+        window.clearInterval(timers.slideTransitionTimer);
+        this.setTimerToTransitionSlides(newDelay);
+
+        this.props.setAutoTransitionDelay(value);
     }
 
     loadFile(file) {
@@ -214,13 +225,19 @@ class Presentation extends React.Component {
             window.clearInterval(timers.slideTransitionTimer);
             timers.slideTransitionTimer = null;
         } else {
-            timers.slideTransitionTimer = window.setInterval(
-                this.autoTransitToNextSlide.bind(this),
-                5000
+            this.setTimerToTransitionSlides(
+                this.props.presentation.autoTransitionDelay * minimumSlideTransitionDelay
             );
         }
 
         this.props.toggleAutoTransition();
+    }
+
+    setTimerToTransitionSlides(actualDelay) {
+        timers.slideTransitionTimer = window.setInterval(
+            this.autoTransitToNextSlide.bind(this),
+            actualDelay
+        );
     }
 
     autoTransitToNextSlide() {
@@ -296,6 +313,14 @@ class Presentation extends React.Component {
                             </div>
                             <div className={'control-button' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '') + (this.props.presentation.isAutoTransitionEnabled ? ' active' : '')} onClick={() => this.toggleAutoTransition()}>
                                 Auto-Transition
+                            </div>
+                            <div id="auto-transition-controls" className={(!this.props.presentation.isAutoTransitionEnabled ? ' disabled' : '')}>
+                                <input type="range" name="auto-transition-delay" min="1" max="12" value={this.props.presentation.autoTransitionDelay} onChange={(e) => this.onAutoTransitionDelayChange(e)} disabled={!this.props.presentation.isAutoTransitionEnabled} />
+                                &nbsp;
+                                <span>
+                                    {this.props.presentation.autoTransitionDelay * 5}
+                                    &nbsp;seconds
+                                </span>
                             </div>
                             <div className="controls-header">
                                 Slide-transition Animation

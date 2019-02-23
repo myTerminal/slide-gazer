@@ -16,6 +16,7 @@ export const presentation = {
     zoomOut: 'ZOOM_OUT',
     setControlMode: 'SET_CONTROL_MODE',
     toggleAutoTransition: 'TOGGLE_AUTO_TRANSITION',
+    setAutoTransitionDelay: 'SET_AUTO_TRANSITION_DELAY',
     setAnimation: 'SET_ANIMATION',
     getAnimation: 'GET_ANIMATION',
     setControllerConnectionState: 'SET_CONTROLLER_CONNECTION_STATE',
