@@ -29,6 +29,7 @@
 @emphasis-color-one: #f00;
 @emphasis-color-two: #0f0;
 @red-color: #ff4444;
+@blue-color: #3377ff;
 
 @backdrop-color: rgba(0, 0, 0, 0.8);
 
@@ -95,6 +96,10 @@ body,
         }
 
         &:not(.disabled) {
+
+            &.blue {
+                background-color: @blue-color;
+            }
 
             &.red {
                 background-color: @red-color;

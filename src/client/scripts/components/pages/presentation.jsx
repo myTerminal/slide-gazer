@@ -320,12 +320,12 @@ class Presentation extends React.Component {
                         <div id="top-panel-progress-bar" style={{ width: this.props.presentation.presentationProgress + '%' }} />
                         <span id="top-presentation-title-text">{this.props.presentation.title}</span>
                         <div className="panel-controls-group panel-controls-group-right">
-                            <div className={'control-button smaller fa fa-close red' + (!this.props.presentation.isPresentationLoaded || !this.props.presentation.controlMode ? ' offsetted' : '') + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')} onClick={() => this.props.setControlMode(null)} title="Close" />
+                            <div className={'control-button smaller fa fa-close blue' + (!this.props.presentation.isPresentationLoaded || !this.props.presentation.controlMode ? ' offsetted' : '') + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')} onClick={() => this.props.setControlMode(null)} title="Close" />
                             <div className={'control-button smaller fa fa-gear' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')} onClick={() => this.props.setControlMode('presentation')} title="Set presentation preferences" />
                             <div className={'control-button smaller fa fa-chain' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '') + (this.props.presentation.isControllerConnected ? ' active' : '')} onClick={() => this.props.setControlMode('control')} title={this.props.presentation.isControllerConnected ? 'A controller is connected' : 'Connect a controller'} />
                             <div className={'control-button smaller fa fa-arrows-alt' + (!this.props.presentation.isPresentationLoaded || this.props.presentation.isFullscreen ? ' hidden' : '')} onClick={() => this.switchToFullscreen()} title="Switch to Fullscreen" />
                             <div className={'control-button smaller fa fa-window-restore' + (!this.props.presentation.isPresentationLoaded || !this.props.presentation.isFullscreen ? ' hidden' : '')} onClick={() => this.exitFullscreen()} title="Exit Fullscreen" />
-                            <div className={'control-button smaller fa fa-stop' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')} onClick={() => this.endPresentation()} title="End presentation" />
+                            <div className={'control-button smaller fa fa-stop red' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')} onClick={() => this.endPresentation()} title="End presentation" />
                             <div className={'control-button smaller' + (this.props.presentation.isPresentationLoaded ? ' hidden' : '')} onClick={() => this.backToHome()}>
                                 Go Back
                             </div>
