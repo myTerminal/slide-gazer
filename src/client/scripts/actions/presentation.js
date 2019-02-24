@@ -173,6 +173,14 @@ const getAnimation = () =>
             });
     };
 
+const setFullscreenMode = mode =>
+    dispatch => {
+        dispatch({
+            type: presentation.setFullscreenMode,
+            payLoad: mode
+        });
+    };
+
 const setControllerConnectionState = connectionState =>
     dispatch => {
         dispatch({
@@ -203,6 +211,7 @@ export default {
     setAutoTransitionDelay,
     setAnimation,
     getAnimation,
+    setFullscreenMode,
     setControllerConnectionState,
     endPresentation
 };

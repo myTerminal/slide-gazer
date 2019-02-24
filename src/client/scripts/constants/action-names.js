@@ -19,6 +19,7 @@ export const presentation = {
     setAutoTransitionDelay: 'SET_AUTO_TRANSITION_DELAY',
     setAnimation: 'SET_ANIMATION',
     getAnimation: 'GET_ANIMATION',
+    setFullscreenMode: 'SET_FULLSCREEN_MODE',
     setControllerConnectionState: 'SET_CONTROLLER_CONNECTION_STATE',
     endPresentation: 'END_PRESENTATION'
 };

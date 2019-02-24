@@ -39,6 +39,26 @@ class Presentation extends React.Component {
         document.onkeydown = this.onKeyDownOnPresentation.bind(this);
 
         this.props.getDomain();
+
+        document.addEventListener('webkitfullscreenchange', this.onFullscreenChange.bind(this), false);
+        document.addEventListener('mozfullscreenchange', this.onFullscreenChange.bind(this), false);
+        document.addEventListener('fullscreenchange', this.onFullscreenChange.bind(this), false);
+        document.addEventListener('MSFullscreenChange', this.onFullscreenChange.bind(this), false);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('webkitfullscreenchange', this.onFullscreenChange.bind(this), false);
+        document.removeEventListener('mozfullscreenchange', this.onFullscreenChange.bind(this), false);
+        document.removeEventListener('fullscreenchange', this.onFullscreenChange.bind(this), false);
+        document.removeEventListener('MSFullscreenChange', this.onFullscreenChange.bind(this), false);
+    }
+
+    onFullscreenChange() {
+        if (document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement) {
+            this.props.setFullscreenMode(true);
+        } else {
+            this.props.setFullscreenMode(false);
+        }
     }
 
     onDragOverOnStage() {
@@ -59,16 +79,6 @@ class Presentation extends React.Component {
 
     onFilePick(file) {
         this.loadFile(file);
-    }
-
-    onAutoTransitionDelayChange(event) {
-        const value = event.target.value,
-            newDelay = value * minimumSlideTransitionDelay;
-
-        window.clearInterval(timers.slideTransitionTimer);
-        this.setTimerToTransitionSlides(newDelay);
-
-        this.props.setAutoTransitionDelay(value);
     }
 
     loadFile(file) {
@@ -233,6 +243,16 @@ class Presentation extends React.Component {
         this.props.toggleAutoTransition();
     }
 
+    onAutoTransitionDelayChange(event) {
+        const value = event.target.value,
+            newDelay = value * minimumSlideTransitionDelay;
+
+        window.clearInterval(timers.slideTransitionTimer);
+        this.setTimerToTransitionSlides(newDelay);
+
+        this.props.setAutoTransitionDelay(value);
+    }
+
     setTimerToTransitionSlides(actualDelay) {
         timers.slideTransitionTimer = window.setInterval(
             this.autoTransitToNextSlide.bind(this),
@@ -246,6 +266,14 @@ class Presentation extends React.Component {
 
     setAnimation(animationName) {
         this.props.setAnimation(animationName);
+    }
+
+    switchToFullscreen() {
+        document.body.requestFullscreen();
+    }
+
+    exitFullscreen() {
+        document.exitFullscreen();
     }
 
     onInfo(info) {
@@ -300,6 +328,8 @@ class Presentation extends React.Component {
                             <div className={'control-button smaller fa fa-close red' + (!this.props.presentation.isPresentationLoaded || !this.props.presentation.controlMode ? ' offsetted' : '') + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')} onClick={() => this.props.setControlMode(null)} title="Close" />
                             <div className={'control-button smaller fa fa-gear' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')} onClick={() => this.props.setControlMode('presentation')} title="Set presentation preferences" />
                             <div className={'control-button smaller fa fa-chain' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '') + (this.props.presentation.isControllerConnected ? ' active' : '')} onClick={() => this.props.setControlMode('control')} title={this.props.presentation.isControllerConnected ? 'A controller is connected' : 'Connect a controller'} />
+                            <div className={'control-button smaller fa fa-arrows-alt' + (!this.props.presentation.isPresentationLoaded || this.props.presentation.isFullscreen ? ' hidden' : '')} onClick={() => this.switchToFullscreen()} title="Switch to Fullscreen" />
+                            <div className={'control-button smaller fa fa-window-restore' + (!this.props.presentation.isPresentationLoaded || !this.props.presentation.isFullscreen ? ' hidden' : '')} onClick={() => this.exitFullscreen()} title="Exit Fullscreen" />
                             <div className={'control-button smaller fa fa-stop' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')} onClick={() => this.endPresentation()} title="End presentation" />
                             <div className={'control-button smaller' + (this.props.presentation.isPresentationLoaded ? ' hidden' : '')} onClick={() => this.backToHome()}>
                                 Go Back

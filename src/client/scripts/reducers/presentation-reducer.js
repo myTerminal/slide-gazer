@@ -1,4 +1,4 @@
-/* global require, window */
+/* global require, window, document */
 
 import { presentation } from '../constants/action-names';
 import { timers } from '../common';
@@ -20,6 +20,7 @@ const initialState = {
     isAutoTransitionEnabled: false,
     autoTransitionDelay: 1,
     animation: 'scroll-down',
+    isFullscreen: false,
     isControllerConnected: false
 };
 
@@ -90,6 +91,11 @@ const presentationReducer = (state = initialState, action) => {
             ...state,
             animation: action.payLoad || state.animation
         };
+    case presentation.setFullscreenMode:
+        return {
+            ...state,
+            isFullscreen: action.payLoad
+        };
     case presentation.setControllerConnectionState:
         return {
             ...state,
@@ -98,6 +104,10 @@ const presentationReducer = (state = initialState, action) => {
     case presentation.endPresentation:
         if (state.isAutoTransitionEnabled) {
             window.clearTimeout(timers.slideTransitionTimer);
+        }
+
+        if (state.isFullscreen) {
+            document.exitFullscreen();
         }
 
         return {
@@ -110,6 +120,7 @@ const presentationReducer = (state = initialState, action) => {
             currentSlideIndex: 0,
             presentationProgress: 0,
             controlMode: null,
+            isFullscreen: false,
             isAutoTransitionEnabled: false
         };
     default:
