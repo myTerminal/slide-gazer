@@ -82,13 +82,14 @@ class Presentation extends React.Component {
     }
 
     loadFile(file) {
-        const context = this,
-            reader = new FileReader();
+        const context = this;
+        const reader = new FileReader();
 
         reader.onload = event => {
             const presentationDom = converter.makeHtml(event.target.result);
 
-            localforage.setItem('lastPresentationDom', presentationDom)
+            localforage
+                .setItem('lastPresentationDom', presentationDom)
                 .then(() => {
                     context.startPresentation(presentationDom);
                 });
@@ -98,7 +99,8 @@ class Presentation extends React.Component {
     }
 
     reloadLastPresentation() {
-        localforage.getItem('lastPresentationDom')
+        localforage
+            .getItem('lastPresentationDom')
             .then(value => {
                 if (value) {
                     this.startPresentation(value);
@@ -158,17 +160,10 @@ class Presentation extends React.Component {
         this.touchGestures.on(
             'swipe',
             (function (evt) {
-                switch (evt.offsetDirection) {
-                case 2:
-                    // Swipe left = move to next slide
+                if (evt.offsetDirection === 2) {
                     this.props.nextSlide(this.showSlide.bind(this));
-                    break;
-                case 4:
-                    // Swipe right = move to previous slide
+                } else if (evt.offsetDirection === 4) {
                     this.props.previousSlide(this.showSlide.bind(this));
-                    break;
-                default:
-                    // Do nothing
                 }
             }).bind(this)
         );
@@ -244,8 +239,8 @@ class Presentation extends React.Component {
     }
 
     onAutoTransitionDelayChange(event) {
-        const value = event.target.value,
-            newDelay = value * minimumSlideTransitionDelay;
+        const value = event.target.value;
+        const newDelay = value * minimumSlideTransitionDelay;
 
         window.clearInterval(timers.slideTransitionTimer);
         this.setTimerToTransitionSlides(newDelay);
@@ -360,7 +355,8 @@ class Presentation extends React.Component {
                                     (
                                         <div key={animation} className={'control-button' + (this.props.presentation.animation === animation ? ' active' : '')} onClick={() => this.setAnimation(animation)}>
                                             {
-                                                animation.slice(0, 1)
+                                                animation
+                                                    .slice(0, 1)
                                                     .toUpperCase()
                                                 + animation.slice(1)
                                             }
