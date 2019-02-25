@@ -13,15 +13,16 @@ A light-weight presentation tool for presenting your ideas quickly and with styl
 
 ## What is it?
 
-*Slide Gazer* is a web application that can be used to present slide-shows written as markdown documents.
+Born out of an idea and improved over time, *Slide Gazer* is the successor of [faded-presenter](https://github.com/myTerminal/faded-presenter).
+It's an online tool that can be used to present slide-shows created with plain-text markdown documents.
 
 ## Features
 
 * Use any text-editor to create slide-show presentations and do it quickly by focussing only on content and not formatting
-* Present from any computer, phone or tablet: all you need is a web-browser
+* Present from any device capable of running a decent web-browser
 * Choose from a range of slide-transition animations
-* Select auto-transition of slides
-* Focus on a few emphasized words on a slide
+* Choose to have auto-transition of slides with a customizable delay
+* Focus on a few emphasized words on a slide, on demand
 * Control the presentation from another device and have a bird's eye view of the presentation at the same time
 
 ## How to use
@@ -43,6 +44,8 @@ Use the up and down arrow keys to focus a few emphasized words on a slide and re
 
 Use the **Preferences** button on the top-right corner to reveal more options like animations and slide auto-transition.
 
+While viewed on a mobile phone or a tablet with a touch-screen, a bar is displayed at the bottom edge to be able to navigate through slides.
+
 ### Controlling a slide-show
 
 While a presentation is being presented, select **Control** from the top-right corner of the screen to view the URL that can be used to control the presentation from another device.
@@ -51,7 +54,7 @@ You can also scan the QR code to navigate to the URL.
 
 Once a connection to the presentation if estabilished, use the buttons on the controller to control the presentation.
 
-## Installation
+## Installation on own server
 
 Clone this repository with
 
@@ -81,6 +84,5 @@ Start the application with
 
 ## To-do
 
-* Touch gestures for mobile devices
-* "Slide-seek" to be able to jump to a specific slide
+* 'Slide-seek' to be able to jump to a specific slide
 * Support for less-smart web browsers
