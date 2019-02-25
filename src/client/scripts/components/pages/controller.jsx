@@ -130,40 +130,57 @@ class Controller extends React.Component {
     render() {
         return (
             <div id="controller-page">
-                <div id="stage" className={this.props.controller.isConnected ? 'hidden' : ''}>
+                <div
+                    id="stage"
+                    className={this.props.controller.isConnected ? 'hidden' : ''}>
                     <div id="stage-controls">
-                        <span id="presentation-code-label" className="regular-text">
+                        <span
+                            id="presentation-code-label"
+                            className="regular-text">
                             Enter presentation code to connect
                         </span>
                         <br />
-                        <input type="text"
+                        <input
+                            type="text"
                             id="presentation-code-input"
                             value={this.props.controller.presentationCode}
-                            onChange={this.onPresentationCodeChange.bind(this)} />
+                            onChange={this.onPresentationCodeChange.bind(this)}
+                        />
                         <br />
-                        <div id="connect-button"
+                        <div
+                            id="connect-button"
                             className={'control-button' + (!this.props.controller.presentationCode ? ' disabled' : '')}
                             onClick={this.connect.bind(this)}>
                             Connect
                         </div>
-                        <div id="back-button"
+                        <div
+                            id="back-button"
                             className="control-button"
                             onClick={this.backToHome.bind(this)}>
                             Back
                         </div>
                     </div>
                 </div>
-                <div id="controller" className={!this.props.controller.isConnected ? 'hidden' : ''}>
+                <div
+                    id="controller"
+                    className={!this.props.controller.isConnected ? 'hidden' : ''}>
                     <div id="controller-presentation-view" />
                     <div id="controller-controls">
                         <div className="presentation-progress-container">
-                            <div id="presentation-progress-bar"
-                                style={{ width: this.props.controller.presentationProgress + '%' }} />
+                            <div
+                                id="presentation-progress-bar"
+                                style={{
+                                    width: this.props.controller.presentationProgress + '%'
+                                }} />
                             <div className="presentation-progress-text">
                                 Slide:&nbsp;
-                                {this.props.controller.currentSlideIndex + 1}
+                                {
+                                    this.props.controller.currentSlideIndex + 1
+                                }
                                 /
-                                {this.props.controller.slideCount}
+                                {
+                                    this.props.controller.slideCount
+                                }
                             </div>
                         </div>
                         <div className="controller-controls-buttons">
@@ -171,10 +188,14 @@ class Controller extends React.Component {
                                 <div className="presentation-control-button disabled">
                                     <span className="fa fa-3x fa-fast-backward" />
                                 </div>
-                                <div className={'presentation-control-button' + (!this.props.controller.currentSlideIndex ? ' disabled' : '')} onClick={this.previousSlide.bind(this)}>
+                                <div
+                                    className={'presentation-control-button' + (!this.props.controller.currentSlideIndex ? ' disabled' : '')}
+                                    onClick={this.previousSlide.bind(this)}>
                                     <span className="fa fa-3x fa-step-backward" />
                                 </div>
-                                <div className={'presentation-control-button' + (this.props.controller.currentSlideIndex === this.props.controller.slideCount - 1 ? ' disabled' : '')} onClick={this.nextSlide.bind(this)}>
+                                <div
+                                    className={'presentation-control-button' + (this.props.controller.currentSlideIndex === this.props.controller.slideCount - 1 ? ' disabled' : '')}
+                                    onClick={this.nextSlide.bind(this)}>
                                     <span className="fa fa-3x fa-step-forward" />
                                 </div>
                                 <div className="presentation-control-button disabled">
@@ -182,13 +203,24 @@ class Controller extends React.Component {
                                 </div>
                             </div>
                             <div className="control-row">
-                                <div className="presentation-control-button" onClick={this.disconnect.bind(this)}>
-                                    <span className="fa fa-3x fa-power-off" style={{ color: '#f00' }} />
+                                <div
+                                    className="presentation-control-button"
+                                    onClick={this.disconnect.bind(this)}>
+                                    <span
+                                        className="fa fa-3x fa-power-off"
+                                        style={{
+                                            color: '#f00'
+                                        }}
+                                    />
                                 </div>
-                                <div className={'presentation-control-button' + (!this.props.controller.isZoomedIn ? ' active disabled' : '')} onClick={this.zoomOutOnCurrentSlide.bind(this)}>
+                                <div
+                                    className={'presentation-control-button' + (!this.props.controller.isZoomedIn ? ' active disabled' : '')}
+                                    onClick={this.zoomOutOnCurrentSlide.bind(this)}>
                                     <span className="fa fa-3x fa-search-minus" />
                                 </div>
-                                <div className={'presentation-control-button' + (this.props.controller.isZoomedIn ? ' active disabled' : '')} onClick={this.zoomInOnCurrentSlide.bind(this)}>
+                                <div
+                                    className={'presentation-control-button' + (this.props.controller.isZoomedIn ? ' active disabled' : '')}
+                                    onClick={this.zoomInOnCurrentSlide.bind(this)}>
                                     <span className="fa fa-3x fa-search-plus" />
                                 </div>
                                 <div className="presentation-control-button disabled">
