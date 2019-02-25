@@ -1,6 +1,6 @@
 {
   "name": "slide-gazer",
-  "version": "0.30.1",
+  "version": "0.30.2",
   "description": "slide-gazer",
   "main": "src/server/index.js",
   "scripts": {
