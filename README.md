@@ -21,8 +21,8 @@ It's an online tool that can be used to present slide-shows created with plain-t
 * Use any text-editor to create slide-show presentations and do it quickly by focussing only on content and not formatting
 * Present from any device capable of running a decent web-browser
 * Choose from a range of slide-transition animations
-* Choose to have auto-transition of slides with a customizable delay
-* Focus on a few emphasized words on a slide, on demand
+* Choose to have auto-transition of slides with an adjustable delay
+* Bring attention of your audience to a few emphasized words on a slide
 * Control the presentation from another device and have a bird's eye view of the presentation at the same time
 
 ## How to use
