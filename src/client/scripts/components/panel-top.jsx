@@ -125,24 +125,36 @@ export default class TopPanel extends React.Component {
                         }
                     </div>
                     <div className={'top-panel-body-content' + (this.props.presentation.controlMode === 'control' ? ' visible' : '')}>
-                        <div className="controls-header">
-                            Remotely control this presentation
+                        <div className={this.props.presentation.isControllerConnected ? 'hidden' : ''}>
+                            <div className="controls-header">
+                                Remotely control this presentation
+                            </div>
+                            <div
+                                id="qr-code-image"
+                                style={{
+                                    backgroundImage: 'url(' + this.props.presentation.controllerUrlQrCodeData + ')'
+                                }}
+                            />
+                            <div>
+                                <a
+                                    id="controller-url-link"
+                                    href={this.props.configs['web-protocol'] + '://' + this.props.configs.domain + '/control/' + this.props.presentation.presentationCode}
+                                    target="_blank">
+                                    {
+                                        this.props.configs['web-protocol'] + '://' + this.props.configs.domain + '/control/' + this.props.presentation.presentationCode
+                                    }
+                                </a>
+                            </div>
                         </div>
-                        <div
-                            id="qr-code-image"
-                            style={{
-                                backgroundImage: 'url(' + this.props.presentation.controllerUrlQrCodeData + ')'
-                            }}
-                        />
-                        <div>
-                            <a
-                                id="controller-url-link"
-                                href={this.props.configs['web-protocol'] + '://' + this.props.configs.domain + '/control/' + this.props.presentation.presentationCode}
-                                target="_blank">
-                                {
-                                    this.props.configs['web-protocol'] + '://' + this.props.configs.domain + '/control/' + this.props.presentation.presentationCode
-                                }
-                            </a>
+                        <div className={this.props.presentation.isControllerConnected ? '' : 'hidden'}>
+                            <div className="controls-header">
+                                A controller is connected
+                            </div>
+                            <div
+                                className="control-button"
+                                onClick={() => this.props.disconnectController()}>
+                                Disconnect controller
+                            </div>
                         </div>
                     </div>
                 </div>

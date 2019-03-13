@@ -121,6 +121,9 @@ module.exports = function (portNumber) {
 
                         // Close connection to the controller
                         targetClient.ws.close();
+                    } else if (receivedMessage.subType === 'DISCONNECT-CONTROLLER') {
+                        // Close connection to the controller
+                        targetClient.ws.close();
                     }
                 } else {
                     // No use-case yet

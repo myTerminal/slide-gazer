@@ -152,6 +152,10 @@ class Presentation extends React.Component {
         }
     }
 
+    disconnectController() {
+        socketService.sendInfo('DISCONNECT-CONTROLLER');
+    }
+
     toggleAutoTransition() {
         if (this.props.presentation.isAutoTransitionEnabled) {
             window.clearInterval(timers.slideTransitionTimer);
@@ -257,6 +261,7 @@ class Presentation extends React.Component {
                     configs={this.props.configs}
                     presentation={this.props.presentation}
                     setControlMode={this.props.setControlMode}
+                    disconnectController={() => this.disconnectController()}
                     toggleAutoTransition={() => this.toggleAutoTransition()}
                     setAnimation={(n) => this.props.setAnimation(n)}
                     onAutoTransitionDelayChange={(e) => this.onAutoTransitionDelayChange(e)}
