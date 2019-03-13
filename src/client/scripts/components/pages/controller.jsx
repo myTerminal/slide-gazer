@@ -110,11 +110,35 @@ class Controller extends React.Component {
 
             this.loadPresentation(data);
         } else if (info === 'NO-PRESENTATION') {
-            alert(['Sorry!', 'The presentation you tried to connect to does not exist!']);
+            alert(
+                [
+                    'Sorry!',
+                    'The presentation you tried to connect to does not exist!'
+                ],
+                {
+                    autoClose: 3000
+                }
+            );
         } else if (info === 'DISCONNECTION') {
-            alert(['Oops!', 'The presentation you were controlling has ended']);
+            alert(
+                [
+                    'Oops!',
+                    'The presentation you were controlling has ended'
+                ],
+                {
+                    autoClose: 3000
+                }
+            );
         } else if (info === 'DUPLICATE') {
-            alert(['Hey!', 'Someone is already controlling the presentation you tried to connect to!']);
+            alert(
+                [
+                    'Hey!',
+                    'Someone is already controlling the presentation you tried to connect to!'
+                ],
+                {
+                    autoClose: 3000
+                }
+            );
         }
     }
 
@@ -130,7 +154,12 @@ class Controller extends React.Component {
     }
 
     onException(exception) {
-        alert(exception);
+        alert(
+            exception,
+            {
+                autoClose: 3000
+            }
+        );
         this.reset();
     }
 
