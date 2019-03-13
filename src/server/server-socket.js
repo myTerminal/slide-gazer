@@ -75,6 +75,12 @@ module.exports = function (portNumber) {
                             subType: 'CONNECTION-REQUEST'
                         }));
 
+                        // Sent the controller a confirmation that a presentation has been found and a request has been sent
+                        currentClient.ws.send(JSON.stringify({
+                            type: 'INFO',
+                            subType: 'REQUEST-SENT'
+                        }));
+
                         console.log('Controller trying to connect:', currentClient.id);
                     } else { // If no presentation is found
                         // Inform controller that no presentation was found

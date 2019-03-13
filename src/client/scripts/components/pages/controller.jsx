@@ -37,16 +37,6 @@ class Controller extends React.Component {
             this.onSignal.bind(this),
             this.onException.bind(this)
         );
-
-        alert(
-            [
-                'Request sent to presentation',
-                'Once accepted, you\'ll be able to control the presentation from here.'
-            ],
-            {
-                autoClose: 3000
-            }
-        );
     }
 
     loadPresentation(presentationData) {
@@ -97,7 +87,17 @@ class Controller extends React.Component {
     }
 
     onInfo(info, data) {
-        if (info === 'DATA') {
+        if (info === 'REQUEST-SENT') {
+            alert(
+                [
+                    'Request sent to presentation',
+                    'Once accepted, you\'ll be able to control the presentation from here.'
+                ],
+                {
+                    autoClose: 3000
+                }
+            );
+        } else if (info === 'DATA') {
             alert(
                 [
                     'Connection accepted!',
