@@ -65,25 +65,17 @@ module.exports = function (portNumber) {
                         return;
                     }
 
-
                     // Find the corresponding presentation
                     targetClient = clients.filter(c => c.clientType === 'presentation' && c.id === currentClient.id)[0];
 
                     if (targetClient) { // If a presentation is found
-                        // Send presentation data to controller
-                        currentClient.ws.send(JSON.stringify({
-                            type: 'INFO',
-                            subType: 'DATA',
-                            data: targetClient.data
-                        }));
-
-                        // Inform presentation that a controller is connected
+                        // Send the presentation a connection request
                         targetClient.ws.send(JSON.stringify({
                             type: 'INFO',
-                            subType: 'CONNECTION'
+                            subType: 'CONNECTION-REQUEST'
                         }));
 
-                        console.log('Controller connected:', currentClient.id);
+                        console.log('Controller trying to connect:', currentClient.id);
                     } else { // If no presentation is found
                         // Inform controller that no presentation was found
                         currentClient.ws.send(JSON.stringify({
@@ -91,6 +83,41 @@ module.exports = function (portNumber) {
                             subType: 'NO-PRESENTATION'
                         }));
                     }
+                }
+
+                break;
+
+            case 'INFO':
+                // Find the current client in the list of connected clients
+                currentClient = clients.filter(c => c.ws === ws)[0];
+
+                if (currentClient.clientType === 'presentation') {
+                    // Find the corresponding controller
+                    targetClient = clients.filter(c => c.clientType === 'controller' && c.id === currentClient.id)[0];
+
+                    if (receivedMessage.subType === 'CONNECTION-ACCEPTED') {
+                        // Send presentation data to controller
+                        targetClient.ws.send(JSON.stringify({
+                            type: 'INFO',
+                            subType: 'DATA',
+                            data: currentClient.data
+                        }));
+
+                        // Inform presentation that a controller is connected
+                        currentClient.ws.send(JSON.stringify({
+                            type: 'INFO',
+                            subType: 'CONNECTION'
+                        }));
+
+                        console.log('Controller connection accepted:', currentClient.id);
+                    } else if (receivedMessage.subType === 'CONNECTION-DECLINED') {
+                        console.log('Controller connection declined:', currentClient.id);
+
+                        // Close connection to the controller
+                        targetClient.ws.close();
+                    }
+                } else {
+                    // No use-case yet
                 }
 
                 break;

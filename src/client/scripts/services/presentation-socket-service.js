@@ -59,6 +59,13 @@ const handlers = {
     }
 };
 
+const sendInfo = (info) => {
+    socket.send(JSON.stringify({
+        type: 'INFO',
+        subType: info
+    }));
+};
+
 const sendSignal = (signal, data) => {
     socket.send(JSON.stringify({
         type: 'SIGNAL',
@@ -73,6 +80,7 @@ const close = () => {
 
 export default {
     open,
+    sendInfo,
     sendSignal,
     close
 };

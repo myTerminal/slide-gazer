@@ -37,6 +37,16 @@ class Controller extends React.Component {
             this.onSignal.bind(this),
             this.onException.bind(this)
         );
+
+        alert(
+            [
+                'Request sent to presentation',
+                'Once accepted, you\'ll be able to control the presentation from here.'
+            ],
+            {
+                autoClose: 3000
+            }
+        );
     }
 
     loadPresentation(presentationData) {
@@ -88,6 +98,16 @@ class Controller extends React.Component {
 
     onInfo(info, data) {
         if (info === 'DATA') {
+            alert(
+                [
+                    'Connection accepted!',
+                    'You now have control over the presentation'
+                ],
+                {
+                    autoClose: 3000
+                }
+            );
+
             this.loadPresentation(data);
         } else if (info === 'NO-PRESENTATION') {
             alert(['Sorry!', 'The presentation you tried to connect to does not exist!']);

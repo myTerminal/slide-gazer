@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
+import { alert, confirm } from 'ample-alerts';
 import Hammer from 'hammerjs';
 
 import TopPanel from '../panel-top.jsx';
@@ -186,7 +187,30 @@ class Presentation extends React.Component {
     }
 
     onInfo(info) {
-        if (info === 'CONNECTION') {
+        if (info === 'CONNECTION-REQUEST') {
+            confirm(
+                [
+                    'A controller is trying to connect...',
+                    'Do you want to accept this connection?'
+                ],
+                {
+                    onAction: response => {
+                        if (response) {
+                            alert(
+                                'Controller connected!',
+                                {
+                                    autoClose: 3000
+                                }
+                            );
+
+                            socketService.sendInfo('CONNECTION-ACCEPTED');
+                        } else {
+                            socketService.sendInfo('CONNECTION-DECLINED');
+                        }
+                    }
+                }
+            );
+        } else if (info === 'CONNECTION') {
             this.props.setControllerConnectionState(true);
 
             socketService.sendSignal('SLIDE-SHOW', this.props.presentation.currentSlideIndex);
