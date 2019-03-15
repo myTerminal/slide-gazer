@@ -357,6 +357,14 @@ body,
                     border: 1px solid @lightest-color;
                     box-shadow: 0 0 5px @dark-color;
 
+                    &.with-notes {
+
+                        > [id^=notes],
+                        > [id^=notes] + * {
+                            display: none;
+                        }
+                    }
+
                     &.visible {
                         z-index: 3;
 
@@ -667,7 +675,7 @@ body,
 
             #controller-presentation-view {
                 height: 70%;
-                font-size: 0.5em;
+                font-size: 0.7em;
                 background-color: @lightest-color;
                 overflow-y: scroll;
 
@@ -675,6 +683,27 @@ body,
                     padding: 5px;
                     border: 1px solid @dark-color;
                     .opacity(0.3);
+
+                    &.with-notes {
+                        font-style: italic;
+
+                        > * {
+                            display: none;
+                        }
+
+                        > h2 {
+                            display: inherit;
+                        }
+
+                        > [id^=notes],
+                        > [id^=notes] + * {
+                            display: inherit;
+                        }
+
+                        > [id^=notes] + * {
+                            color: #00f;
+                        }
+                    }
 
                     img {
                         display: none;
@@ -896,6 +925,14 @@ body.mobile-mode {
                                 box-shadow: none !important;
                                 border: none !important;
                                 .transform(none) !important;
+
+                                &.with-notes {
+
+                                    > [id^=notes],
+                                    > [id^=notes] + * {
+                                        display: inherit;
+                                    }
+                                }
 
                                 &.first-slide {
                                     display: none;

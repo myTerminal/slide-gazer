@@ -40,6 +40,16 @@ const startPresentation = (presentationDomData, protocol, domain, presentationCo
         presentationContainer.innerHTML += getLastSlide(title);
         presentationContainer.innerHTML += getFooter(protocol, domain);
 
+        presentationContainer
+            .querySelectorAll('.slide')
+            .forEach(s => {
+                if (s.querySelector('[id^=notes]')) {
+                    s.className += ' with-notes';
+                } else {
+                    s.className += ' without-notes';
+                }
+            });
+
         setTimeout(() => {
             allImagesLoaded(images).then(() => {
                 dispatch(setLoading(false));

@@ -24,6 +24,7 @@ It's an online tool that can be used to present slide-shows created with plain-t
 * Choose to have auto-transition of slides with an adjustable delay
 * Bring attention of your audience to a few emphasized words on a slide
 * Control the presentation from another device and have a bird's eye view of the presentation at the same time
+* Add speaker notes to be able to refer some text while presenting
 
 ## How to use
 
@@ -53,6 +54,34 @@ While a presentation is being presented, select **Control** from the top-right c
 You can also scan the QR code to navigate to the URL.
 
 Once a connection to the presentation if estabilished, use the buttons on the controller to control the presentation.
+
+### Speaker notes
+
+Creating speaker notes can be done within the same file. Just create a third level heading named `Notes` for a slide which is usually a second level heading (except for slide 1) and the section will be treated as speaker notes for that slide. Speaker notes, as one would expect, are not visible on the slides while presenting. They are just shown to the controller for reference while controlling the presentation. Example:
+
+    # Title
+
+    My interesting idea
+
+    ## Slide one
+
+    The idea starts here
+
+    ### Notes
+
+    Actually, the idea is more than what it seems
+
+    ## Slide two
+
+    And it would also help with other things
+
+    ### Notes
+
+    Things are: thing-one, thing-two, thing-three
+
+    ## Conclusion
+
+    That's my idea, thoughts?
 
 ## Installation on own server
 

@@ -12,16 +12,28 @@ Use keyboard left arrow key to move back to the previous slide.
 
 The progress bar at the top edge updates to show the exact progress again.
 
+### Notes
+
+Talk about navigation here
+
 ## Emphasizing bold text
 
 Press keyboard up arrow to **emphasize** all bold text on the current slide.
 
 Pressing keyboard down arrow will **de-emphasize** all text back to normal.
 
+### Notes
+
+Talk about highlighting specific text on a slide
+
 ## Changing slide-transition animation
 
 Open **Preferences** from the top-right corner while in a presentation.
 Select a slide-transition animation to use while moving between slides.
+
+### Notes
+
+Briefly describe the different animation types
 
 ## Enabling auto-transition
 

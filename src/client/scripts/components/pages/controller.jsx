@@ -49,6 +49,16 @@ class Controller extends React.Component {
         presentationView.innerHTML = getFirstSlide(title) + presentationView.innerHTML;
         presentationView.innerHTML += getLastSlide(title);
 
+        presentationView
+            .querySelectorAll('.slide')
+            .forEach(s => {
+                if (s.querySelector('[id^=notes]')) {
+                    s.className += ' with-notes';
+                } else {
+                    s.className += ' without-notes';
+                }
+            });
+
         this.props.startControllingPresentation(presentationView.querySelectorAll('.slide').length);
     }
 
