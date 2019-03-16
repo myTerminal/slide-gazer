@@ -9,7 +9,8 @@ import controllerActions from '../../actions/controller';
 import {
     getFirstSlide,
     getSlidesDom,
-    getLastSlide
+    getLastSlide,
+    markSlidesForNotes
 } from '../../common';
 
 import socketService from '../../services/controller-socket-service.js';
@@ -49,15 +50,7 @@ class Controller extends React.Component {
         presentationView.innerHTML = getFirstSlide(title) + presentationView.innerHTML;
         presentationView.innerHTML += getLastSlide(title);
 
-        presentationView
-            .querySelectorAll('.slide')
-            .forEach(s => {
-                if (s.querySelector('[id^=notes]')) {
-                    s.className += ' with-notes';
-                } else {
-                    s.className += ' without-notes';
-                }
-            });
+        markSlidesForNotes(presentationView);
 
         this.props.startControllingPresentation(presentationView.querySelectorAll('.slide').length);
     }

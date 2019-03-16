@@ -38,6 +38,18 @@ export const getFooter = (protocol, domain) =>
     + '  Printed from <a href="' + protocol + '://' + domain + '">slide-gazer</a>'
     + '</div>';
 
+export const markSlidesForNotes = slides => {
+    slides
+        .querySelectorAll('.slide')
+        .forEach(s => {
+            if (s.querySelector('[id^=notes]')) {
+                s.className += ' with-notes';
+            } else {
+                s.className += ' without-notes';
+            }
+        });
+};
+
 export const mutateImageSources = domString =>
     domString.replace(/src=/g, 'src_=');
 

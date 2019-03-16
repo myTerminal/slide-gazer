@@ -8,6 +8,7 @@ import {
     getSlidesDom,
     getLastSlide,
     getFooter,
+    markSlidesForNotes,
     mutateImageSources,
     unmutateImageSources,
     allImagesLoaded
@@ -40,15 +41,7 @@ const startPresentation = (presentationDomData, protocol, domain, presentationCo
         presentationContainer.innerHTML += getLastSlide(title);
         presentationContainer.innerHTML += getFooter(protocol, domain);
 
-        presentationContainer
-            .querySelectorAll('.slide')
-            .forEach(s => {
-                if (s.querySelector('[id^=notes]')) {
-                    s.className += ' with-notes';
-                } else {
-                    s.className += ' without-notes';
-                }
-            });
+        markSlidesForNotes(presentationContainer);
 
         setTimeout(() => {
             allImagesLoaded(images).then(() => {
