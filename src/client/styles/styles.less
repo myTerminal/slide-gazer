@@ -680,12 +680,14 @@ body,
                 overflow-y: scroll;
 
                 .slide {
+                    margin: 5px;
                     padding: 5px;
-                    border: 1px solid @dark-color;
+                    border: 1px solid @accent-secondary;
+                    .round-borders(5px);
                     .opacity(0.3);
+                    .transition(0.5s);
 
                     &.with-notes {
-                        font-style: italic;
 
                         > * {
                             display: none;
@@ -700,8 +702,16 @@ body,
                             display: inherit;
                         }
 
+                        > [id^=notes] {
+                            margin-top: 5px;
+                            font-weight: normal;
+                        }
+
                         > [id^=notes] + * {
-                            color: #00f;
+                            background-color: @highlight-color;
+                            padding: 5px;
+                            margin: 0;
+                            .round-borders(3px);
                         }
                     }
 
@@ -718,12 +728,12 @@ body,
                     }
 
                     &.active {
-                        background: @highlight-color;
-                        border-color: @emphasis-color-two;
+                        border-color: @accent-primary;
+                        border-left-width: 5px;
                         .opacity(1);
 
                         &+ .slide {
-                            .opacity(1);
+                            .opacity(0.7);
                         }
                     }
                 }
