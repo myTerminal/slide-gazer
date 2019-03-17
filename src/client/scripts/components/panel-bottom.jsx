@@ -6,6 +6,12 @@ export default class BottomPanel extends React.Component {
             <div id="bottom-panel" className="horizontal-panel">
                 <div id="bottom-panel-head" className="panel-head">
                     <div
+                        id="bottom-panel-progress-bar"
+                        style={{
+                            width: this.props.presentation.presentationProgress + '%'
+                        }}
+                    />
+                    <div
                         id="gestures-help-text"
                         className={(!this.props.presentation.isPresentationLoaded ? ' hidden' : '')}>
                         Swipe here to change slide

@@ -288,6 +288,15 @@ body,
 
             #bottom-panel-head {
 
+                #bottom-panel-progress-bar {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    height: @panel-size;
+                    .background-gradient-twoColor(@accent-primary, @accent-secondary);
+                    .transition(1s);
+                }
+
                 #gestures-help-text {
                     height: @panel-size;
                     font-size: 0.9em;
@@ -885,6 +894,10 @@ body.mobile-mode {
                 display: inherit;
 
                 #bottom-panel-head {
+
+                    #bottom-panel-progress-bar {
+                        height: @panel-size-touch;
+                    }
 
                     #gestures-help-text {
                         height: @panel-size-touch;
