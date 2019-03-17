@@ -6,6 +6,7 @@ const initialState = {
     slideCount: 0,
     currentSlideIndex: 0,
     isZoomedIn: false,
+    isReadingMode: false,
     presentationProgress: 0
 };
 
@@ -45,6 +46,11 @@ const controllerReducer = (state = initialState, action) => {
             ...state,
             isZoomedIn: false
         };
+    case controller.toggleReadingMode:
+        return {
+            ...state,
+            isReadingMode: !state.isReadingMode
+        };
     case controller.reset:
         return {
             ...state,
@@ -52,6 +58,7 @@ const controllerReducer = (state = initialState, action) => {
             presentationCode: '',
             slideCount: 0,
             currentSlideIndex: 0,
+            isReadingMode: false,
             presentationProgress: 0
         };
     default:

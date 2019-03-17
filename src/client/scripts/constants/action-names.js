@@ -31,5 +31,6 @@ export const controller = {
     showSlide: 'SLIDE_SHOW',
     zoomIn: 'ZOOM_IN',
     zoomOut: 'ZOOM_OUT',
+    toggleReadingMode: 'TOGGLE_READING_MODE',
     reset: 'RESET'
 };

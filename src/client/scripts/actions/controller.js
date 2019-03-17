@@ -49,6 +49,13 @@ const zoomOut = () =>
         });
     };
 
+const toggleReadingMode = () =>
+    dispatch => {
+        dispatch({
+            type: controller.toggleReadingMode
+        });
+    };
+
 const reset = () =>
     dispatch => {
         dispatch({
@@ -63,5 +70,6 @@ export default {
     showSlide,
     zoomIn,
     zoomOut,
+    toggleReadingMode,
     reset
 };

@@ -216,7 +216,7 @@ class Controller extends React.Component {
                 <div
                     id="controller"
                     className={!this.props.controller.isConnected ? 'hidden' : ''}>
-                    <div id="controller-presentation-view" />
+                    <div id="controller-presentation-view" className={this.props.controller.isReadingMode ? ' reading-mode' : ''} />
                     <div id="controller-controls">
                         <div className="presentation-progress-container">
                             <div
@@ -275,8 +275,10 @@ class Controller extends React.Component {
                                     onClick={this.zoomInOnCurrentSlide.bind(this)}>
                                     <span className="fa fa-3x fa-search-plus" />
                                 </div>
-                                <div className="presentation-control-button disabled">
-                                    <span className="fa fa-3x" />
+                                <div
+                                    className="presentation-control-button"
+                                    onClick={this.props.toggleReadingMode.bind(this)}>
+                                    <span className={'fa fa-3x' + (this.props.controller.isReadingMode ? ' fa-list-ul' : ' fa-file-text-o')} />
                                 </div>
                             </div>
                         </div>
