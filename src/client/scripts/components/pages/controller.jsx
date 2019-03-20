@@ -53,6 +53,23 @@ class Controller extends React.Component {
         markSlidesForNotes(presentationView);
 
         this.props.startControllingPresentation(presentationView.querySelectorAll('.slide').length);
+
+        this.bindNavigationEvents();
+    }
+
+    bindNavigationEvents() {
+        const context = this;
+
+        Array.prototype.forEach.call(
+            document.querySelectorAll(
+                '#controller-presentation-view .slide h1, #controller-presentation-view .slide h2'
+            ),
+            (s, i) => {
+                s.onclick = () => {
+                    context.moveToSlide(i);
+                };
+            }
+        );
     }
 
     highlightSlide(slideIndex) {
@@ -176,7 +193,17 @@ class Controller extends React.Component {
     }
 
     reset() {
+        this.unbindNavigationEvents();
         this.props.reset();
+    }
+
+    unbindNavigationEvents() {
+        Array.prototype.forEach.call(
+            document.querySelectorAll(
+                '#controller-presentation-view .slide h1, #controller-presentation-view .slide h2'
+            ),
+            s => { s.onclick = null; }
+        );
     }
 
     backToHome() {
