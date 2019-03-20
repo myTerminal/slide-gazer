@@ -70,7 +70,7 @@ class Controller extends React.Component {
             return;
         }
 
-        socketService.sendCommand('SLIDE-SHOW', this.props.controller.currentSlideIndex - 1);
+        this.moveToSlide(this.props.controller.currentSlideIndex - 1);
     }
 
     nextSlide() {
@@ -78,7 +78,11 @@ class Controller extends React.Component {
             return;
         }
 
-        socketService.sendCommand('SLIDE-SHOW', this.props.controller.currentSlideIndex + 1);
+        this.moveToSlide(this.props.controller.currentSlideIndex + 1);
+    }
+
+    moveToSlide(slideIndex) {
+        socketService.sendCommand('SLIDE-SHOW', slideIndex);
     }
 
     zoomInOnCurrentSlide() {
@@ -237,27 +241,38 @@ class Controller extends React.Component {
                         </div>
                         <div className="controller-controls-buttons">
                             <div className="control-row">
-                                <div className="presentation-control-button disabled">
+                                <div
+                                    className={'presentation-control-button' + (!this.props.controller.currentSlideIndex ? ' disabled' : '')}
+                                    onClick={() => this.moveToSlide(0)}
+                                >
                                     <span className="fa fa-3x fa-fast-backward" />
                                 </div>
                                 <div
                                     className={'presentation-control-button' + (!this.props.controller.currentSlideIndex ? ' disabled' : '')}
-                                    onClick={this.previousSlide.bind(this)}>
+                                    onClick={this.previousSlide.bind(this)}
+                                >
                                     <span className="fa fa-3x fa-step-backward" />
                                 </div>
                                 <div
                                     className={'presentation-control-button' + (this.props.controller.currentSlideIndex === this.props.controller.slideCount - 1 ? ' disabled' : '')}
-                                    onClick={this.nextSlide.bind(this)}>
+                                    onClick={this.nextSlide.bind(this)}
+                                >
                                     <span className="fa fa-3x fa-step-forward" />
                                 </div>
-                                <div className="presentation-control-button disabled">
+                                <div
+                                    className={'presentation-control-button' + (this.props.controller.currentSlideIndex === this.props.controller.slideCount - 1 ? ' disabled' : '')}
+                                    onClick={
+                                        () => this.moveToSlide(this.props.controller.slideCount - 1)
+                                    }
+                                >
                                     <span className="fa fa-3x fa-fast-forward" />
                                 </div>
                             </div>
                             <div className="control-row">
                                 <div
                                     className="presentation-control-button"
-                                    onClick={this.disconnect.bind(this)}>
+                                    onClick={this.disconnect.bind(this)}
+                                >
                                     <span
                                         className="fa fa-3x fa-power-off"
                                         style={{
@@ -267,17 +282,20 @@ class Controller extends React.Component {
                                 </div>
                                 <div
                                     className={'presentation-control-button' + (!this.props.controller.isZoomedIn ? ' active disabled' : '')}
-                                    onClick={this.zoomOutOnCurrentSlide.bind(this)}>
+                                    onClick={this.zoomOutOnCurrentSlide.bind(this)}
+                                >
                                     <span className="fa fa-3x fa-search-minus" />
                                 </div>
                                 <div
                                     className={'presentation-control-button' + (this.props.controller.isZoomedIn ? ' active disabled' : '')}
-                                    onClick={this.zoomInOnCurrentSlide.bind(this)}>
+                                    onClick={this.zoomInOnCurrentSlide.bind(this)}
+                                >
                                     <span className="fa fa-3x fa-search-plus" />
                                 </div>
                                 <div
                                     className="presentation-control-button"
-                                    onClick={this.props.toggleReadingMode.bind(this)}>
+                                    onClick={this.props.toggleReadingMode.bind(this)}
+                                >
                                     <span className={'fa fa-3x' + (this.props.controller.isReadingMode ? ' fa-list-ul' : ' fa-file-text-o')} />
                                 </div>
                             </div>
