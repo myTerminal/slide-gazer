@@ -2,7 +2,7 @@ import axios from 'axios';
 import { alert } from 'ample-alerts';
 import { configs } from '../constants/action-names';
 
-const getDomain = () =>
+export const getDomain = () =>
     (dispatch) => {
         axios.get('/configs').then(response => {
             dispatch({

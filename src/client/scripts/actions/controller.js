@@ -1,6 +1,6 @@
 import { controller } from '../constants/action-names';
 
-const setInitialPresentationCode = presentationCode =>
+export const setInitialPresentationCode = presentationCode =>
     dispatch => {
         dispatch({
             type: controller.setInitialPresentationCode,
@@ -8,7 +8,7 @@ const setInitialPresentationCode = presentationCode =>
         });
     };
 
-const changePresentationCode = presentationCode =>
+export const changePresentationCode = presentationCode =>
     dispatch => {
         dispatch({
             type: controller.changePresentationCode,
@@ -16,7 +16,7 @@ const changePresentationCode = presentationCode =>
         });
     };
 
-const startControllingPresentation = slideCount =>
+export const startControllingPresentation = slideCount =>
     dispatch => {
         dispatch({
             type: controller.startControllingPresentation,
@@ -24,7 +24,7 @@ const startControllingPresentation = slideCount =>
         });
     };
 
-const showSlide = (slideIndex, slideCount) =>
+export const showSlide = (slideIndex, slideCount) =>
     dispatch => {
         dispatch({
             type: controller.showSlide,
@@ -35,28 +35,28 @@ const showSlide = (slideIndex, slideCount) =>
         });
     };
 
-const zoomIn = () =>
+export const zoomIn = () =>
     dispatch => {
         dispatch({
             type: controller.zoomIn
         });
     };
 
-const zoomOut = () =>
+export const zoomOut = () =>
     dispatch => {
         dispatch({
             type: controller.zoomOut
         });
     };
 
-const toggleReadingMode = () =>
+export const toggleReadingMode = () =>
     dispatch => {
         dispatch({
             type: controller.toggleReadingMode
         });
     };
 
-const reset = () =>
+export const reset = () =>
     dispatch => {
         dispatch({
             type: controller.reset

@@ -4,7 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { alert } from 'ample-alerts';
 
-import getDomain from '../../actions/configs';
+import { getDomain } from '../../actions/configs';
 import controllerActions from '../../actions/controller';
 import {
     getFirstSlide,

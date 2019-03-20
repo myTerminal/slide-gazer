@@ -11,7 +11,7 @@ import BottomPanel from '../panel-bottom.jsx';
 import Loading from '../loading.jsx';
 
 import { timers } from '../../common';
-import getDomain from '../../actions/configs';
+import { getDomain } from '../../actions/configs';
 import presentationActions from '../../actions/presentation';
 
 import socketService from '../../services/presentation-socket-service.js';

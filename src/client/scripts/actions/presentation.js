@@ -15,7 +15,7 @@ import {
 } from '../common';
 import { presentation } from '../constants/action-names';
 
-const updatePreviousPresentationInfo = () =>
+export const updatePreviousPresentationInfo = () =>
     dispatch => {
         localforage.getItem('lastPresentationDom')
             .then(value => {
@@ -26,7 +26,7 @@ const updatePreviousPresentationInfo = () =>
             });
     };
 
-const startPresentation = (presentationDomData, protocol, domain, presentationCode) =>
+export const startPresentation = (presentationDomData, protocol, domain, presentationCode) =>
     dispatch => {
         dispatch(setLoading(true));
 
@@ -65,7 +65,7 @@ const startPresentation = (presentationDomData, protocol, domain, presentationCo
         }, 1000);
     };
 
-const setLoading = value =>
+export const setLoading = value =>
     dispatch => {
         dispatch({
             type: presentation.setLoading,
@@ -73,7 +73,7 @@ const setLoading = value =>
         });
     };
 
-const showSlide = (slideIndex, slideCount) =>
+export const showSlide = (slideIndex, slideCount) =>
     dispatch => {
         dispatch({
             type: presentation.showSlide,
@@ -84,7 +84,7 @@ const showSlide = (slideIndex, slideCount) =>
         });
     };
 
-const setControllerUrlQrCodeData = (protocol, domain, presentationCode) =>
+export const setControllerUrlQrCodeData = (protocol, domain, presentationCode) =>
     dispatch => {
         qrcode.toDataURL(protocol + '://' + domain + '/control/' + presentationCode)
             .then(url => {
@@ -95,7 +95,7 @@ const setControllerUrlQrCodeData = (protocol, domain, presentationCode) =>
             });
     };
 
-const nextSlide = showSlideCallback =>
+export const nextSlide = showSlideCallback =>
     (dispatch, getState) => {
         const state = getState().presentation;
 
@@ -106,7 +106,7 @@ const nextSlide = showSlideCallback =>
         showSlideCallback(state.currentSlideIndex + 1);
     };
 
-const previousSlide = showSlideCallback =>
+export const previousSlide = showSlideCallback =>
     (dispatch, getState) => {
         const state = getState().presentation;
 
@@ -117,21 +117,21 @@ const previousSlide = showSlideCallback =>
         showSlideCallback(state.currentSlideIndex - 1);
     };
 
-const zoomIn = () =>
+export const zoomIn = () =>
     dispatch => {
         dispatch({
             type: presentation.zoomIn
         });
     };
 
-const zoomOut = () =>
+export const zoomOut = () =>
     dispatch => {
         dispatch({
             type: presentation.zoomOut
         });
     };
 
-const setControlMode = mode =>
+export const setControlMode = mode =>
     dispatch => {
         dispatch({
             type: presentation.setControlMode,
@@ -139,14 +139,14 @@ const setControlMode = mode =>
         });
     };
 
-const toggleAutoTransition = () =>
+export const toggleAutoTransition = () =>
     dispatch => {
         dispatch({
             type: presentation.toggleAutoTransition
         });
     };
 
-const setAutoTransitionDelay = delay =>
+export const setAutoTransitionDelay = delay =>
     dispatch => {
         dispatch({
             type: presentation.setAutoTransitionDelay,
@@ -154,7 +154,7 @@ const setAutoTransitionDelay = delay =>
         });
     };
 
-const setAnimation = animationName =>
+export const setAnimation = animationName =>
     dispatch => {
         localforage.setItem('animationName', animationName)
             .then(() => {
@@ -165,7 +165,7 @@ const setAnimation = animationName =>
             });
     };
 
-const getAnimation = () =>
+export const getAnimation = () =>
     dispatch => {
         localforage.getItem('animationName')
             .then(value => {
@@ -176,7 +176,7 @@ const getAnimation = () =>
             });
     };
 
-const setFullscreenMode = mode =>
+export const setFullscreenMode = mode =>
     dispatch => {
         dispatch({
             type: presentation.setFullscreenMode,
@@ -184,7 +184,7 @@ const setFullscreenMode = mode =>
         });
     };
 
-const setControllerConnectionState = connectionState =>
+export const setControllerConnectionState = connectionState =>
     dispatch => {
         dispatch({
             type: presentation.setControllerConnectionState,
@@ -192,7 +192,7 @@ const setControllerConnectionState = connectionState =>
         });
     };
 
-const endPresentation = () =>
+export const endPresentation = () =>
     dispatch => {
         dispatch({
             type: presentation.endPresentation
