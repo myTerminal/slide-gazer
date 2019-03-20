@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import localforage from 'localforage';
 
 import store from './store';
+import presentationActions from './actions/presentation';
 
 import './service-worker-starter.js';
 
@@ -26,7 +27,7 @@ localforage.config({
 render(
     <Provider store={store}>
         <BrowserRouter basename={baseUrl}>
-            <App />
+            <App resetPresentation={() => store.dispatch(presentationActions.endPresentation())} />
         </BrowserRouter>
     </Provider>,
     document.getElementById('page')

@@ -1,11 +1,19 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { withRouter, Route } from 'react-router-dom';
 
 import Home from './pages/home.jsx';
 import Presentation from './pages/presentation.jsx';
 import Controller from './pages/controller.jsx';
 
-export default class App extends React.Component {
+class App extends React.Component {
+    componentDidMount() {
+        this.props.history.listen(location => {
+            if (location.pathname === '/') {
+                this.props.resetPresentation();
+            }
+        });
+    }
+
     render() {
         return (
             <div className="canvas">
@@ -17,3 +25,5 @@ export default class App extends React.Component {
         );
     }
 }
+
+export default withRouter(App);
