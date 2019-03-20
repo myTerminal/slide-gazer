@@ -200,19 +200,19 @@ class Controller extends React.Component {
                             type="text"
                             id="presentation-code-input"
                             value={this.props.controller.presentationCode}
-                            onChange={this.onPresentationCodeChange.bind(this)}
+                            onChange={(e) => this.onPresentationCodeChange(e)}
                         />
                         <br />
                         <div
                             id="connect-button"
                             className={'control-button' + (!this.props.controller.presentationCode ? ' disabled' : '')}
-                            onClick={this.connect.bind(this)}>
+                            onClick={() => this.connect()}>
                             Connect
                         </div>
                         <div
                             id="back-button"
                             className="control-button"
-                            onClick={this.backToHome.bind(this)}>
+                            onClick={() => this.backToHome()}>
                             Back
                         </div>
                     </div>
@@ -249,13 +249,13 @@ class Controller extends React.Component {
                                 </div>
                                 <div
                                     className={'presentation-control-button' + (!this.props.controller.currentSlideIndex ? ' disabled' : '')}
-                                    onClick={this.previousSlide.bind(this)}
+                                    onClick={() => this.previousSlide()}
                                 >
                                     <span className="fa fa-3x fa-step-backward" />
                                 </div>
                                 <div
                                     className={'presentation-control-button' + (this.props.controller.currentSlideIndex === this.props.controller.slideCount - 1 ? ' disabled' : '')}
-                                    onClick={this.nextSlide.bind(this)}
+                                    onClick={() => this.nextSlide()}
                                 >
                                     <span className="fa fa-3x fa-step-forward" />
                                 </div>
@@ -271,7 +271,7 @@ class Controller extends React.Component {
                             <div className="control-row">
                                 <div
                                     className="presentation-control-button"
-                                    onClick={this.disconnect.bind(this)}
+                                    onClick={() => this.disconnect()}
                                 >
                                     <span
                                         className="fa fa-3x fa-power-off"
@@ -282,19 +282,19 @@ class Controller extends React.Component {
                                 </div>
                                 <div
                                     className={'presentation-control-button' + (!this.props.controller.isZoomedIn ? ' active disabled' : '')}
-                                    onClick={this.zoomOutOnCurrentSlide.bind(this)}
+                                    onClick={() => this.zoomOutOnCurrentSlide()}
                                 >
                                     <span className="fa fa-3x fa-search-minus" />
                                 </div>
                                 <div
                                     className={'presentation-control-button' + (this.props.controller.isZoomedIn ? ' active disabled' : '')}
-                                    onClick={this.zoomInOnCurrentSlide.bind(this)}
+                                    onClick={() => this.zoomInOnCurrentSlide()}
                                 >
                                     <span className="fa fa-3x fa-search-plus" />
                                 </div>
                                 <div
                                     className="presentation-control-button"
-                                    onClick={this.props.toggleReadingMode.bind(this)}
+                                    onClick={() => this.props.toggleReadingMode()}
                                 >
                                     <span className={'fa fa-3x' + (this.props.controller.isReadingMode ? ' fa-list-ul' : ' fa-file-text-o')} />
                                 </div>
