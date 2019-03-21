@@ -135,6 +135,10 @@ export default class TopPanel extends React.Component {
                                     backgroundImage: 'url(' + this.props.presentation.controllerUrlQrCodeData + ')'
                                 }}
                             />
+                            <div id="presentation-code-label">
+                                Presentation code:&nbsp;
+                                <span id="presentation-code">{this.props.presentation.presentationCode}</span>
+                            </div>
                             <div>
                                 <a
                                     id="controller-url-link"
