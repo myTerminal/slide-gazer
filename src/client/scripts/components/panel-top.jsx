@@ -43,14 +43,19 @@ export default class TopPanel extends React.Component {
                             title={this.props.presentation.isControllerConnected ? 'A controller is connected' : 'Connect a controller'}
                         />
                         <div
+                            className={'control-button smaller fa fa-list' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '') + (this.props.presentation.isIndexMode ? ' active' : '')}
+                            onClick={() => this.props.toggleIndex()}
+                            title="Go-to slide"
+                        />
+                        <div
                             className={'control-button smaller fa fa-arrows-alt' + (!this.props.presentation.isPresentationLoaded || this.props.presentation.isFullscreen ? ' hidden' : '')}
                             onClick={() => this.switchToFullscreen()}
-                            title="Switch to Fullscreen"
+                            title="Switch to fullscreen"
                         />
                         <div
                             className={'control-button smaller fa fa-window-restore' + (!this.props.presentation.isPresentationLoaded || !this.props.presentation.isFullscreen ? ' hidden' : '')}
                             onClick={() => this.exitFullscreen()}
-                            title="Exit Fullscreen"
+                            title="Exit fullscreen"
                         />
                         <div
                             className={'control-button smaller fa fa-stop red' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')}

@@ -176,6 +176,13 @@ export const getAnimation = () =>
             });
     };
 
+export const toggleIndex = () =>
+    dispatch => {
+        dispatch({
+            type: presentation.toggleIndex
+        });
+    };
+
 export const setFullscreenMode = mode =>
     dispatch => {
         dispatch({
@@ -214,6 +221,7 @@ export default {
     setAutoTransitionDelay,
     setAnimation,
     getAnimation,
+    toggleIndex,
     setFullscreenMode,
     setControllerConnectionState,
     endPresentation

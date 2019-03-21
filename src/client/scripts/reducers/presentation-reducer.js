@@ -20,6 +20,7 @@ const initialState = {
     isAutoTransitionEnabled: false,
     autoTransitionDelay: 1,
     animation: 'scroll-down',
+    isIndexMode: false,
     isFullscreen: false,
     isControllerConnected: false
 };
@@ -49,7 +50,8 @@ const presentationReducer = (state = initialState, action) => {
             ...state,
             currentSlideIndex: action.payLoad.currentSlideIndex,
             isZoomedIn: false,
-            presentationProgress: action.payLoad.presentationProgress
+            presentationProgress: action.payLoad.presentationProgress,
+            isIndexMode: false
         };
     case presentation.setControllerUrlQrCodeData:
         return {
@@ -59,17 +61,20 @@ const presentationReducer = (state = initialState, action) => {
     case presentation.zoomIn:
         return {
             ...state,
-            isZoomedIn: true
+            isZoomedIn: true,
+            isIndexMode: false
         };
     case presentation.zoomOut:
         return {
             ...state,
-            isZoomedIn: false
+            isZoomedIn: false,
+            isIndexMode: false
         };
     case presentation.setControlMode:
         return {
             ...state,
-            controlMode: action.payLoad
+            controlMode: action.payLoad,
+            isIndexMode: false
         };
     case presentation.toggleAutoTransition:
         return {
@@ -90,6 +95,12 @@ const presentationReducer = (state = initialState, action) => {
         return {
             ...state,
             animation: action.payLoad || state.animation
+        };
+    case presentation.toggleIndex:
+        return {
+            ...state,
+            controlMode: null,
+            isIndexMode: !state.isIndexMode
         };
     case presentation.setFullscreenMode:
         return {
@@ -120,6 +131,7 @@ const presentationReducer = (state = initialState, action) => {
             currentSlideIndex: 0,
             presentationProgress: 0,
             controlMode: null,
+            isIndexMode: false,
             isFullscreen: false,
             isAutoTransitionEnabled: false
         };

@@ -81,6 +81,7 @@ class Presentation extends React.Component {
             this.onException.bind(this),
             () => {
                 this.showSlide(0);
+                this.bindNavigationEvents();
             }
         );
 
@@ -120,6 +121,21 @@ class Presentation extends React.Component {
             socketService.sendSignal('SLIDE-SHOW', slideIndex);
             socketService.sendSignal('SLIDE-ZOOM-OUT');
         }
+    }
+
+    bindNavigationEvents() {
+        const context = this;
+
+        Array.prototype.forEach.call(
+            document.querySelectorAll(
+                '#presentation .slide h1, #presentation .slide h2'
+            ),
+            (s, i) => {
+                s.onclick = () => {
+                    context.showSlide(i);
+                };
+            }
+        );
     }
 
     onKeyDownOnPresentation(e) {
@@ -248,6 +264,16 @@ class Presentation extends React.Component {
         socketService.close();
 
         this.touchGestures.off('swipe');
+        this.unbindNavigationEvents();
+    }
+
+    unbindNavigationEvents() {
+        Array.prototype.forEach.call(
+            document.querySelectorAll(
+                '#presentation .slide h1, #presentation .slide h2'
+            ),
+            s => { s.onclick = null; }
+        );
     }
 
     backToHome() {
@@ -265,6 +291,7 @@ class Presentation extends React.Component {
                     toggleAutoTransition={() => this.toggleAutoTransition()}
                     setAnimation={(n) => this.props.setAnimation(n)}
                     onAutoTransitionDelayChange={(e) => this.onAutoTransitionDelayChange(e)}
+                    toggleIndex={this.props.toggleIndex}
                     backToHome={() => this.backToHome()}
                     endPresentation={() => this.endPresentation()}
                 />
@@ -277,7 +304,7 @@ class Presentation extends React.Component {
                     className={!this.props.presentation.isPresentationLoaded ? 'hidden' : ''}>
                     <div
                         id="presentation"
-                        className={'markdown-body ' + this.props.presentation.animation + (this.props.presentation.isZoomedIn ? ' zoomed' : '')}>
+                        className={'markdown-body ' + this.props.presentation.animation + (this.props.presentation.isZoomedIn ? ' zoomed' : '') + (this.props.presentation.isIndexMode ? ' index-mode' : '')}>
                         <div id="slides-holder" />
                     </div>
                 </div>

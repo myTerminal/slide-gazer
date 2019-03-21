@@ -581,6 +581,59 @@ body,
                         }
                     }
                 }
+
+                &.index-mode {
+                    overflow-y: auto;
+
+                    .slide {
+                        position: static;
+                        height: auto;
+                        padding: 0;
+                        .opacity(1) !important;
+                        overflow: visible;
+                        box-shadow: none;
+                        border: none;
+                        .transform(none) !important;
+
+                        .round-borders(5px);
+
+                        > * {
+                            display: none;
+                        }
+
+                        > h1,
+                        > h2 {
+                            display: inherit;
+                            margin: 5px;
+                            padding: 0;
+                            cursor: pointer;
+                        }
+
+                        &.first-slide {
+                            display: none;
+                        }
+
+                        &.last-slide {
+                            display: none;
+                        }
+
+                        &:hover {
+                            padding-left: 10px;
+                            color: @accent-primary;
+                        }
+
+                        &.visible {
+                            padding-left: 0;
+                            background-color: @accent-primary;
+                            color: @lightest-color;
+
+                            h1,
+                            h2 {
+                                border: none;
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -1001,6 +1054,21 @@ body.mobile-mode {
                                         color: @darkest-color;
                                         font-size: inherit;
                                     }
+                                }
+                            }
+
+                            &.index-mode {
+
+                                &:after {
+                                    margin-top: 50%;
+                                    width: 100%;
+                                    content: 'Please quit list mode and return to slide-show to print the presentation.';
+                                    text-align: center;
+                                    font-size: 2em;
+                                }
+
+                                #slides-holder {
+                                    display: none;
                                 }
                             }
                         }
