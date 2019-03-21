@@ -43,6 +43,12 @@ By default, the slides will start changing every 5 seconds.
 
 You can use change the delay using a slider next to the button.
 
+## Jumping directly to a slide
+
+Selecting the 'Go-to slide' option near the top-right corner brings up a list of slide titles.
+
+Select one to move to the corresponding slide.
+
 ## Controlling the presentation remotely
 
 To control a presentation remotely, do one of the following:
