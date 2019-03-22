@@ -1,8 +1,49 @@
 /* global document */
 
 import React from 'react';
+import { confirm } from 'ample-alerts';
 
 export default class TopPanel extends React.Component {
+    promptToEndPresentation() {
+        confirm(
+            [
+                'About to end presentation!',
+                'Are you sure you want to end the presentation?'
+            ],
+            {
+                onAction: response => {
+                    if (response) {
+                        this.props.endPresentation();
+                    }
+                },
+                labels: [
+                    'End',
+                    'Cancel'
+                ]
+            }
+        );
+    }
+
+    promptToDisconnectController() {
+        confirm(
+            [
+                'The controller will be disconnected!',
+                'Are you sure you want to disconnect controller?'
+            ],
+            {
+                onAction: response => {
+                    if (response) {
+                        this.props.disconnectController();
+                    }
+                },
+                labels: [
+                    'Disconnect',
+                    'Cancel'
+                ]
+            }
+        );
+    }
+
     switchToFullscreen() {
         document.body.requestFullscreen();
     }
@@ -59,7 +100,7 @@ export default class TopPanel extends React.Component {
                         />
                         <div
                             className={'control-button smaller fa fa-stop red' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')}
-                            onClick={() => this.props.endPresentation()}
+                            onClick={() => this.promptToEndPresentation()}
                             title="End presentation"
                         />
                         <div
@@ -161,7 +202,7 @@ export default class TopPanel extends React.Component {
                             </div>
                             <div
                                 className="control-button"
-                                onClick={() => this.props.disconnectController()}>
+                                onClick={() => this.promptToDisconnectController()}>
                                 Disconnect controller
                             </div>
                         </div>

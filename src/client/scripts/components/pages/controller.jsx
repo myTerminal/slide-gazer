@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { alert } from 'ample-alerts';
+import { alert, confirm } from 'ample-alerts';
 
 import { getDomain } from '../../actions/configs';
 import controllerActions from '../../actions/controller';
@@ -187,6 +187,26 @@ class Controller extends React.Component {
         this.reset();
     }
 
+    promptToDisconnect() {
+        confirm(
+            [
+                'About to disconnect!',
+                'Are you sure you want quit controlling the presentation?'
+            ],
+            {
+                onAction: response => {
+                    if (response) {
+                        this.disconnect();
+                    }
+                },
+                labels: [
+                    'End',
+                    'Cancel'
+                ]
+            }
+        );
+    }
+
     disconnect() {
         socketService.close();
         this.reset();
@@ -298,7 +318,7 @@ class Controller extends React.Component {
                             <div className="control-row">
                                 <div
                                     className="presentation-control-button"
-                                    onClick={() => this.disconnect()}
+                                    onClick={() => this.promptToDisconnect()}
                                 >
                                     <span
                                         className="fa fa-3x fa-power-off"

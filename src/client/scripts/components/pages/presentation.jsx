@@ -240,6 +240,13 @@ class Presentation extends React.Component {
             }
         } else if (info === 'DISCONNECTION') {
             this.props.setControllerConnectionState(false);
+
+            alert(
+                'Controller has been disconnected',
+                {
+                    autoClose: 3000
+                }
+            );
         }
     }
 
