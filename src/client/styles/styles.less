@@ -42,6 +42,41 @@ body,
     margin: 0;
     padding: 0;
     height: 100%;
+
+    #ample-alerts-container {
+
+        .ample-alert {
+            background-color: @dark-color;
+            color: @lightest-color;
+            border-color: @highlight-color;
+
+            .ample-alert-header {
+
+                .ample-alert-close {
+                    color: @highlight-color;
+
+                    &:hover {
+                        color: @lightest-color;
+                    }
+                }
+            }
+
+            .ample-alert-controls {
+
+                .ample-alert-control {
+                    background-color: @dark-color;
+                    border: 1px solid @lightest-color;
+                    color: @lightest-color;
+
+                    &:hover {
+                        background-color: @accent-primary;
+                        border-color: @accent-primary;
+                        color: @accent-secondary;
+                    }
+                }
+            }
+        }
+    }
 }
 
 .canvas {
