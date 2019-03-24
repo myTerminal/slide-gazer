@@ -3,6 +3,8 @@
 import React from 'react';
 import { confirm } from 'ample-alerts';
 
+import Help from './help.jsx';
+
 export default class TopPanel extends React.Component {
     promptToEndPresentation() {
         confirm(
@@ -69,9 +71,14 @@ export default class TopPanel extends React.Component {
                     </span>
                     <div className="panel-controls-group panel-controls-group-right">
                         <div
-                            className={'control-button smaller fa fa-close blue' + (!this.props.presentation.isPresentationLoaded || !this.props.presentation.controlMode ? ' offsetted' : '') + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')}
+                            className={'control-button smaller fa fa-close blue' + (!this.props.presentation.controlMode ? ' offsetted' : '')}
                             onClick={() => this.props.setControlMode(null)}
                             title="Close"
+                        />
+                        <div
+                            className="control-button smaller fa fa-question"
+                            onClick={() => this.props.setControlMode('help')}
+                            title="See Help"
                         />
                         <div
                             className={'control-button smaller fa fa-gear' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')}
@@ -111,6 +118,9 @@ export default class TopPanel extends React.Component {
                     </div>
                 </div>
                 <div id="top-panel-body" className={'panel-body' + (this.props.presentation.controlMode ? ' active' : '')}>
+                    <div className={'top-panel-body-content' + (this.props.presentation.controlMode === 'help' ? ' visible' : '')}>
+                        <Help />
+                    </div>
                     <div className={'top-panel-body-content' + (this.props.presentation.controlMode === 'presentation' ? ' visible' : '')}>
                         <div className="controls-header">
                             Presentation
