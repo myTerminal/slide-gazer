@@ -36,8 +36,8 @@ export default class Stage extends React.Component {
     }
 
     loadFile(file) {
-        const context = this;
-        const reader = new FileReader();
+        const context = this,
+            reader = new FileReader();
 
         reader.onload = event => {
             const presentationDom = converter.makeHtml(event.target.result);

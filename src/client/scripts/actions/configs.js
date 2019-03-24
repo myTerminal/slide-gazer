@@ -3,15 +3,17 @@ import { alert } from 'ample-alerts';
 import { configs } from '../constants/action-names';
 
 export const getDomain = () =>
-    (dispatch) => {
-        axios.get('/configs').then(response => {
-            dispatch({
-                type: configs.domain.fetched,
-                payLoad: response.data
+    dispatch => {
+        axios
+            .get('/configs')
+            .then(response => {
+                dispatch({
+                    type: configs.domain.fetched,
+                    payLoad: response.data
+                });
+            }).catch(() => {
+                alert(['Error!', 'Failed to fetch domain details.']);
             });
-        }).catch(() => {
-            alert(['Error!', 'Failed to fetch domain details.']);
-        });
     };
 
 export default getDomain;

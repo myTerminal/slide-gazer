@@ -184,6 +184,7 @@ class Controller extends React.Component {
                 autoClose: 3000
             }
         );
+
         this.reset();
     }
 

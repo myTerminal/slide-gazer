@@ -17,7 +17,8 @@ import { presentation } from '../constants/action-names';
 
 export const updatePreviousPresentationInfo = () =>
     dispatch => {
-        localforage.getItem('lastPresentationDom')
+        localforage
+            .getItem('lastPresentationDom')
             .then(value => {
                 dispatch({
                     type: presentation.setPreviousPresentationInfo,
@@ -86,7 +87,8 @@ export const showSlide = (slideIndex, slideCount) =>
 
 export const setControllerUrlQrCodeData = (protocol, domain, presentationCode) =>
     dispatch => {
-        qrcode.toDataURL(protocol + '://' + domain + '/control/' + presentationCode)
+        qrcode
+            .toDataURL(protocol + '://' + domain + '/control/' + presentationCode)
             .then(url => {
                 dispatch({
                     type: presentation.setControllerUrlQrCodeData,
@@ -156,7 +158,8 @@ export const setAutoTransitionDelay = delay =>
 
 export const setAnimation = animationName =>
     dispatch => {
-        localforage.setItem('animationName', animationName)
+        localforage
+            .setItem('animationName', animationName)
             .then(() => {
                 dispatch({
                     type: presentation.setAnimation,
@@ -167,7 +170,8 @@ export const setAnimation = animationName =>
 
 export const getAnimation = () =>
     dispatch => {
-        localforage.getItem('animationName')
+        localforage
+            .getItem('animationName')
             .then(value => {
                 dispatch({
                     type: presentation.getAnimation,
