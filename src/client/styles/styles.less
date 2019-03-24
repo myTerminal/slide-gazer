@@ -423,14 +423,27 @@ body,
                     }
 
                     &.first-slide {
-                        filter: invert(1);
                         z-index: 2;
+                        color: @lightest-color;
+                        background-color: @accent-secondary;
+                        border-color: @accent-secondary;
+                        box-shadow: 0 0 40px 40px @accent-secondary;
+                        overflow: hidden;
 
                         .slide-contents {
                             text-align: center;
                             position: relative;
                             top: 50%;
                             .transform(translateY(-50%));
+
+                            h1 {
+                                margin: 0;
+                                border-bottom: none;
+                            }
+
+                            span {
+                                font-size: 0.5em;
+                            }
                         }
                     }
                 }

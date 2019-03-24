@@ -1,18 +1,13 @@
 import Promise from 'bluebird';
 import axios from 'axios';
 
+import packageDetails from '../../../package.json';
+
 export const getFirstSlide = title => `
     <div class="slide first-slide">
       <div class="slide-contents">
         <h1>${title}</h1>
-        <br />
-        <span class="fa fa-arrow-right"></span> Next Slide
-        <br />
-        <span class="fa fa-arrow-left"></span> Previous Slide
-        <br />
-        <span class="fa fa-arrow-up"></span> Emphasize
-        <br />
-        <span class="fa fa-arrow-down"></span> De-emphasize
+        <span>on Slide Gazer ${packageDetails.version}</span>
       </div>
     </div>`;
 
