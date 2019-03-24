@@ -238,6 +238,8 @@ class Presentation extends React.Component {
             if (this.props.presentation.isZoomedIn) {
                 socketService.sendSignal('SLIDE-ZOOM-IN');
             }
+
+            this.props.setControlMode(null);
         } else if (info === 'DISCONNECTION') {
             this.props.setControllerConnectionState(false);
 
