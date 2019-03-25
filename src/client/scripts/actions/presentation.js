@@ -3,6 +3,8 @@
 import qrcode from 'qrcode';
 import localforage from 'localforage';
 
+import { showTipOnPresentationStart } from '../tips';
+
 import {
     getFirstSlide,
     getSlidesDom,
@@ -47,6 +49,7 @@ export const startPresentation = (presentationDomData, protocol, domain, present
         setTimeout(() => {
             allImagesLoaded(images).then(() => {
                 dispatch(setLoading(false));
+                showTipOnPresentationStart(() => dispatch(setControlMode('help')));
             });
 
             unmutateImageSources(images);
