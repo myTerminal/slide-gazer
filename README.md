@@ -7,7 +7,7 @@
 [![peer Dependency Status](https://david-dm.org/team-fluxion/slide-gazer/peer-status.svg)](https://david-dm.org/team-fluxion/slide-gazer#info=peerDependencies)  
 [![License](https://img.shields.io/badge/LICENSE-GPL%20v3.0-blue.svg)](https://www.gnu.org/licenses/gpl.html)
 
-A light-weight presentation tool for presenting your ideas quickly and with style!
+An online presentation tool for presenting your ideas quickly and with style!
 
 > Based on [faded-presenter](https://github.com/myTerminal/faded-presenter)
 
@@ -21,16 +21,16 @@ It's an online tool that can be used to present slide-shows created with plain-t
 * Use any text-editor to create slide-show presentations and do it quickly by focussing only on content and not formatting
 * Present from any device capable of running a decent web-browser
 * Choose from a range of slide-transition animations
-* Choose to have auto-transition of slides with an adjustable delay
+* Have auto-transition of slides with an adjustable delay
 * Bring attention of your audience to a few emphasized words on a slide
 * Control the presentation from another device and have a bird's eye view of the presentation at the same time
 * Add speaker notes to be able to refer to some text while presenting
 
 ## How to use
 
-Open the URL [http://slide-gazer.teamfluxion.com](http://slide-gazer.teamfluxion.com) in a web-browser.
+Open the URL [http://slide-gazer.teamfluxion.com](http://slide-gazer.teamfluxion.com) in a web-browser. Google Chrome is the recommended web-browser, a few features may not work in other browsers as making this tool cross-browser was not the focus during its development.
 
-Choose to present a slide-show presentation or to control one that is already running.
+On the home-screen, you can choose to present a slide-show presentation or control one that is already running.
 
 ### Presenting a slide-show
 
@@ -39,13 +39,16 @@ You can select a presentation to be presented in one of the following three ways
 1. Pick a markdown document from the system
 2. Drop a markdown document on the page
 3. Reload a previously presented slide-show
+4. Load a sample presentation (if you just want to check how it works)
 
 Once a presentation is started, navigate through the slides using the right and left arrow keys on the keyboard.
 Use the up and down arrow keys to focus a few emphasized words on a slide and restore view back to normal respectively.
 
 Use the **Preferences** button on the top-right corner to reveal more options like animations and slide auto-transition.
 
-While viewed on a mobile phone or a tablet with a touch-screen, a bar is displayed at the bottom edge to be able to navigate through slides by swiping.
+There are other controls to toggle fullscreen, view an index of slides, etc.
+
+While viewed on a mobile device with a touch-screen, a bar is displayed at the bottom edge to be able to navigate through slides by swiping.
 
 ### Controlling a slide-show
 
@@ -114,3 +117,4 @@ Start the application with
 ## To-do
 
 * Support for less-smart web browsers
+* Import presentation files directly from [organism](https://github.com/myTerminal/organism)
