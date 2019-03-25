@@ -23,7 +23,7 @@ export const showTipOnPresentationStart = action => {
                                             }
                                         },
                                         labels: [
-                                            'Show next time',
+                                            'Yes',
                                             'Don\'t show next time'
                                         ]
                                     }
