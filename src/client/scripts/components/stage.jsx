@@ -42,13 +42,9 @@ export default class Stage extends React.Component {
             reader = new FileReader();
 
         reader.onload = event => {
-            const presentationDom = converter.makeHtml(event.target.result);
+            const presentationDomString = converter.makeHtml(event.target.result);
 
-            localforage
-                .setItem('lastPresentationDom', presentationDom)
-                .then(() => {
-                    context.props.startPresentation(presentationDom);
-                });
+            context.saveAndStartPresentation(presentationDomString);
         };
 
         reader.readAsText(file);
@@ -67,13 +63,10 @@ export default class Stage extends React.Component {
                                 url: response
                             })
                             .then(r => {
-                                const fileText = converter.makeHtml(r.data);
+                                const data = r.data,
+                                    fileText = converter.makeHtml(data.content);
 
-                                localforage
-                                    .setItem('lastPresentationDom', fileText)
-                                    .then(() => {
-                                        context.props.startPresentation(fileText);
-                                    });
+                                context.saveAndStartPresentation(fileText, data.remotePath);
                             })
                             .catch(error => {
                                 alert(['Error!', error.response.data]);
@@ -90,13 +83,24 @@ export default class Stage extends React.Component {
     }
 
     reloadLastPresentation() {
-        localforage
-            .getItem('lastPresentationDom')
-            .then(value => {
-                if (value) {
-                    this.props.startPresentation(value);
-                }
-            });
+        const context = this;
+
+        Promise
+            .all(
+                [
+                    localforage.getItem('lastPresentationDomString'),
+                    localforage.getItem('lastPresentationRemotePath')
+                ]
+            )
+            .then(
+                (
+                    [
+                        domString,
+                        remotePath
+                    ]
+                ) => {
+                    context.props.startPresentation(domString, remotePath);
+                });
     }
 
     loadSamplePresentation() {
@@ -117,6 +121,21 @@ export default class Stage extends React.Component {
                 );
 
                 FileSaver.saveAs(blob, 'sample-presentation.md');
+            });
+    }
+
+    saveAndStartPresentation(domString, remotePath) {
+        const context = this;
+
+        Promise
+            .all(
+                [
+                    localforage.setItem('lastPresentationDomString', domString),
+                    localforage.setItem('lastPresentationRemotePath', remotePath)
+                ]
+            )
+            .then(() => {
+                context.props.startPresentation(domString, remotePath);
             });
     }
 

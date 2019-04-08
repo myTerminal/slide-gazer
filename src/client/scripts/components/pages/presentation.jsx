@@ -56,11 +56,14 @@ class Presentation extends React.Component {
         }
     }
 
-    startPresentation(presentationData) {
+    startPresentation(domString, remotePath = '') {
         const generatedPresentationCode = (new Date()).getTime();
 
         this.props.startPresentation(
-            presentationData,
+            {
+                domString,
+                remotePath
+            },
             this.props.configs['web-protocol'],
             this.props.configs.domain,
             generatedPresentationCode
@@ -75,7 +78,7 @@ class Presentation extends React.Component {
         socketService.open(
             this.props.configs,
             generatedPresentationCode,
-            presentationData,
+            domString,
             this.onInfo.bind(this),
             this.onCommand.bind(this),
             this.onException.bind(this),
@@ -306,7 +309,7 @@ class Presentation extends React.Component {
                 />
                 <Stage
                     presentation={this.props.presentation}
-                    startPresentation={(d) => this.startPresentation(d)}
+                    startPresentation={(d, p) => this.startPresentation(d, p)}
                 />
                 <div
                     id="presentation-container"

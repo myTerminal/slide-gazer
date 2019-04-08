@@ -12,6 +12,7 @@ import {
     getFooter,
     markSlidesForNotes,
     mutateImageSources,
+    fixRelativeImagePaths,
     unmutateImageSources,
     allImagesLoaded
 } from '../common';
@@ -20,7 +21,7 @@ import { presentation } from '../constants/action-names';
 export const updatePreviousPresentationInfo = () =>
     dispatch => {
         localforage
-            .getItem('lastPresentationDom')
+            .getItem('lastPresentationDomString')
             .then(value => {
                 dispatch({
                     type: presentation.setPreviousPresentationInfo,
@@ -29,13 +30,14 @@ export const updatePreviousPresentationInfo = () =>
             });
     };
 
-export const startPresentation = (presentationDomData, protocol, domain, presentationCode) =>
+export const startPresentation = (presentationData, protocol, domain, presentationCode) =>
     dispatch => {
         dispatch(setLoading(true));
 
         const presentationContainer = document.getElementById('slides-holder');
 
-        presentationContainer.innerHTML = getSlidesDom(mutateImageSources(presentationDomData));
+        presentationContainer
+            .innerHTML = getSlidesDom(mutateImageSources(presentationData.domString));
 
         const title = presentationContainer.querySelector('h1').innerText,
             images = document.getElementsByTagName('img');
@@ -52,6 +54,7 @@ export const startPresentation = (presentationDomData, protocol, domain, present
                 showTipOnPresentationStart(() => dispatch(setControlMode('help')));
             });
 
+            fixRelativeImagePaths(images, presentationData.remotePath);
             unmutateImageSources(images);
 
             dispatch({

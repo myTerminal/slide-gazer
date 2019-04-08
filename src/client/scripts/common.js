@@ -45,6 +45,22 @@ export const markSlidesForNotes = slides => {
 export const mutateImageSources = domString =>
     domString.replace(/src=/g, 'src_=');
 
+export const fixRelativeImagePaths = (images, absolutePath) => {
+    const pathElements = (absolutePath || '').split('/'),
+        remoteDirectoryPath = pathElements.slice(0, pathElements.length - 1).join('/');
+
+    for (let i = 0; i < images.length; i += 1) {
+        const relativeSourcePath = images[i].getAttribute('src_');
+
+        if (relativeSourcePath.indexOf('http') !== 0) {
+            images[i].setAttribute(
+                'src_',
+                `${remoteDirectoryPath}/${relativeSourcePath}`
+            );
+        }
+    }
+};
+
 export const unmutateImageSources = images => {
     for (let i = 0; i < images.length; i += 1) {
         const img = images[i];

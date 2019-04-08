@@ -33,7 +33,10 @@ const fetchRemoteMarkdownFile = fileUrl =>
                   }
 
                   // Send the file body text
-                  resolve(body);
+                  resolve({
+                      remotePath: fileUrl,
+                      content: body
+                  });
               });
       });
 
@@ -54,8 +57,8 @@ module.exports = function (portNumber) {
 
     app.post('/load-remote-presentation', (req, res) => {
         fetchRemoteMarkdownFile(req.body.url)
-            .then(fileText => {
-                res.send(fileText);
+            .then(info => {
+                res.send(info);
             })
             .catch(error => {
                 res.status(400);

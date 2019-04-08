@@ -1,6 +1,6 @@
 # Sample Presentation
 
-![sample-image](/images/pexels-photo-64778.jpg)
+![sample-image](http://slide-gazer.teamfluxion.com/images/pexels-photo-64778.jpg)
 
 Use keyboard right arrow key to move forward to the next slide.
 
