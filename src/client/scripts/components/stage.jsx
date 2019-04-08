@@ -4,7 +4,9 @@ import React from 'react';
 import showdown from 'showdown';
 import localforage from 'localforage';
 import FileSaver from 'file-saver';
+import axios from 'axios';
 import { FilePicker } from 'react-file-picker';
+import { alert, prompt } from 'ample-alerts';
 
 import { fetchSampleMarkdownFile } from '../common';
 
@@ -50,6 +52,41 @@ export default class Stage extends React.Component {
         };
 
         reader.readAsText(file);
+    }
+
+    fetchPresentationFromUrl() {
+        const context = this;
+
+        prompt(
+            'Enter URL of a markdown file',
+            {
+                onAction: response => {
+                    if (response) {
+                        axios
+                            .post('/load-remote-presentation', {
+                                url: response
+                            })
+                            .then(r => {
+                                const fileText = converter.makeHtml(r.data);
+
+                                localforage
+                                    .setItem('lastPresentationDom', fileText)
+                                    .then(() => {
+                                        context.props.startPresentation(fileText);
+                                    });
+                            })
+                            .catch(error => {
+                                alert(['Error!', error.response.data]);
+                            });
+                    }
+                },
+                defaultResponse: 'https://github.com/myTerminal/theme-looper/blob/master/README.md',
+                labels: [
+                    'Load',
+                    'Cancel'
+                ]
+            }
+        );
     }
 
     reloadLastPresentation() {
@@ -105,6 +142,13 @@ export default class Stage extends React.Component {
                             Pick a markdown file
                         </div>
                     </FilePicker>
+                    <br />
+                    <div
+                        className="control-button"
+                        onClick={() => this.fetchPresentationFromUrl()}>
+                        Load presentation from URL (experimental)
+                    </div>
+                    <br />
                     <br />
                     <div
                         className={'control-button' + (!this.props.presentation.previousPresentationDataExists ? ' disabled' : '')}

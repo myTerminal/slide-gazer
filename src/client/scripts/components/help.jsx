@@ -15,6 +15,7 @@ export default class TopPanel extends React.Component {
                     <ul>
                         <li>Drop a markdown file on presentation page</li>
                         <li>Pick a file from disk</li>
+                        <li>Load a file from a URL</li>
                         <li>Reload the last presentation, if any</li>
                         <li>Load a sample presentation</li>
                     </ul>

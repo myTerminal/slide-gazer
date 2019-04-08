@@ -36,10 +36,11 @@ On the home-screen, you can choose to present a slide-show presentation or contr
 
 You can select a presentation to be presented in one of the following three ways:
 
-1. Pick a markdown document from the system
-2. Drop a markdown document on the page
-3. Reload a previously presented slide-show
-4. Load a sample presentation (if you just want to check how it works)
+1. Drop a markdown document on the page
+2. Pick a markdown document from the system
+3. Load a markdown document from a URL (experimental)
+4. Reload a previously presented slide-show
+5. Load a sample presentation (if you just want to check how it works)
 
 Once a presentation is started, navigate through the slides using the right and left arrow keys on the keyboard.
 Use the up and down arrow keys to focus a few emphasized words on a slide and restore view back to normal respectively.
