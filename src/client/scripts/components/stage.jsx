@@ -73,7 +73,7 @@ export default class Stage extends React.Component {
                             });
                     }
                 },
-                defaultResponse: 'https://github.com/myTerminal/theme-looper/blob/master/README.md',
+                defaultResponse: 'https://github.com/myTerminal/presentations/blob/master/why-use-emacs-in-2017/README.md',
                 labels: [
                     'Load',
                     'Cancel'
