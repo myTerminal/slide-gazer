@@ -18,8 +18,9 @@ It's an online tool that can be used to present slide-shows created with plain-t
 
 ## Features
 
-* Use any text-editor to create slide-show presentations and do it quickly by focussing only on content and not formatting
+* Use any text editor to create slide-show presentations and do it quickly by focussing only on content and not formatting
 * Present from any device capable of running a decent web-browser
+* Present markdown documents from almost anywhere on the web, including GitHub README files as presentations
 * Choose from a range of slide-transition animations
 * Have auto-transition of slides with an adjustable delay
 * Bring attention of your audience to a few emphasized words on a slide
@@ -30,7 +31,7 @@ It's an online tool that can be used to present slide-shows created with plain-t
 
 Open the URL [http://slide-gazer.teamfluxion.com](http://slide-gazer.teamfluxion.com) in a web-browser. Google Chrome is the recommended web-browser, a few features may not work in other browsers as making this tool cross-browser was not the focus during its development.
 
-On the home-screen, you can choose to present a slide-show presentation or control one that is already running.
+On the home screen, you can choose to present a slide-show presentation or control one that is already running.
 
 ### Presenting a slide-show
 
