@@ -7,7 +7,7 @@ export const showTipOnPresentationStart = action => {
         .then(value => {
             if (value !== false) {
                 confirm(
-                    'Would you like to learn about the basics?',
+                    'Would you like to have a quick glance at the help page?',
                     {
                         onAction: r1 => {
                             if (r1) {
