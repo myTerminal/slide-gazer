@@ -9,7 +9,7 @@ import localforage from 'localforage';
 import store from './store';
 import { endPresentation } from './actions/presentation';
 
-import './service-worker-starter.js';
+import './pwa';
 
 import '../styles/styles.less';
 
