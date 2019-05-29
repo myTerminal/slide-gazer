@@ -1,5 +1,5 @@
-@import 'mixins.less';
 @import './github-markdown.css';
+@import '../../../node_modules/effortless-css/less/all.less';
 @import '../../../node_modules/font-awesome/css/font-awesome.min.css';
 @import '../../../node_modules/ample-alerts/build/styles/ample-alerts.dark.css';
 
@@ -192,7 +192,7 @@ body,
                 position: absolute;
                 width: 100%;
                 height: @panel-size;
-                .background-gradient-twoColor(@top-panel-color-one, @top-panel-color-two);
+                .background-gradient-two-color-top(@top-panel-color-one, @top-panel-color-two);
                 color: @lightest-color;
                 z-index: 2;
                 cursor: default;
@@ -251,7 +251,7 @@ body,
                     top: 0;
                     left: 0;
                     height: @panel-size;
-                    .background-gradient-twoColor(@accent-primary, @accent-secondary);
+                    .background-gradient-two-color-top(@accent-primary, @accent-secondary);
                     .transition(1s);
                 }
 
@@ -334,7 +334,7 @@ body,
                     top: 0;
                     left: 0;
                     height: @panel-size;
-                    .background-gradient-twoColor(@accent-primary, @accent-secondary);
+                    .background-gradient-two-color-top(@accent-primary, @accent-secondary);
                     .transition(1s);
                 }
 
@@ -528,7 +528,7 @@ body,
                 &.flip {
 
                     .slide {
-                        .transitions(0.5s transform ease-in-out, 1s opacity);
+                        .transition(0.5s transform ease-in-out, 1s opacity;);
 
                         &.previous {
                             .transform(rotate3d(0, 1, 0, -90deg));
@@ -549,7 +549,7 @@ body,
                 &.cube {
 
                     .slide {
-                        .transitions(0.5s ease-in-out);
+                        .transition(0.5s ease-in-out);
 
                         &.previous {
                             .transform(translateX(-100%) rotateY(-90deg));
@@ -570,7 +570,7 @@ body,
                 &.cube-inverse {
 
                     .slide {
-                        .transitions(0.5s ease-in-out);
+                        .transition(0.5s ease-in-out);
 
                         &.previous {
                             .transform(translateX(-100%) rotateY(90deg));
@@ -591,7 +591,7 @@ body,
                 &.carousel {
 
                     .slide {
-                        .transitions(0.5s transform ease-in-out, 1s opacity);
+                        .transition(0.5s transform ease-in-out, 1s opacity;);
 
                         &.previous {
                             .transform(translate3d(-70%, 0, -500px));
@@ -713,7 +713,7 @@ body,
                     height: 120px;
                     left: 50%;
                     .transform(translateX(-30%) rotate3d(1, -1, 0, 30deg));
-                    .transformStyle(preserve-3d);
+                    .transform-style(preserve-3d);
                     .perspective(500px);
 
                     .sheet {
@@ -921,7 +921,7 @@ body,
                             height: 100%;
                             border-right: 10px solid @darkest-color;
                             text-align: center;
-                            .background-gradient-twoColor(@dark-color, @dark-color);
+                            .background-gradient-two-color-top(@dark-color, @dark-color);
                             color: @lightest-color;
                             cursor: pointer;
 
@@ -934,12 +934,12 @@ body,
                             &:not(.disabled) {
 
                                 &.active {
-                                    .background-gradient-twoColor(@accent-primary, @accent-secondary);
+                                    .background-gradient-two-color-top(@accent-primary, @accent-secondary);
                                     color: @lightest-color;
                                 }
 
                                 &:hover {
-                                    .background-gradient-twoColor(@accent-secondary, @dark-color);
+                                    .background-gradient-two-color-top(@accent-secondary, @dark-color);
                                     color: @accent-primary;
                                 }
                             }
@@ -1140,17 +1140,17 @@ body.mobile-mode {
 
 @keyframes lift {
     0% {
-        .translateZ(0px);
+        .transform(translateZ(0px));
         opacity: 0;
     }
 
     80% {
-        .translateZ(100px);
+        .transform(translateZ(100px));
         opacity: 1;
     }
 
     100% {
-        .translateZ(200px);
+        .transform(translateZ(200px));
         opacity: 0;
     }
 }
