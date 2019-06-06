@@ -33,6 +33,13 @@ export default class Home extends React.Component {
                     </NavLink>
                     <br />
                     <br />
+                    <span className="regular-text" id="pwa-install" style={{ display: 'none' }}>
+                        Click&nbsp;
+                        <span className="emphasized">here</span>
+                        &nbsp;to install as an app.
+                    </span>
+                    <br />
+                    <br />
                     <span className="regular-text">Source:</span>
                     <a href="https://github.com/team-fluxion/slide-gazer"
                         className="regular-text fa fa-github fa-lg"
