@@ -6,7 +6,7 @@ import packageDetails from '../../../../../package.json';
 export default class Home extends React.Component {
     render() {
         return (
-            <div id="home-page">
+            <section id="home-page">
                 <div id="center-panel">
                     <h1 className="regular-text">
                         Slide Gazer
@@ -47,7 +47,7 @@ export default class Home extends React.Component {
                         &nbsp;
                     </a>
                 </div>
-            </div>
+            </section>
         );
     }
 }

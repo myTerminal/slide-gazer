@@ -294,7 +294,7 @@ class Presentation extends React.Component {
 
     render() {
         return (
-            <div id="presentation-page">
+            <section id="presentation-page">
                 <TopPanel
                     configs={this.props.configs}
                     presentation={this.props.presentation}
@@ -326,7 +326,7 @@ class Presentation extends React.Component {
                     zoomOutOnCurrentSlide={() => this.zoomOutOnCurrentSlide()}
                 />
                 <Loading isLoading={this.props.presentation.isLoading} />
-            </div>
+            </section>
         );
     }
 }

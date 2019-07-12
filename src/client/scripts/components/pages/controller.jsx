@@ -233,7 +233,7 @@ class Controller extends React.Component {
 
     render() {
         return (
-            <div id="controller-page">
+            <section id="controller-page">
                 <div
                     id="stage"
                     className={this.props.controller.isConnected ? 'hidden' : ''}>
@@ -350,7 +350,7 @@ class Controller extends React.Component {
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
         );
     }
 }
