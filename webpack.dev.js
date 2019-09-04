@@ -11,16 +11,15 @@ const packageDetails = require('./package.json');
 
 const copy = new CopyWebpackPlugin([
     {
-        from: sourceDir + '/manifest.json',
-        transform: function (content, path) {
-            return content.toString()
-                .replace(/#manifest-origin#/g, '/');
-        }
+        from: `${sourceDir}/manifest.json`,
+        transform: (content, path) =>
+            content.toString()
+                .replace(/#manifest-origin#/g, '/')
     }
 ]);
 
 const html = new HtmlWebpackPlugin({
-    template: sourceDir + '/index.ejs',
+    template: `${sourceDir}/index.ejs`,
     templateParameters: {
         titlePrefix: '[DEBUG] ',
         baseUrl: '/',
@@ -30,10 +29,13 @@ const html = new HtmlWebpackPlugin({
     chunks: ['app']
 });
 
-module.exports = WebpackMerge(commonConfig, {
-    devtool: 'inline-source-map',
-    plugins: [
-        copy,
-        html
-    ]
-});
+module.exports = WebpackMerge(
+    commonConfig,
+    {
+        devtool: 'inline-source-map',
+        plugins: [
+            copy,
+            html
+        ]
+    }
+);

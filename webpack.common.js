@@ -14,10 +14,10 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const clean = new CleanWebpackPlugin([outputDir]);
 const copy = new CopyWebpackPlugin([
     {
-        from: sourceDir + '/favicon.ico'
+        from: `${sourceDir}/favicon.ico`
     },
     {
-        from: sourceDir + '/icons',
+        from: `${sourceDir}/icons`,
         to: 'icons'
     }
 ]);
@@ -27,7 +27,7 @@ const optimizeCSS = new OptimizeCssAssetsPlugin();
 module.exports = {
     mode: 'development',
     entry: {
-        app: './' + sourceDir + '/scripts/index.jsx'
+        app: `./${sourceDir}/scripts/index.jsx`
     },
     module: {
         rules: [

@@ -14,26 +14,24 @@ const configs = require('./configs.json');
 
 const copy = new CopyWebpackPlugin([
     {
-        from: sourceDir + '/sw.js',
-        transform: (content, path) => {
-            return content.toString()
+        from: `${sourceDir}/sw.js`,
+        transform: (content, path) =>
+            content.toString()
                 .replace(/#sw-cache-string#/g, (new Date().getTime()))
-                .replace(/#sw-origin#/g, configs.origin);
-        }
+                .replace(/#sw-origin#/g, configs.origin)
     },
     {
-        from: sourceDir + '/manifest.json',
-        transform: function (content, path) {
-            return content.toString()
-                .replace(/#manifest-origin#/g, configs.origin);
-        }
+        from: `${sourceDir}/manifest.json`,
+        transform: (content, path) =>
+            content.toString()
+                .replace(/#manifest-origin#/g, configs.origin)
     }
 ]);
 const html = new HtmlWebpackPlugin({
-    template: sourceDir + '/index.ejs',
+    template: `${sourceDir}/index.ejs`,
     templateParameters: {
         titlePrefix: '',
-        baseUrl: configs['web-protocol'] + '://' + configs.domain + configs.origin,
+        baseUrl: `${configs['web-protocol']}://${configs.domain}${configs.origin}`,
         version: packageDetails.version
     },
     filename: 'index.html',
@@ -41,11 +39,14 @@ const html = new HtmlWebpackPlugin({
     hash: true
 });
 
-module.exports = WebpackMerge(commonConfig, {
-    mode: 'production',
-    plugins: [
-        copy,
-        new UglifyJSPlugin(),
-        html
-    ]
-});
+module.exports = WebpackMerge(
+    commonConfig,
+    {
+        mode: 'production',
+        plugins: [
+            copy,
+            new UglifyJSPlugin(),
+            html
+        ]
+    }
+);
