@@ -293,19 +293,19 @@ class Controller extends React.Component {
                                     className={'presentation-control-button' + (!this.props.controller.currentSlideIndex ? ' disabled' : '')}
                                     onClick={() => this.moveToSlide(0)}
                                 >
-                                    <span className="fa fa-3x fa-fast-backward" />
+                                    <span className="fas fa-3x fa-fast-backward" />
                                 </div>
                                 <div
                                     className={'presentation-control-button' + (!this.props.controller.currentSlideIndex ? ' disabled' : '')}
                                     onClick={() => this.previousSlide()}
                                 >
-                                    <span className="fa fa-3x fa-step-backward" />
+                                    <span className="fas fa-3x fa-step-backward" />
                                 </div>
                                 <div
                                     className={'presentation-control-button' + (this.props.controller.currentSlideIndex === this.props.controller.slideCount - 1 ? ' disabled' : '')}
                                     onClick={() => this.nextSlide()}
                                 >
-                                    <span className="fa fa-3x fa-step-forward" />
+                                    <span className="fas fa-3x fa-step-forward" />
                                 </div>
                                 <div
                                     className={'presentation-control-button' + (this.props.controller.currentSlideIndex === this.props.controller.slideCount - 1 ? ' disabled' : '')}
@@ -313,7 +313,7 @@ class Controller extends React.Component {
                                         () => this.moveToSlide(this.props.controller.slideCount - 1)
                                     }
                                 >
-                                    <span className="fa fa-3x fa-fast-forward" />
+                                    <span className="fas fa-3x fa-fast-forward" />
                                 </div>
                             </div>
                             <div className="control-row">
@@ -322,7 +322,7 @@ class Controller extends React.Component {
                                     onClick={() => this.promptToDisconnect()}
                                 >
                                     <span
-                                        className="fa fa-3x fa-power-off"
+                                        className="fas fa-3x fa-power-off"
                                         style={{
                                             color: '#f00'
                                         }}
@@ -332,19 +332,19 @@ class Controller extends React.Component {
                                     className={'presentation-control-button' + (!this.props.controller.isZoomedIn ? ' active disabled' : '')}
                                     onClick={() => this.zoomOutOnCurrentSlide()}
                                 >
-                                    <span className="fa fa-3x fa-search-minus" />
+                                    <span className="fas fa-3x fa-search-minus" />
                                 </div>
                                 <div
                                     className={'presentation-control-button' + (this.props.controller.isZoomedIn ? ' active disabled' : '')}
                                     onClick={() => this.zoomInOnCurrentSlide()}
                                 >
-                                    <span className="fa fa-3x fa-search-plus" />
+                                    <span className="fas fa-3x fa-search-plus" />
                                 </div>
                                 <div
                                     className="presentation-control-button"
                                     onClick={() => this.props.toggleReadingMode()}
                                 >
-                                    <span className={'fa fa-3x' + (this.props.controller.isReadingMode ? ' fa-list-ul' : ' fa-file-text-o')} />
+                                    <span className={'fas fa-3x' + (this.props.controller.isReadingMode ? ' fa-list' : ' fa-file-alt')} />
                                 </div>
                             </div>
                         </div>

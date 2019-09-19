@@ -18,14 +18,14 @@ export default class BottomPanel extends React.Component {
                     </div>
                     <div className="panel-controls-group panel-controls-group-left">
                         <div
-                            className={'control-button smaller fa fa-search-minus' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '') + (!this.props.presentation.isZoomedIn ? ' active' : '')}
+                            className={'control-button smaller fas fa-search-minus' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '') + (!this.props.presentation.isZoomedIn ? ' active' : '')}
                             onClick={() => this.props.zoomOutOnCurrentSlide()}
                             title="Zoom out"
                         />
                     </div>
                     <div className="panel-controls-group panel-controls-group-right">
                         <div
-                            className={'control-button smaller fa fa-search-plus' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '') + (this.props.presentation.isZoomedIn ? ' active' : '')}
+                            className={'control-button smaller fas fa-search-plus' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '') + (this.props.presentation.isZoomedIn ? ' active' : '')}
                             onClick={() => this.props.zoomInOnCurrentSlide()}
                             title="Zoom in"
                         />

@@ -42,7 +42,7 @@ export default class Home extends React.Component {
                     <br />
                     <span className="regular-text">Source:</span>
                     <a href="https://github.com/team-fluxion/slide-gazer"
-                        className="regular-text fa fa-github fa-lg"
+                        className="regular-text fab fa-github fa-lg"
                         target="_blank">
                         &nbsp;
                     </a>

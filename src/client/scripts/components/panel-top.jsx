@@ -71,42 +71,42 @@ export default class TopPanel extends React.Component {
                     </span>
                     <div className="panel-controls-group panel-controls-group-right">
                         <div
-                            className={'control-button smaller fa fa-close blue' + (!this.props.presentation.controlMode ? ' offsetted' : '')}
+                            className={'control-button smaller fas fa-times blue' + (!this.props.presentation.controlMode ? ' offsetted' : '')}
                             onClick={() => this.props.setControlMode(null)}
                             title="Close"
                         />
                         <div
-                            className="control-button smaller fa fa-question"
+                            className="control-button smaller fas fa-question"
                             onClick={() => this.props.setControlMode('help')}
                             title="See Help"
                         />
                         <div
-                            className={'control-button smaller fa fa-gear' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')}
+                            className={'control-button smaller fas fa-cog' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')}
                             onClick={() => this.props.setControlMode('presentation')}
                             title="Set presentation preferences"
                         />
                         <div
-                            className={'control-button smaller fa fa-chain' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '') + (this.props.presentation.isControllerConnected ? ' active' : '')}
+                            className={'control-button smaller fas fa-link' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '') + (this.props.presentation.isControllerConnected ? ' active' : '')}
                             onClick={() => this.props.setControlMode('control')}
                             title={this.props.presentation.isControllerConnected ? 'A controller is connected' : 'Connect a controller'}
                         />
                         <div
-                            className={'control-button smaller fa fa-list' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '') + (this.props.presentation.isIndexMode ? ' active' : '')}
+                            className={'control-button smaller fas fa-list' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '') + (this.props.presentation.isIndexMode ? ' active' : '')}
                             onClick={() => this.props.toggleIndex()}
                             title="Go-to slide"
                         />
                         <div
-                            className={'control-button smaller fa fa-arrows-alt' + (!this.props.presentation.isPresentationLoaded || this.props.presentation.isFullscreen ? ' hidden' : '')}
+                            className={'control-button smaller fas fa-expand-arrows-alt' + (!this.props.presentation.isPresentationLoaded || this.props.presentation.isFullscreen ? ' hidden' : '')}
                             onClick={() => this.switchToFullscreen()}
                             title="Switch to fullscreen"
                         />
                         <div
-                            className={'control-button smaller fa fa-window-restore' + (!this.props.presentation.isPresentationLoaded || !this.props.presentation.isFullscreen ? ' hidden' : '')}
+                            className={'control-button smaller fas fa-compress-arrows-alt' + (!this.props.presentation.isPresentationLoaded || !this.props.presentation.isFullscreen ? ' hidden' : '')}
                             onClick={() => this.exitFullscreen()}
                             title="Exit fullscreen"
                         />
                         <div
-                            className={'control-button smaller fa fa-stop red' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')}
+                            className={'control-button smaller fas fa-stop red' + (!this.props.presentation.isPresentationLoaded ? ' hidden' : '')}
                             onClick={() => this.promptToEndPresentation()}
                             title="End presentation"
                         />

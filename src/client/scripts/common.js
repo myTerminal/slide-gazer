@@ -10,7 +10,7 @@ export const getFirstSlide = title => `
         <span class="credit">on Slide Gazer ${packageDetails.version}</span>
         <br />
         <br />
-        Press <span class="fa fa-arrow-right"></span> to start
+        Press <span class="fas fa-arrow-right"></span> to start
       </div>
     </div>`;
 
