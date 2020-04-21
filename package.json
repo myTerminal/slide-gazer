@@ -25,7 +25,7 @@
   "license": "GPL-3.0",
   "dependencies": {
     "@fortawesome/fontawesome-free": "5.11.1",
-    "ample-alerts": "1.2.2",
+    "ample-alerts": "1.4.1",
     "axios": "0.18.0",
     "bluebird": "3.5.3",
     "body-parser": "1.18.3",
