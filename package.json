@@ -26,7 +26,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "5.11.1",
     "ample-alerts": "1.4.1",
-    "axios": "0.18.0",
+    "axios": "0.18.1",
     "bluebird": "3.5.3",
     "body-parser": "1.18.3",
     "express": "4.16.4",
