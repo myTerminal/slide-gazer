@@ -268,7 +268,7 @@ class Controller extends React.Component {
                 <div
                     id="controller"
                     className={!this.props.controller.isConnected ? 'hidden' : ''}>
-                    <div id="controller-presentation-view" className={this.props.controller.isReadingMode ? ' reading-mode' : ''} />
+                    <div id="controller-presentation-view" className={'markdown-body' + (this.props.controller.isReadingMode ? ' reading-mode' : '')} />
                     <div id="controller-controls">
                         <div className="presentation-progress-container">
                             <div
