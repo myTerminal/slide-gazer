@@ -30,7 +30,7 @@ It's an online tool that can be used to present slide-shows created with plain-t
 
 ## How to use
 
-Open the URL [http://slide-gazer.teamfluxion.com](http://slide-gazer.teamfluxion.com) in a web-browser. Google Chrome is the recommended web-browser, a few features may not work in other browsers as making this tool cross-browser was not the focus during its development.
+Open the URL [https://slide-gazer.teamfluxion.com](https://slide-gazer.teamfluxion.com) in a web-browser. Google Chrome is the recommended web-browser, a few features may not work in other browsers as making this tool cross-browser was not the focus during its development.
 
 On the home screen, you can choose to present a slide-show presentation or control one that is already running.
 
