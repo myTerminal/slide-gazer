@@ -1,5 +1,7 @@
 /* global require, window, document */
 
+import { alert } from 'ample-alerts';
+
 import { presentation } from '../constants/action-names';
 import { timers } from '../common';
 
@@ -71,6 +73,16 @@ const presentationReducer = (state = initialState, action) => {
             isIndexMode: false
         };
     case presentation.setControlMode:
+        // TODO: Temporary message for broken websocket connectivity
+        if (action.payLoad === 'control') {
+            alert(
+                [
+                    'This feature is broken!',
+                    'Due to recent updates, Slide Gazer is not able to connect to web socket server. This means that remotely controlling a running presentation will not be possible until this issue is resolved. Effort is planned for this activity and hopefully it will start working again.'
+                ]
+            );
+        }
+
         return {
             ...state,
             controlMode: action.payLoad,
