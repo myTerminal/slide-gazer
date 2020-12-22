@@ -91,14 +91,9 @@ module.exports = portNumber => {
         (req, res) => {
             const { headers, url } = req;
 
-            if (headers['x-forwarded-proto'] === 'http') {
-                // Force redirection to https
-                res.redirect(`https://${headers.host}${url}`);
-            } else {
-                res.send(
-                    fs.readFileSync(baseUrl + '/public/index.html', 'utf8')
-                );
-            }
+            res.send(
+                fs.readFileSync(baseUrl + '/public/index.html', 'utf8')
+            );
         }
     );
 };
