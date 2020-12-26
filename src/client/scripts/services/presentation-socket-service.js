@@ -16,7 +16,7 @@ const open = (configs, id, data, onInfo, onCommand, onException, afterOpen) => {
     exceptionHandler = onException;
     afterOpenCallback = afterOpen;
 
-    socket = new WebSocket(`${configs['socket-protocol']}://${configs.domain}:${configs['socket-port']}`);
+    socket = new WebSocket(`${configs['ssl-cert-path'] ? 'wss' : 'ws'}://${configs.domain}:${configs['socket-port']}`);
 
     bindEvents(socket);
 };

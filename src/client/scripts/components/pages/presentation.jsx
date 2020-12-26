@@ -64,13 +64,13 @@ class Presentation extends React.Component {
                 domString,
                 remotePath
             },
-            this.props.configs['web-protocol'],
+            this.props.configs['ssl-cert-path'] ? 'https' : 'http',
             this.props.configs.domain,
             generatedPresentationCode
         );
 
         this.props.setControllerUrlQrCodeData(
-            this.props.configs['web-protocol'],
+            this.props.configs['ssl-cert-path'] ? 'https' : 'http',
             this.props.configs.domain,
             generatedPresentationCode
         );

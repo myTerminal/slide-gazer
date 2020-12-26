@@ -108,8 +108,6 @@ Configure hosting information in file `configs.json`.
     {
         "origin": "/",
         "domain": "slide-gazer.teamfluxion.com",
-        "web-protocol": "https",
-        "socket-protocol": "wss",
         "web-port": "8089",
         "socket-port": "8090"
     }

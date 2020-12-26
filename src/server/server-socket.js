@@ -1,15 +1,39 @@
 /* global module require setInterval */
 
 const ws = require('ws');
+const https = require('https');
+const fs = require('fs');
+
+const configs = require('../../configs');
 
 const noOperation = () => {};
 
 module.exports = portNumber => {
     const clients = [];
-    const wss = new ws.Server({
-        perMessageDeflate: false,
-        port: portNumber
-    });
+
+    let server;
+    let wss;
+
+    if (configs['ssl-cert-path']) {
+        server = https.createServer(
+            {
+                key: fs.readFileSync(`${configs['ssl-cert-path']}/privkey.pem}`),
+                cert: fs.readFileSync(`${configs['ssl-cert-path']}/fullchain.pem}`)
+            }
+        );
+
+        wss = new ws.Server({
+            server,
+            perMessageDeflate: false
+        });
+
+        server.listen(portNumber);
+    } else {
+        wss = new ws.Server({
+            perMessageDeflate: false,
+            port: portNumber
+        });
+    }
 
     wss.on(
         'connection',

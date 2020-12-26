@@ -1,8 +1,7 @@
 {
     "origin": "/",
     "domain": "localhost",
-    "web-protocol": "https",
-    "socket-protocol": "wss",
     "web-port": "8089",
-    "socket-port": "8090"
+    "socket-port": "8090",
+    "ssl-cert-path": ""
 }

@@ -198,10 +198,10 @@ export default class TopPanel extends React.Component {
                             <div>
                                 <a
                                     id="controller-url-link"
-                                    href={this.props.configs['web-protocol'] + '://' + this.props.configs.domain + '/control/' + this.props.presentation.presentationCode}
+                                    href={(this.props.configs['ssl-cert-path'] ? 'https' : 'http') + '://' + this.props.configs.domain + '/control/' + this.props.presentation.presentationCode}
                                     target="_blank">
                                     {
-                                        this.props.configs['web-protocol'] + '://' + this.props.configs.domain + '/control/' + this.props.presentation.presentationCode
+                                        (this.props.configs['ssl-cert-path'] ? 'https' : 'http') + '://' + this.props.configs.domain + '/control/' + this.props.presentation.presentationCode
                                     }
                                 </a>
                             </div>

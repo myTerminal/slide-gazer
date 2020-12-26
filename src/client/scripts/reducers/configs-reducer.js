@@ -3,7 +3,6 @@ import { configs } from '../constants/action-names';
 const initialState = {
     origin: '/',
     domain: 'slide-gazer.teamfluxion.com',
-    'web-protocol': 'http',
     'web-port': '8089',
     'socket-port': '8090'
 };

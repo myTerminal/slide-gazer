@@ -31,7 +31,7 @@ const html = new HtmlWebpackPlugin({
     template: `${sourceDir}/index.ejs`,
     templateParameters: {
         titlePrefix: '',
-        baseUrl: `${configs['web-protocol']}://${configs.domain}${configs.origin}`,
+        baseUrl: `${configs['ssl-cert-path'] ? 'https' : 'http'}://${configs.domain}${configs.origin}`,
         version: packageDetails.version
     },
     filename: 'index.html',

@@ -12,7 +12,7 @@ const open = (configs, id, onInfo, onSignal, onException) => {
     signalHandler = onSignal;
     exceptionHandler = onException;
 
-    socket = new WebSocket(`${configs['socket-protocol']}://${configs.domain}:${configs['socket-port']}`);
+    socket = new WebSocket(`${configs['ssl-cert-path'] ? 'wss' : 'ws'}://${configs.domain}:${configs['socket-port']}`);
 
     bindEvents(socket);
 };
