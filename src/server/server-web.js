@@ -2,11 +2,15 @@
 
 const appName = 'slide-gazer';
 
-const path = require('path');
 const express = require('express');
-const request = require('request');
 const bodyParser = require('body-parser');
+
+const path = require('path');
+const request = require('request');
+const https = require('https');
 const fs = require('fs');
+
+const configs = require('../../configs');
 
 const fetchRemoteMarkdownFile = fileUrl =>
     new Promise((resolve, reject) => {
@@ -46,13 +50,6 @@ module.exports = portNumber => {
 
     app.use(express.static(path.join(baseUrl, 'public')));
     app.use(bodyParser.json());
-
-    app.listen(
-        portNumber,
-        () => {
-            console.log(appName, 'web server started on port', portNumber);
-        }
-    );
 
     app.get(
         '/configs',
@@ -96,4 +93,28 @@ module.exports = portNumber => {
             );
         }
     );
+
+    if (configs['ssl-cert-path']) {
+        const server = https.createServer(
+            {
+                key: fs.readFileSync(`${configs['ssl-cert-path']}/privkey.pem`),
+                cert: fs.readFileSync(`${configs['ssl-cert-path']}/fullchain.pem`)
+            },
+            app
+        );
+
+        server.listen(
+            portNumber,
+            () => {
+                console.log(appName, 'web server started on port', portNumber);
+            }
+        );
+    } else {
+        app.listen(
+            portNumber,
+            () => {
+                console.log(appName, 'web server started on port', portNumber);
+            }
+        );
+    }
 };

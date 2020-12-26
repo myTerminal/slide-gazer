@@ -17,8 +17,8 @@ module.exports = portNumber => {
     if (configs['ssl-cert-path']) {
         server = https.createServer(
             {
-                key: fs.readFileSync(`${configs['ssl-cert-path']}/privkey.pem}`),
-                cert: fs.readFileSync(`${configs['ssl-cert-path']}/fullchain.pem}`)
+                key: fs.readFileSync(`${configs['ssl-cert-path']}/privkey.pem`),
+                cert: fs.readFileSync(`${configs['ssl-cert-path']}/fullchain.pem`)
             }
         );
 
