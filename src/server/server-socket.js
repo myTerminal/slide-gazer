@@ -1,8 +1,9 @@
 /* global module require setInterval */
 
-const ws = require('ws');
 const https = require('https');
 const fs = require('fs');
+
+const ws = require('ws');
 
 const configs = require('../../configs');
 

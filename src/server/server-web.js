@@ -2,13 +2,13 @@
 
 const appName = 'slide-gazer';
 
-const express = require('express');
-const bodyParser = require('body-parser');
-
 const path = require('path');
 const request = require('request');
 const https = require('https');
 const fs = require('fs');
+
+const express = require('express');
+const bodyParser = require('body-parser');
 
 const configs = require('../../configs');
 
