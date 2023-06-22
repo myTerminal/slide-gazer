@@ -12,12 +12,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:team-fluxion/slide-gazer.git"
+    "url": "git@github.com:myTerminal/slide-gazer.git"
   },
   "bugs": {
-    "url": "https://github.com/team-fluxion/slide-gazer/issues"
+    "url": "https://github.com/myTerminal/slide-gazer/issues"
   },
-  "homepage": "https://github.com/team-fluxion/slide-gazer#readme",
+  "homepage": "https://github.com/myTerminal/slide-gazer#readme",
   "keywords": [
     "slide-show"
   ],

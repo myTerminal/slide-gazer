@@ -1,8 +1,8 @@
 # slide-gazer
 
-[![Code Climate](https://codeclimate.com/github/team-fluxion/slide-gazer.png)](https://codeclimate.com/github/team-fluxion/slide-gazer)
+[![Code Climate](https://codeclimate.com/github/myTerminal/slide-gazer.png)](https://codeclimate.com/github/myTerminal/slide-gazer)
 [![js-myterminal-style](https://img.shields.io/badge/code%20style-myterminal-blue.svg)](https://www.npmjs.com/package/eslint-config/myterminal)
-[![Coverage Status](https://img.shields.io/coveralls/team-fluxion/slide-gazer.svg)](https://coveralls.io/r/team-fluxion/slide-gazer?branch=master)  
+[![Coverage Status](https://img.shields.io/coveralls/myTerminal/slide-gazer.svg)](https://coveralls.io/r/myTerminal/slide-gazer?branch=master)  
 [![License](https://img.shields.io/badge/LICENSE-GPL%20v3.0-blue.svg)](https://www.gnu.org/licenses/gpl.html)
 
 An online presentation tool for presenting your ideas quickly and with style!
@@ -89,7 +89,7 @@ Creating speaker notes can be done within the same file. Just create a third lev
 
 Clone this repository with
 
-    git clone https://github.com/team-fluxion/slide-gazer.git
+    git clone https://github.com/myTerminal/slide-gazer.git
 
 To install dependencies within the directory, run
 
