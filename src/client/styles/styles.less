@@ -82,7 +82,7 @@ body,
 .canvas {
     font-family: OpenSans;
     height: 100%;
-    background-image: url('../images/pexels-photo-64778.jpg');
+    background-image: url('../images/meeting-room-730679_1280.jpg');
     background-size: cover;
 
     .hidden {
@@ -150,6 +150,12 @@ body,
                 border-color: @accent-primary;
             }
         }
+    }
+
+    #home-page,
+    #presentation-page,
+    #controller-page {
+        background-color: #000000aa;
     }
 
     #home-page {
@@ -1058,6 +1064,12 @@ body.mobile-mode {
 
             .canvas {
                 height: auto;
+
+                #home-page,
+                #presentation-page,
+                #controller-page {
+                    background: none;
+                }
 
                 #home-page {
 
