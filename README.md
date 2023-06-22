@@ -26,7 +26,7 @@ The successor of [faded-presenter](https://github.com/myTerminal/faded-presenter
 
 ## How to use
 
-Open the URL [https://slide-gazer.teamfluxion.com](https://slide-gazer.teamfluxion.com) in a web browser. Google Chrome is the recommended web-browser, but almost everything works in all major browsers.
+Open the URL [https://slide-gazer.myterminal.me](https://slide-gazer.myterminal.me) in a web browser. Google Chrome is the recommended web-browser, but almost everything works in all major browsers.
 
 On the home screen, you can choose to present a slide-show presentation or control one that is already running.
 
@@ -103,7 +103,7 @@ Configure hosting information in file `configs.json`.
 
     {
         "origin": "/",
-        "domain": "slide-gazer.teamfluxion.com",
+        "domain": "slide-gazer.myterminal.me",
         "web-port": "8089",
         "socket-port": "8090"
     }
@@ -112,10 +112,10 @@ If deploying with SSL, include certificate path in the configs and the rest will
 
     {
         "origin": "/",
-        "domain": "slide-gazer.teamfluxion.com",
+        "domain": "slide-gazer.myterminal.me",
         "web-port": "8089",
         "socket-port": "8090",
-        "ssl-cert-path": "/etc/letsencrypt/live/teamfluxion.com"
+        "ssl-cert-path": "/etc/letsencrypt/live/myterminal.me"
     }
 
 Start the application with
